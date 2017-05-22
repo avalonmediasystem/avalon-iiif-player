@@ -74,7 +74,7 @@
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -82,72 +82,72 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var HashHandler = function () {
-    function HashHandler(options) {
-        _classCallCheck(this, HashHandler);
+  function HashHandler(options) {
+    _classCallCheck(this, HashHandler);
 
-        this.qualityChoices = options.qualityChoices;
+    this.qualityChoices = options.qualityChoices;
+  }
+
+  _createClass(HashHandler, [{
+    key: 'bindHashChange',
+    value: function bindHashChange() {
+      var _this = this;
+
+      /**
+       * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
+       **/
+      if (window.location.hash.indexOf('#avalon') >= 0) {
+        this.playFromHash(window.location.hash);
+      }
+      window.onhashchange = function () {
+        _this.playFromHash(window.location.hash);
+      };
     }
+  }, {
+    key: 'playFromHash',
+    value: function playFromHash(hash) {
+      /**
+       * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
+       **/
+      var mediaPlayer = document.getElementById('iiif-av-player');
+      var options = this.processHash(hash);
 
-    _createClass(HashHandler, [{
-        key: 'bindHashChange',
-        value: function bindHashChange() {
-            var _this = this;
-
-            /**
-             * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
-             **/
-            if (window.location.hash.indexOf('#avalon') >= 0) {
-                this.playFromHash(window.location.hash);
-            }
-            window.onhashchange = function () {
-                _this.playFromHash(window.location.hash);
-            };
+      this.qualityChoices.forEach(function (choice) {
+        if (choice.label === options.quality) {
+          mediaPlayer.src = choice.id;
         }
-    }, {
-        key: 'playFromHash',
-        value: function playFromHash(hash) {
-            /**
-             * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
-             **/
-            var mediaPlayer = document.getElementById('iiif-av-player');
-            var options = this.processHash(hash);
+      });
 
-            this.qualityChoices.forEach(function (choice) {
-                if (choice.label === options.quality) {
-                    mediaPlayer.src = choice.id;
-                }
-            });
+      mediaPlayer.setCurrentTime(options.start);
+      mediaPlayer.play();
+    }
+  }, {
+    key: 'processHash',
+    value: function processHash(hash) {
+      /**
+       * This method processes a window.location.hash and creates an object.
+       * It can take any number of parameters. Strings at even locations are keys
+       * and odd locations are values.
+       * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
+       * @param {string} hash - a window.location.hash
+       * @return {object}
+       **/
 
-            mediaPlayer.setCurrentTime(options.start);
-            mediaPlayer.play();
+      return hash.split('/').splice(1).reduce(function (result, item, index, array) {
+        if (index % 2 === 0) {
+          if (item === 'time') {
+            var time = array[index + 1].split(',');
+            result['start'] = time[0];
+            result['stop'] = time[1];
+          }
+          result[item] = array[index + 1];
         }
-    }, {
-        key: 'processHash',
-        value: function processHash(hash) {
-            /**
-             * This method processes a window.location.hash and creates an object. 
-             * It can take any number of parameters. Strings at even locations are keys
-             * and odd locations are values.
-             * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
-             * @param {string} hash - a window.location.hash
-             * @return {object}
-             **/
+        return result;
+      }, {});
+    }
+  }]);
 
-            return hash.split("/").splice(1).reduce(function (result, item, index, array) {
-                if (index % 2 === 0) {
-                    if (item === "time") {
-                        var time = array[index + 1].split(',');
-                        result['start'] = time[0];
-                        result['stop'] = time[1];
-                    }
-                    result[item] = array[index + 1];
-                }
-                return result;
-            }, {});
-        }
-    }]);
-
-    return HashHandler;
+  return HashHandler;
 }();
 
 exports.default = HashHandler;
@@ -185,9 +185,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/** Class representing a MediaPlayer 
+/** Class representing a MediaPlayer
  * @class MediaPlayer
-*/
+ */
 var MediaPlayer = function () {
   function MediaPlayer(options) {
     _classCallCheck(this, MediaPlayer);
@@ -207,13 +207,12 @@ var MediaPlayer = function () {
 
       /**
        * this method sets the link on parent Ranges that don't have their own time, but inherit it from children in the tree
-       * 
+       *
        * @method MediaPlayer#getLinks
        */
       (0, _jquery2.default)('.canvas-range').each(function (el) {
         console.log(el);
         try {
-
           (0, _jquery2.default)('.canvas-range:eq( ' + el + ' )').find('.canvas-url').attr('href', '' + _this.getExtentForCanvas((0, _jquery2.default)('.canvas-range')[el], [], []));
         } catch (e) {
           console.log(e);
@@ -225,7 +224,7 @@ var MediaPlayer = function () {
     value: function getSubtitles() {
       /**
        * this method gets the first subtitle track from the manifest. It will probaly need to more robust in the future
-       * 
+       *
        * @method MediaPlayer#getSubtitles
        * @return {string} subtitle - a URI that points to subtitles
        */
@@ -285,7 +284,7 @@ var MediaPlayer = function () {
        *
        *  this takes a uri with a media fragment that looks like #=120,134 and returns an object with start/stop in seconds and the duration in milliseconds
        * @method MediaPlayer#getMediaFragment
-       * 
+       *
        * @return {object}
        */
 
@@ -311,7 +310,7 @@ var MediaPlayer = function () {
       /**
        * Recurses the manifest structure and creates an html tree
        *  @method MediaPlayer#createStructure
-       * 
+       *
        *  @return {string} list - a string version of the html tree
        */
       manifest.map(function (data, index) {
@@ -342,9 +341,9 @@ var MediaPlayer = function () {
       console.log(el);
       /**
        * This method takes a jQuery selector and calculates the extent of the parent based on the duration of the children
-       * 
+       *
        * @method MediaPlayer#getExtentForCanvas
-       * 
+       *
        * @param {string} el - a jQuery selector
        * @param {array} splits - an empty array
        * @param {array} newSplits - an empty array
