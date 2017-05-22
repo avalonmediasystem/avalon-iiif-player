@@ -9,8 +9,13 @@ module.exports = {
         {
             test: /\.js$/,
             exclude: /(node_modules|bower_components)/,
+             include: [
+                    path.join(__dirname, 'app'),
+                    path.join(__dirname, 'spec')
+                ],
             use: {
                 loader: 'babel-loader',
+               
                 options: {
                     presets: ['env']
                 }
