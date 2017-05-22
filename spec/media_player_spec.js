@@ -255,7 +255,7 @@ describe('an Avalon media player', () => {
         var mediaPlayer = av.createVideoPlayer({'manifest': manifest, 'target': 'media-player-target'})
         var mediaPlayerMarkup = document.getElementById('media-player-target').innerHTML
 
-        expect(mediaPlayerMarkup).toContain('<source src="http://dlib.indiana.edu/iiif_av/lunchroom_manners/medium/lunchroom_manners_512kb.mp4" type="video/mp4">')
+        expect(mediaPlayerMarkup).toContain("http://dlib.indiana.edu/iiif_av/lunchroom_manners/medium/lunchroom_manners_512kb.mp4")
         console.log(mediaPlayerMarkup)
     })
 
