@@ -41,3 +41,11 @@ To build the bundle:
  </html>
 ```
 The `data-iiifav-source` attribute should link to a publically accesible IIIF-AV manifest.
+
+## Using with GitHub Pages
+
+You can fork this repository to host your own IIIF Player. 
+
+First fork this repository, then edit the HTML pages and upload your own manifests in the `dist` folder. 
+
+Commit the changes and then push. 
