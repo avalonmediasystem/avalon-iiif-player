@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "main": "app.js",
-  "repository" : "https://github.com/avalonmediasystem/avalon-poc-standalone",  
+  "repository": "https://github.com/avalonmediasystem/avalon-poc-standalone",
   "scripts": {
     "test": "./node_modules/karma/bin/karma --single-run --browsers PhantomJS"
   },
@@ -17,6 +17,7 @@
     "babel-register": "^6.24.1",
     "css-loader": "^0.28.1",
     "jasmine-core": "^2.6.2",
+    "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.1.1",
     "karma-jasmine": "^1.1.0",
     "karma-webpack": "^2.0.3",
