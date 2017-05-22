@@ -5,6 +5,11 @@
 This is a JavaScript player that displays a player and navagation when given IIIF-AV 
 JSON. 
 
+## Demo Pages:
+- [Video](https://avalonmediasystem.github.io/avalon-poc-standalone/dist/index.html)
+  - [IIIF-AV Manifest](https://github.com/avalonmediasystem/avalon-poc-standalone/blob/master/dist/lunchroom_manners_v2.json)
+- [Audio](https://avalonmediasystem.github.io/avalon-poc-standalone/dist/audio.html)
+  - [IIIF-AV Manifest](https://github.com/avalonmediasystem/avalon-poc-standalone/blob/master/dist/mahler-symphony-3.json)
 ## Running tests:
 
 To run the project's tests:
