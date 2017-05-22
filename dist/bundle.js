@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -160,6 +160,244 @@ module.exports = "<svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _hashHandler = __webpack_require__(0);
+
+var _hashHandler2 = _interopRequireDefault(_hashHandler);
+
+var _jquery = __webpack_require__(3);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+__webpack_require__(14);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/** Class representing a MediaPlayer 
+ * @class MediaPlayer
+*/
+var MediaPlayer = function () {
+  function MediaPlayer(options) {
+    _classCallCheck(this, MediaPlayer);
+
+    /**
+     * Create a MediaPlayer
+     * @param {object} options - an object with the manifest and target
+     */
+    this.manifest = options.manifest;
+    this.target = document.getElementById(options.target);
+  }
+
+  _createClass(MediaPlayer, [{
+    key: 'getLinks',
+    value: function getLinks() {
+      var _this = this;
+
+      /**
+       * this method sets the link on parent Ranges that don't have their own time, but inherit it from children in the tree
+       * 
+       * @method MediaPlayer#getLinks
+       */
+      (0, _jquery2.default)('.canvas-range').each(function (el) {
+        console.log(el);
+        try {
+
+          (0, _jquery2.default)('.canvas-range:eq( ' + el + ' )').find('.canvas-url').attr('href', '' + _this.getExtentForCanvas((0, _jquery2.default)('.canvas-range')[el], [], []));
+        } catch (e) {
+          console.log(e);
+        }
+      });
+    }
+  }, {
+    key: 'getSubtitles',
+    value: function getSubtitles() {
+      /**
+       * this method gets the first subtitle track from the manifest. It will probaly need to more robust in the future
+       * 
+       * @method MediaPlayer#getSubtitles
+       * @return {string} subtitle - a URI that points to subtitles
+       */
+      var subtitle;
+      this.manifest.content[0].items.forEach(function (item) {
+        item.body.forEach(function (body) {
+          if (body.type === 'Text') {
+            subtitle = body;
+          }
+        });
+      });
+      return subtitle;
+    }
+  }, {
+    key: 'getQualityChoices',
+    value: function getQualityChoices() {
+      var choices = [];
+      if (this.manifest.content) {
+        this.manifest.content[0].items.forEach(function (item) {
+          item.body.forEach(function (body) {
+            if (body.type === 'Choice') {
+              body.items.forEach(function (item) {
+                choices.push(item);
+              });
+            }
+          });
+        });
+      }
+      return choices;
+    }
+  }, {
+    key: 'getVideoUri',
+    value: function getVideoUri() {
+      /**
+       *  this method returns the URI with Medium quality from the manfest
+       * @method MediaPlayer#getVideoUri
+       * @return {string} uri - a URI for the medium quality video
+       */
+      var uri;
+      this.manifest.content[0].items.forEach(function (item) {
+        item.body.forEach(function (body) {
+          if (body.type === 'Choice') {
+            body.items.forEach(function (item) {
+              if (item.label === 'Medium') {
+                uri = item;
+              }
+            });
+          }
+        });
+      });
+      return uri;
+    }
+  }, {
+    key: 'getMediaFragment',
+    value: function getMediaFragment(uri) {
+      /**
+       *
+       *  this takes a uri with a media fragment that looks like #=120,134 and returns an object with start/stop in seconds and the duration in milliseconds
+       * @method MediaPlayer#getMediaFragment
+       * 
+       * @return {object}
+       */
+
+      if (uri !== undefined) {
+        var fragment = uri.split('#t=')[1];
+        if (fragment !== undefined) {
+          var splitFragment = fragment.split(',');
+          var duration = splitFragment[1] - splitFragment[0];
+          return { 'start': splitFragment[0],
+            'stop': splitFragment[1] };
+        } else {
+          return undefined;
+        }
+      } else {
+        return undefined;
+      }
+    }
+  }, {
+    key: 'createStructure',
+    value: function createStructure(manifest, list, canvasId) {
+      var _this2 = this;
+
+      /**
+       * Recurses the manifest structure and creates an html tree
+       *  @method MediaPlayer#createStructure
+       * 
+       *  @return {string} list - a string version of the html tree
+       */
+      manifest.map(function (data, index) {
+        if (data.type === 'Range') {
+          if (manifest[index].members[0].id !== undefined) {
+            canvasId = manifest[index].members[0].id;
+          }
+        }
+        if (data.hasOwnProperty('members')) {
+          // Parent elements
+          if (_this2.getMediaFragment(canvasId) !== undefined) {
+            var mediaFragment = _this2.getMediaFragment(canvasId);
+
+            list.push('<ul><li><a data-turbolinks=\'false\' data-target="#" href="#avalon/time/' + mediaFragment.start + ',' + mediaFragment.stop + '/quality/Medium" class="media-structure-uri" >' + data.label + '</a></li>');
+            _this2.createStructure(data.members, list, canvasId);
+          } else {
+            list.push('<ul class=\'canvas-range\'><a data-target="#" data-turbolinks=\'false\' class=\'canvas-url\' href=\'\'>' + data.label + '</a></li>');
+            _this2.createStructure(data.members, list, canvasId);
+          }
+        }
+      });
+      list.push('</ul>');
+      return list.join('');
+    }
+  }, {
+    key: 'getExtentForCanvas',
+    value: function getExtentForCanvas(el, splits, newSplits) {
+      console.log(el);
+      /**
+       * This method takes a jQuery selector and calculates the extent of the parent based on the duration of the children
+       * 
+       * @method MediaPlayer#getExtentForCanvas
+       * 
+       * @param {string} el - a jQuery selector
+       * @param {array} splits - an empty array
+       * @param {array} newSplits - an empty array
+       * @return {string} - a mediafragment
+       **/
+      (0, _jquery2.default)(el).children().find('a').each(function () {
+        var splitHref = (0, _jquery2.default)(this).attr('href').split('#t=');
+
+        splitHref.forEach(function (split) {
+          if (split !== '') {
+            splits.push(split);
+          }
+          newSplits = splits.join(',').split(',');
+        });
+      });
+      return newSplits[0] + ',' + newSplits[newSplits.length - 1];
+    }
+  }, {
+    key: 'renderStructure',
+    value: function renderStructure(manifest, list, canvasId) {
+      var _this3 = this;
+
+      /**
+       * Recurses the manifest structure and creates an html tree
+       * @method MediaPlayer#renderStructure
+       *
+       */
+      manifest.map(function (data, index) {
+        if (data.type === 'Range') {
+          canvasId = manifest[index].members[0].id;
+        }
+        if (data.hasOwnProperty('members')) {
+          if (_this3.getMediaFragment(canvasId) !== undefined) {
+            list.push('<ul><li><a class="media-structure-uri" data-media-fragment="' + canvasId + '">' + data.label + '</a></li>');
+            _this3.renderStructure(data.members, list, canvasId);
+          } else {
+            list.push('<ul><li>' + data.label + '</li>');
+            _this3.renderStructure(data.members, list, canvasId);
+          }
+        }
+      });
+      list.push('</ul>');
+      return list.join('');
+    }
+  }]);
+
+  return MediaPlayer;
+}();
+
+exports.default = MediaPlayer;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10419,244 +10657,6 @@ return jQuery;
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _hashHandler = __webpack_require__(0);
-
-var _hashHandler2 = _interopRequireDefault(_hashHandler);
-
-var _jquery = __webpack_require__(2);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-__webpack_require__(13);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/** Class representing a MediaPlayer 
- * @class MediaPlayer
-*/
-var MediaPlayer = function () {
-  function MediaPlayer(options) {
-    _classCallCheck(this, MediaPlayer);
-
-    /**
-     * Create a MediaPlayer
-     * @param {object} options - an object with the manifest and target
-     */
-    this.manifest = options.manifest;
-    this.target = document.getElementById(options.target);
-  }
-
-  _createClass(MediaPlayer, [{
-    key: 'getLinks',
-    value: function getLinks() {
-      var _this = this;
-
-      /**
-       * this method sets the link on parent Ranges that don't have their own time, but inherit it from children in the tree
-       * 
-       * @method MediaPlayer#getLinks
-       */
-      (0, _jquery2.default)('.canvas-range').each(function (el) {
-        console.log(el);
-        try {
-
-          (0, _jquery2.default)('.canvas-range:eq( ' + el + ' )').find('.canvas-url').attr('href', '' + _this.getExtentForCanvas((0, _jquery2.default)('.canvas-range')[el], [], []));
-        } catch (e) {
-          console.log(e);
-        }
-      });
-    }
-  }, {
-    key: 'getSubtitles',
-    value: function getSubtitles() {
-      /**
-       * this method gets the first subtitle track from the manifest. It will probaly need to more robust in the future
-       * 
-       * @method MediaPlayer#getSubtitles
-       * @return {string} subtitle - a URI that points to subtitles
-       */
-      var subtitle;
-      this.manifest.content[0].items.forEach(function (item) {
-        item.body.forEach(function (body) {
-          if (body.type === 'Text') {
-            subtitle = body;
-          }
-        });
-      });
-      return subtitle;
-    }
-  }, {
-    key: 'getQualityChoices',
-    value: function getQualityChoices() {
-      var choices = [];
-      if (this.manifest.content) {
-        this.manifest.content[0].items.forEach(function (item) {
-          item.body.forEach(function (body) {
-            if (body.type === 'Choice') {
-              body.items.forEach(function (item) {
-                choices.push(item);
-              });
-            }
-          });
-        });
-      }
-      return choices;
-    }
-  }, {
-    key: 'getVideoUri',
-    value: function getVideoUri() {
-      /**
-       *  this method returns the URI with Medium quality from the manfest
-       * @method MediaPlayer#getVideoUri
-       * @return {string} uri - a URI for the medium quality video
-       */
-      var uri;
-      this.manifest.content[0].items.forEach(function (item) {
-        item.body.forEach(function (body) {
-          if (body.type === 'Choice') {
-            body.items.forEach(function (item) {
-              if (item.label === 'Medium') {
-                uri = item;
-              }
-            });
-          }
-        });
-      });
-      return uri;
-    }
-  }, {
-    key: 'getMediaFragment',
-    value: function getMediaFragment(uri) {
-      /**
-       *
-       *  this takes a uri with a media fragment that looks like #=120,134 and returns an object with start/stop in seconds and the duration in milliseconds
-       * @method MediaPlayer#getMediaFragment
-       * 
-       * @return {object}
-       */
-
-      if (uri !== undefined) {
-        var fragment = uri.split('#t=')[1];
-        if (fragment !== undefined) {
-          var splitFragment = fragment.split(',');
-          var duration = splitFragment[1] - splitFragment[0];
-          return { 'start': splitFragment[0],
-            'stop': splitFragment[1] };
-        } else {
-          return undefined;
-        }
-      } else {
-        return undefined;
-      }
-    }
-  }, {
-    key: 'createStructure',
-    value: function createStructure(manifest, list, canvasId) {
-      var _this2 = this;
-
-      /**
-       * Recurses the manifest structure and creates an html tree
-       *  @method MediaPlayer#createStructure
-       * 
-       *  @return {string} list - a string version of the html tree
-       */
-      manifest.map(function (data, index) {
-        if (data.type === 'Range') {
-          if (manifest[index].members[0].id !== undefined) {
-            canvasId = manifest[index].members[0].id;
-          }
-        }
-        if (data.hasOwnProperty('members')) {
-          // Parent elements
-          if (_this2.getMediaFragment(canvasId) !== undefined) {
-            var mediaFragment = _this2.getMediaFragment(canvasId);
-
-            list.push('<ul><li><a data-turbolinks=\'false\' data-target="#" href="#avalon/time/' + mediaFragment.start + ',' + mediaFragment.stop + '/quality/Medium" class="media-structure-uri" >' + data.label + '</a></li>');
-            _this2.createStructure(data.members, list, canvasId);
-          } else {
-            list.push('<ul class=\'canvas-range\'><a data-target="#" data-turbolinks=\'false\' class=\'canvas-url\' href=\'\'>' + data.label + '</a></li>');
-            _this2.createStructure(data.members, list, canvasId);
-          }
-        }
-      });
-      list.push('</ul>');
-      return list.join('');
-    }
-  }, {
-    key: 'getExtentForCanvas',
-    value: function getExtentForCanvas(el, splits, newSplits) {
-      console.log(el);
-      /**
-       * This method takes a jQuery selector and calculates the extent of the parent based on the duration of the children
-       * 
-       * @method MediaPlayer#getExtentForCanvas
-       * 
-       * @param {string} el - a jQuery selector
-       * @param {array} splits - an empty array
-       * @param {array} newSplits - an empty array
-       * @return {string} - a mediafragment
-       **/
-      (0, _jquery2.default)(el).children().find('a').each(function () {
-        var splitHref = (0, _jquery2.default)(this).attr('href').split('#t=');
-
-        splitHref.forEach(function (split) {
-          if (split !== '') {
-            splits.push(split);
-          }
-          newSplits = splits.join(',').split(',');
-        });
-      });
-      return newSplits[0] + ',' + newSplits[newSplits.length - 1];
-    }
-  }, {
-    key: 'renderStructure',
-    value: function renderStructure(manifest, list, canvasId) {
-      var _this3 = this;
-
-      /**
-       * Recurses the manifest structure and creates an html tree
-       * @method MediaPlayer#renderStructure
-       *
-       */
-      manifest.map(function (data, index) {
-        if (data.type === 'Range') {
-          canvasId = manifest[index].members[0].id;
-        }
-        if (data.hasOwnProperty('members')) {
-          if (_this3.getMediaFragment(canvasId) !== undefined) {
-            list.push('<ul><li><a class="media-structure-uri" data-media-fragment="' + canvasId + '">' + data.label + '</a></li>');
-            _this3.renderStructure(data.members, list, canvasId);
-          } else {
-            list.push('<ul><li>' + data.label + '</li>');
-            _this3.renderStructure(data.members, list, canvasId);
-          }
-        }
-      });
-      list.push('</ul>');
-      return list.join('');
-    }
-  }]);
-
-  return MediaPlayer;
-}();
-
-exports.default = MediaPlayer;
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10669,7 +10669,101 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _mediaPlayer = __webpack_require__(3);
+var _jquery = __webpack_require__(3);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _audioPlayer = __webpack_require__(5);
+
+var _audioPlayer2 = _interopRequireDefault(_audioPlayer);
+
+var _videoPlayer = __webpack_require__(6);
+
+var _videoPlayer2 = _interopRequireDefault(_videoPlayer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Avalon = function () {
+  function Avalon() {
+    _classCallCheck(this, Avalon);
+  }
+
+  _createClass(Avalon, [{
+    key: 'initialize',
+    value: function initialize() {
+      if ((0, _jquery2.default)('[data-iiifav-source]').length > 0) {
+        this.mediaPlayerVideo();
+      }
+      if ((0, _jquery2.default)('[data-iiifav-audio-source]').length > 0) {
+        this.mediaPlayerAudio();
+      }
+    }
+  }, {
+    key: 'createAudioPlayer',
+    value: function createAudioPlayer(options) {
+      return new _audioPlayer2.default(options);
+    }
+  }, {
+    key: 'createVideoPlayer',
+    value: function createVideoPlayer(options) {
+      return new _videoPlayer2.default(options);
+    }
+  }, {
+    key: 'mediaPlayerAudio',
+    value: function mediaPlayerAudio() {
+      var _this = this;
+
+      var options = {};
+      var manifestSource = (0, _jquery2.default)('[data-iiifav-audio-source]').data().iiifavAudioSource;
+      console.log(manifestSource);
+      options.audio = {};
+      options.target = (0, _jquery2.default)('[data-iiifav-audio-source]').attr('id');
+
+      _jquery2.default.get(manifestSource, function (manifest) {
+        console.log(manifest);
+        options.manifest = JSON.parse(manifest);
+        _this.createAudioPlayer(options);
+      });
+    }
+  }, {
+    key: 'mediaPlayerVideo',
+    value: function mediaPlayerVideo() {
+      var _this2 = this;
+
+      var options = {};
+      var manifestSource = (0, _jquery2.default)('[data-iiifav-source]').data().iiifavSource;
+      console.log(manifestSource);
+      options.target = (0, _jquery2.default)('[data-iiifav-source]').attr('id');
+
+      _jquery2.default.get(manifestSource, function (manifest) {
+        console.log(manifest);
+        options.manifest = manifest;
+        _this2.createVideoPlayer(options);
+      });
+    }
+  }]);
+
+  return Avalon;
+}();
+
+exports.default = Avalon;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _mediaPlayer = __webpack_require__(2);
 
 var _mediaPlayer2 = _interopRequireDefault(_mediaPlayer);
 
@@ -10772,7 +10866,7 @@ var AudioPlayer = function (_MediaPlayer) {
 exports.default = AudioPlayer;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10784,7 +10878,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _mediaPlayer = __webpack_require__(3);
+var _mediaPlayer = __webpack_require__(2);
 
 var _mediaPlayer2 = _interopRequireDefault(_mediaPlayer);
 
@@ -10792,7 +10886,7 @@ var _hashHandler = __webpack_require__(0);
 
 var _hashHandler2 = _interopRequireDefault(_hashHandler);
 
-__webpack_require__(10);
+__webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10845,108 +10939,26 @@ var VideoPlayer = function (_MediaPlayer) {
 exports.default = VideoPlayer;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _avalon = __webpack_require__(4);
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(2);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _audioPlayer = __webpack_require__(4);
-
-var _audioPlayer2 = _interopRequireDefault(_audioPlayer);
-
-var _videoPlayer = __webpack_require__(5);
-
-var _videoPlayer2 = _interopRequireDefault(_videoPlayer);
+var _avalon2 = _interopRequireDefault(_avalon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Avalon = function () {
-  function Avalon() {
-    _classCallCheck(this, Avalon);
-  }
-
-  _createClass(Avalon, [{
-    key: 'initialize',
-    value: function initialize() {
-      if ((0, _jquery2.default)('[data-iiifav-source]').length > 0) {
-        this.mediaPlayerVideo();
-      }
-      if ((0, _jquery2.default)('[data-iiifav-audio-source]').length > 0) {
-        this.mediaPlayerAudio();
-      }
-    }
-  }, {
-    key: 'createAudioPlayer',
-    value: function createAudioPlayer(options) {
-      return new _audioPlayer2.default(options);
-    }
-  }, {
-    key: 'createVideoPlayer',
-    value: function createVideoPlayer(options) {
-      return new _videoPlayer2.default(options);
-    }
-  }, {
-    key: 'mediaPlayerAudio',
-    value: function mediaPlayerAudio() {
-      var _this = this;
-
-      var options = {};
-      var manifestSource = (0, _jquery2.default)('[data-iiifav-audio-source]').data().iiifavAudioSource;
-      console.log(manifestSource);
-      options.audio = {};
-      options.target = (0, _jquery2.default)('[data-iiifav-audio-source]').attr('id');
-
-      _jquery2.default.get(manifestSource, function (manifest) {
-        console.log(manifest);
-        options.manifest = JSON.parse(manifest);
-        _this.createAudioPlayer(options);
-      });
-    }
-  }, {
-    key: 'mediaPlayerVideo',
-    value: function mediaPlayerVideo() {
-      var _this2 = this;
-
-      var options = {};
-      var manifestSource = (0, _jquery2.default)('[data-iiifav-source]').data().iiifavSource;
-      console.log(manifestSource);
-      options.target = (0, _jquery2.default)('[data-iiifav-source]').attr('id');
-
-      _jquery2.default.get(manifestSource, function (manifest) {
-        console.log(manifest);
-        options.manifest = manifest;
-        _this2.createVideoPlayer(options);
-      });
-    }
-  }]);
-
-  return Avalon;
-}();
-
-exports.default = Avalon;
-
-
-var avalon = new Avalon();
+var avalon = new _avalon2.default();
 avalon.initialize();
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(undefined);
+exports = module.exports = __webpack_require__(9)(undefined);
 // imports
 
 
@@ -10957,7 +10969,7 @@ exports.push([module.i, "/* Accessibility: hide screen reader texts (and prefer 
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 /*
@@ -11039,7 +11051,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -20335,17 +20347,17 @@ _mejs2.default.Utils.convertSMPTEtoSeconds = convertSMPTEtoSeconds;
 
 },{"6":6}]},{},[27,5,4,14,21,18,17,19,20,22,15,16,8,9,10,11,12,13]);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(9);
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(10);
+
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -20382,7 +20394,7 @@ var stylesInDom = {},
 	singletonElement = null,
 	singletonCounter = 0,
 	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(12);
+	fixUrls = __webpack_require__(13);
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -20658,7 +20670,7 @@ function updateLink(linkElement, options, obj) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 
@@ -20753,13 +20765,13 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(7);
+var content = __webpack_require__(8);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -20767,7 +20779,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(11)(content, options);
+var update = __webpack_require__(12)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -20784,7 +20796,7 @@ if(false) {
 }
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 var g;
