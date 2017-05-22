@@ -11391,7 +11391,7 @@ exports = module.exports = __webpack_require__(3)(undefined);
 
 
 // module
-exports.push([module.i, "body {  \n   font-family: -apple-system, \n                BlinkMacSystemFont, \n                \"Segoe UI\", \n                Roboto, \n                Oxygen-Sans, \n                Ubuntu, \n                Cantarell, \n                \"Helvetica Neue\", \n                sans-serif;\n}\n", ""]);
+exports.push([module.i, "body {  \n   font-family: -apple-system, \n                BlinkMacSystemFont, \n                \"Segoe UI\", \n                Roboto, \n                Oxygen-Sans, \n                Ubuntu, \n                Cantarell, \n                \"Helvetica Neue\", \n                sans-serif;\n}\n\n.av-player {\n    display: inline-flex;\n}\n\n.av-controls {\n    padding: 1em;\n    margin-right: 2em;\n}\n", ""]);
 
 // exports
 
