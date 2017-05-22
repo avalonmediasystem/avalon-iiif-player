@@ -1,4 +1,4 @@
-# Avalon proof-of-concept IIIF-AV player 
+# Avalon IIIF-AV player 
 
 This is a JavaScript player that displays a player and navagation when given IIIF-AV 
 JSON. 
