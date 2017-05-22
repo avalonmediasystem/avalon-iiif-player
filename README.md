@@ -5,14 +5,10 @@ JSON.
 
 ## Running tests:
 
-```base
-./node_modules/karma/bin/karma start
-```
-
 To run the project's tests:
 
-```bash
- ./node_modules/.bin/webpack
+```base
+./node_modules/karma/bin/karma start
 ```
 
 ## Building 
@@ -37,5 +33,4 @@ To build the bundle:
    </body>
  </html>
 ```
-The `data-iiifav-source` attribute should link to a publically accesible IIIF-AV manifest. 
-
+The `data-iiifav-source` attribute should link to a publically accesible IIIF-AV manifest.
