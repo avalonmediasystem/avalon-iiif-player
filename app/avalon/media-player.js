@@ -1,6 +1,7 @@
 import HashHandler from './hash-handler'
 import $ from 'jquery'
 import '../../node_modules/mediaelement/src/css/mediaelementplayer.css'
+import QualitySelector from './quality-selector'
 
 /** Class representing a MediaPlayer
  * @class MediaPlayer
@@ -158,6 +159,13 @@ export default class MediaPlayer {
       })
     })
     return `${newSplits[0]},${newSplits[newSplits.length - 1]}`
+  }
+
+  qualitySelectorMarkup () {
+    let qs = new QualitySelector()
+    let choices = qs.qualityChoices(this.manifest, '', [])
+    
+    return qs.renderChoices(choices)
   }
 
   renderStructure (manifest, list, canvasId) {

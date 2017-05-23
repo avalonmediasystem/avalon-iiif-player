@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 export default class QualitySelector {
   changeQualityMarkup (markup, original, replacement) { var re = new RegExp(original, 'g'); return markup.replace(re, replacement) }
 
@@ -20,7 +22,28 @@ export default class QualitySelector {
   }
 
   renderChoices (ch) {
-    var choiceList = ch.map((choice) => { return `<li class='quality-choice' data-quality-choice='${choice.id}'>${choice.label}</li>` })
-    return `<ul>${choiceList}</ul>`
+    console.log(ch)
+    var choiceList = ch.map((choice) => { return `<li class='quality-choice' data-quality-choice='${choice.id}'>${choice.label}</li>` })  
+    this.bindClick()  
+    return `<ul>${choiceList.join(',').replace(/,/g, '')}</ul>`
+  }
+
+  bindClick () {
+      $('body').on('click', '.quality-choice', (event) => {
+          // Change or add the hash to the url
+          if (window.location.hash.search('/quality/') >= 0) {
+              var newMarkup = this.changeQualityMarkup($('.av-controls > ul').html(), this.currentQuality(window.location.hash), event.target.innerText)
+              // Change the links in the structure
+              $('.av-controls > ul').html(newMarkup)
+              window.location.hash = window.location.hash.replace(`/quality/${this.currentQuality(window.location.hash)}`, `/quality/${event.target.innerText}`)
+          } else {
+              // In case there isn't a hash in the url already, Medium is the default so replace that
+              var newMarkup = this.changeQualityMarkup($('.av-controls > ul').html(), 'Medium', event.target.innerText)
+              $('.av-controls > ul').html(newMarkup)
+              window.location.hash = `#avalon/quality/${event.target.innerText}`
+          }
+        
+      })
+  
   }
 }
