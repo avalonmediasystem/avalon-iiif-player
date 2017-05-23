@@ -6,15 +6,15 @@ export default class VideoPlayer extends MediaPlayer {
   constructor (options) {
     super(options)
     this.hashHandler = new HashHandler({'qualityChoices': this.getQualityChoices()})
-      this.render()
-      this.getLinks()
+    this.render()
+    this.getLinks()
   }
 
   render (mediaFragment) {
-        /**
-         * @param {object} mediaFragment - a mediaFragment
-         * this method creates the video element
-         **/
+    /**
+     * @param {object} mediaFragment - a mediaFragment
+     * this method creates the video element
+     **/
 
     if (mediaFragment === undefined) { mediaFragment = this.getVideoUri().id }
     const videoElement = `<video class='av-player-controls' id="iiif-av-player" class="mejs__player" height="${this.manifest.height}" width="${this.manifest.width}" controls data-mejsoptions='{"pluginPath": "", "alwaysShowControls": "true"}'>
@@ -24,10 +24,10 @@ export default class VideoPlayer extends MediaPlayer {
     const videoStructure = this.createStructure(this.manifest['structures'], [])
     this.target.innerHTML = `<div class='av-player'><div class='av-controls'>${videoStructure}</div><div class='av-controls'>${videoElement}</div></div>`
 
-        // Activate MediaElement
+    // Activate MediaElement
     var player = new MediaElementPlayer('iiif-av-player', {})
 
-        // Start listening for changes in the hash
+    // Start listening for changes in the hash
     this.hashHandler.bindHashChange()
   }
 }

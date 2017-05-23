@@ -63,10 +63,10 @@ export default class AudioPlayer extends MediaPlayer {
             </div>
             ${audioStructure}
           `
-            let audioPlayer = new MediaElementPlayer('iiif-av-player', this.getAudioConfig())
+          let audioPlayer = new MediaElementPlayer('iiif-av-player', this.getAudioConfig())
 
-               // Start listening for changes in the hash
-    this.hashHandler.bindHashChange()
+          // Start listening for changes in the hash
+          this.hashHandler.bindHashChange()
         }
       })
     }
