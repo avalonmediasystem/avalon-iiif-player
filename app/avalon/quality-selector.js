@@ -27,19 +27,19 @@ export default class QualitySelector {
     var choiceList = ch.map((choice) => { return `<li class='quality-choice' data-quality-choice='${choice.id}'>${choice.label}</li>` })  
       this.bindClick()
       this.bindSettings()
-    return `<ul class='quality-selector'><li class='quality-settings'>Settings</li>${choiceList.join(',').replace(/,/g, '')}</ul>`
+    return `<ul class='quality-selector'><li class='quality-settings'>Quality</li>${choiceList.join(',').replace(/,/g, '')}</ul>`
   }
     bindSettings () {
        
        $('body').on('click', '.quality-settings', (event) => {
-           
            $('.quality-choice').toggle()
        })
    }
   bindClick () {
       $('body').on('click', '.quality-choice', (event) => {
           $('.quality-choice').removeClass('quality-selected')
-          console.log($(event.target).addClass('quality-selected'))
+          $('.quality-choice').toggle()
+          $(event.target).addClass('quality-selected')
           // Change or add the hash to the url
         if (window.location.hash.search('/quality/') >= 0) {
           var newMarkup = this.changeQualityMarkup($('.av-controls > ul').html(), this.currentQuality(window.location.hash), event.target.innerText)
