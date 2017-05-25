@@ -31,5 +31,11 @@
   "dependencies": {
     "jquery": "^3.2.1",
     "mediaelement": "^4.1.1"
+  },
+  "standard": {
+  "ignore": [
+    "**/out/",
+    "spec/**/*"
+  ]
   }
 }
