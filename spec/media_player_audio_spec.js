@@ -311,9 +311,8 @@ describe('an Avalon media audio player', () => {
     var mediaPlayerMarkup = document.getElementById('media-player-audio-target').innerHTML
 
     console.log('mediaPlayerMarkup', mediaPlayerMarkup)
-    expect(mediaPlayerMarkup).toContain('<div class="av-player">')
-    expect($('#media-player-audio-target')).toContainElement('div.av-player')
-    expect($('.av-player')).toContainElement('div.av-controls')
+    expect(mediaPlayerMarkup).toContain('<ul class="canvas-range">')
+    expect($('#media-player-audio-target')).toContainElement('section.ui')
     
     expect($('#iiif-av-player > audio')).toHaveAttr('src', 'http://dlib.indiana.edu/iiif_av/mahler-symphony-3/CD1/medium/128Kbps.mp4')
     expect($('.mejs__container')).toHaveAttr('style', 'width: 100%; height: 50px;')
