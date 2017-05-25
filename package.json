@@ -5,7 +5,7 @@
   "main": "app.js",
   "repository": "https://github.com/avalonmediasystem/avalon-poc-standalone",
   "scripts": {
-    "test": "karma start --single-run --browsers PhantomJS"
+    "test": "standard && karma start --single-run --browsers PhantomJS"
   },
   "keywords": [],
   "author": "",
@@ -22,8 +22,8 @@
     "karma-jasmine": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-webpack": "^2.0.3",
+    "standard": "^10.0.2",
     "style-loader": "^0.17.0",
-    "svg-inline-loader": "^0.7.1",
     "svg-url-loader": "^2.0.2",
     "webpack": "^2.5.1",
     "webpack-dev-server": "^2.4.5"
