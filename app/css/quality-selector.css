@@ -1,0 +1,36 @@
+.quality-selector {
+    position: absolute;
+    overflow: hidden;
+    background: rgba(28,28,28,0.9);
+    text-shadow: 0 0 2px rgba(0,0,0,.5);
+    margin:0;
+    padding:0;
+    width:10%;
+    color:white;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    text-align:center;
+}
+
+.quality-choice {
+    padding: 4px 0 0 0;
+    line-height: 15px;
+    font-size:0.7em;
+    cursor: pointer;
+    display:none;
+    text-align:center;
+    
+}
+
+.quality-choice:hover {
+    background:grey;
+}
+
+.quality-selected {
+    color:rgba(33, 248, 248, 1)
+}
+
+.quality-settings {
+    font-size:0.7em;
+    cursor:pointer;
+}

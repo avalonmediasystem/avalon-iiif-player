@@ -29,5 +29,7 @@ export default class VideoPlayer extends MediaPlayer {
 
     // Start listening for changes in the hash
     this.hashHandler.bindHashChange()
+    var player = document.getElementById('iiif-av-player')  
+    player.insertAdjacentHTML('beforeend',this.qualitySelectorMarkup())   
   }
 }
