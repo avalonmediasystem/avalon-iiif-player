@@ -25,11 +25,11 @@ export default class VideoPlayer extends MediaPlayer {
     this.target.innerHTML = `<div class='av-player'><div class='av-controls'>${videoStructure}</div><div class='av-controls'>${videoElement}</div></div>`
 
     // Activate MediaElement
-    var player = new MediaElementPlayer('iiif-av-player', {})
+    var player = new MediaElementPlayer('iiif-av-player', {}) // eslint-disable-line
 
     // Start listening for changes in the hash
     this.hashHandler.bindHashChange()
-    var player = document.getElementById('iiif-av-player')  
-    player.insertAdjacentHTML('beforeend',this.qualitySelectorMarkup())   
+    var iiifPlayer = document.getElementById('iiif-av-player')
+    iiifPlayer.insertAdjacentHTML('beforeend', this.qualitySelectorMarkup())
   }
 }

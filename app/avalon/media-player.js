@@ -1,4 +1,3 @@
-import HashHandler from './hash-handler'
 import $ from 'jquery'
 import '../../node_modules/mediaelement/src/css/mediaelementplayer.css'
 import QualitySelector from './quality-selector'
@@ -97,7 +96,6 @@ export default class MediaPlayer {
       const fragment = uri.split('#t=')[1]
       if (fragment !== undefined) {
         const splitFragment = fragment.split(',')
-        const duration = splitFragment[1] - splitFragment[0]
         return { 'start': splitFragment[0],
           'stop': splitFragment[1] }
       } else {
@@ -164,7 +162,7 @@ export default class MediaPlayer {
   qualitySelectorMarkup () {
     let qs = new QualitySelector()
     let choices = qs.qualityChoices(this.manifest, '', [])
-    
+
     return qs.renderChoices(choices)
   }
 
