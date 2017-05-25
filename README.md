@@ -43,6 +43,10 @@ To build the bundle:
 ```
 The `data-iiifav-source` attribute should link to a publically accesible IIIF-AV manifest.
 
+## JSDoc Documentation
+
+Documentation generated from JSDoc comments is published <a href="https://avalonmediasystem.github.io/avalon-poc-standalone/out/">here</a>. 
+
 ## Using with GitHub Pages
 
 You can fork this repository to host your own IIIF Player. 
