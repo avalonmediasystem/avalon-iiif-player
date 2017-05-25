@@ -5,7 +5,10 @@ import 'mediaelement'
 export default class VideoPlayer extends MediaPlayer {
   constructor (options) {
     super(options)
-    this.hashHandler = new HashHandler({'qualityChoices': this.getQualityChoices()})
+    this.hashHandler = new HashHandler({
+      'qualityChoices': this.getQualityChoices(),
+      'instance': this
+    })
     this.render()
     this.getLinks()
   }

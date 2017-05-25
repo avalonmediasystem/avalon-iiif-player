@@ -85,6 +85,8 @@ var HashHandler = function () {
   function HashHandler(options) {
     _classCallCheck(this, HashHandler);
 
+    this.currentCanvasIndex = undefined;
+    this.instance = options.instance;
     this.qualityChoices = options.qualityChoices;
   }
 
@@ -104,6 +106,11 @@ var HashHandler = function () {
       };
     }
   }, {
+    key: 'canvasesInManifest',
+    value: function canvasesInManifest() {
+      return this.instance.manifest.sequences && this.instance.manifest.sequences[0].canvases;
+    }
+  }, {
     key: 'playFromHash',
     value: function playFromHash(hash) {
       /**
@@ -111,6 +118,15 @@ var HashHandler = function () {
        **/
       var mediaPlayer = document.getElementById('iiif-av-player');
       var options = this.processHash(hash);
+      var canvasesExist = this.canvasesInManifest();
+
+      // Is canvas in the hash different from canvas currently in the player?
+      if (canvasesExist && options.canvas !== this.currentCanvasIndex) {
+        // Get current canvas object from canvas index
+        var canvasObj = this.instance.getCanvasByIndex(options.canvas);
+        this.qualityChoices = this.instance.getQualityChoices(canvasObj);
+        this.currentCanvasIndex = options.canvas;
+      }
 
       this.qualityChoices.forEach(function (choice) {
         if (choice.label === options.quality) {
@@ -240,19 +256,20 @@ var MediaPlayer = function () {
     }
   }, {
     key: 'getQualityChoices',
-    value: function getQualityChoices() {
+    value: function getQualityChoices(canvas) {
       var choices = [];
-      if (this.manifest.content) {
-        this.manifest.content[0].items.forEach(function (item) {
-          item.body.forEach(function (body) {
-            if (body.type === 'Choice') {
-              body.items.forEach(function (item) {
-                choices.push(item);
-              });
-            }
-          });
+      var content = canvas ? canvas.content : this.manifest.content;
+
+      content[0].items.forEach(function (item) {
+        item.body.forEach(function (body) {
+          if (body.type === 'Choice') {
+            body.items.forEach(function (item) {
+              choices.push(item);
+            });
+          }
         });
-      }
+      });
+
       return choices;
     }
   }, {
@@ -324,7 +341,10 @@ var MediaPlayer = function () {
           if (_this2.getMediaFragment(canvasId) !== undefined) {
             var mediaFragment = _this2.getMediaFragment(canvasId);
 
-            list.push('<ul><li><a data-turbolinks=\'false\' data-target="#" href="#avalon/time/' + mediaFragment.start + ',' + mediaFragment.stop + '/quality/Medium" class="media-structure-uri" >' + data.label + '</a></li>');
+            var canvasIndex = _this2.getCanvasIndex(canvasId);
+            var canvasHash = canvasIndex !== '' ? '/canvas/' + canvasIndex : '';
+
+            list.push('<ul><li><a data-turbolinks=\'false\' data-target="#" href="#avalon/time/' + mediaFragment.start + ',' + mediaFragment.stop + '/quality/Medium' + canvasHash + '" class="media-structure-uri" >' + data.label + '</a></li>');
             _this2.createStructure(data.members, list, canvasId);
           } else {
             list.push('<ul class=\'canvas-range\'><a data-target="#" data-turbolinks=\'false\' class=\'canvas-url\' href=\'\'>' + data.label + '</a></li>');
@@ -334,6 +354,52 @@ var MediaPlayer = function () {
       });
       list.push('</ul>');
       return list.join('');
+    }
+  }, {
+    key: 'getCanvasIndex',
+    value: function getCanvasIndex() {
+      var canvasId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+      /**
+       * Parse canvasId URI for the canvas index
+       *
+       * @method MediaPlayer#getCanvasIndex
+       * @param {string} canvasId - key in manifest
+       * @returns {string} canvasIndex - URI canvas index
+       */
+      var canvasPos = canvasId.indexOf('canvas');
+      var canvasIndex = '';
+
+      if (canvasPos > -1) {
+        canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1, canvasId.indexOf('#', canvasPos));
+      }
+      return canvasIndex;
+    }
+  }, {
+    key: 'getCanvasByIndex',
+    value: function getCanvasByIndex(index) {
+      /**
+       * Get a canvas object from manifest 'canvases' array
+       *
+       * @method MediaPlayer#getCanvasIndex
+       * @param {string} index - target canvas index
+       * @returns {object} canvasObject or empty object
+       */
+      if (!index) {
+        return {};
+      }
+
+      // TODO: Eventually we'll want to track current sequence index as well.  For now assume first sequence
+      var canvases = this.manifest.sequences[0].canvases;
+      var canvasObject = {};
+
+      canvases.forEach(function (canvas) {
+        var canvasIndex = canvas.id.slice(canvas.id.lastIndexOf('/') + 1);
+        if (canvasIndex === index) {
+          canvasObject = canvas;
+        }
+      });
+      return canvasObject;
     }
   }, {
     key: 'getExtentForCanvas',
@@ -11213,8 +11279,10 @@ var AudioPlayer = function (_MediaPlayer) {
 
     _this.canvases = options.manifest.sequences[0].canvases;
     _this.currentCanvas = _this.getCanvas(_this.canvases[0].id);
-    console.log(_this.getQualityChoices());
-    _this.hashHandler = new _hashHandler2.default({ 'qualityChoices': _this.getQualityChoices() });
+    _this.hashHandler = new _hashHandler2.default({
+      'qualityChoices': _this.getQualityChoices(_this.currentCanvas),
+      'instance': _this
+    });
     _this.render(options);
     _this.getLinks();
     return _this;
@@ -11272,7 +11340,7 @@ var AudioPlayer = function (_MediaPlayer) {
             var audioElement = '<audio controls id="iiif-av-player" width="100%">\n              <source src="' + item.id + '" type="audio/mp3" data-quality="' + item.label + '">\n            </audio>';
             var audioStructure = _this2.createStructure(_this2.manifest['structures'], []);
 
-            _this2.target.innerHTML = '\n            <div class=\'av-player\'>\n              <div class=\'av-controls\'>' + audioElement + '</div>\n            </div>\n            ' + audioStructure + '\n          ';
+            _this2.target.innerHTML = '\n            <section class="ui stackable two column grid">\n              <article class="six wide column">' + audioStructure + '</article>\n              <article class="ten wide column player-wrapper">' + audioElement + '</article>\n            </section>\n          ';
             var audioPlayer = new MediaElementPlayer('iiif-av-player', _this2.getAudioConfig());
 
             // Start listening for changes in the hash
@@ -11327,7 +11395,10 @@ var VideoPlayer = function (_MediaPlayer) {
 
     var _this = _possibleConstructorReturn(this, (VideoPlayer.__proto__ || Object.getPrototypeOf(VideoPlayer)).call(this, options));
 
-    _this.hashHandler = new _hashHandler2.default({ 'qualityChoices': _this.getQualityChoices() });
+    _this.hashHandler = new _hashHandler2.default({
+      'qualityChoices': _this.getQualityChoices(),
+      'instance': _this
+    });
     _this.render();
     _this.getLinks();
     return _this;
@@ -11388,7 +11459,7 @@ exports = module.exports = __webpack_require__(3)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n", ""]);
+exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\nnav {\n  margin: 2rem 0;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n\n.player-wrapper {\n  margin: 2rem 0;\n}\n\n.content-wrapper {\n  margin: 2rem 0;\n}\n", ""]);
 
 // exports
 

@@ -46,19 +46,20 @@ export default class MediaPlayer {
     return subtitle
   }
 
-  getQualityChoices () {
-    var choices = []
-    if (this.manifest.content) {
-      this.manifest.content[0].items.forEach((item) => {
-        item.body.forEach((body) => {
-          if (body.type === 'Choice') {
-            body.items.forEach((item) => {
-              choices.push(item)
-            })
-          }
-        })
+  getQualityChoices (canvas) {
+    let choices = []
+    let content = (canvas) ? canvas.content : this.manifest.content
+
+    content[0].items.forEach((item) => {
+      item.body.forEach((body) => {
+        if (body.type === 'Choice') {
+          body.items.forEach((item) => {
+            choices.push(item)
+          })
+        }
       })
-    }
+    })
+
     return choices
   }
 
@@ -125,7 +126,10 @@ export default class MediaPlayer {
         if (this.getMediaFragment(canvasId) !== undefined) {
           let mediaFragment = this.getMediaFragment(canvasId)
 
-          list.push(`<ul><li><a data-turbolinks='false' data-target="#" href="#avalon/time/${mediaFragment.start},${mediaFragment.stop}/quality/Medium" class="media-structure-uri" >${data.label}</a></li>`)
+          let canvasIndex = this.getCanvasIndex(canvasId)
+          let canvasHash = (canvasIndex !== '') ? `/canvas/${canvasIndex}` : ''
+
+          list.push(`<ul><li><a data-turbolinks='false' data-target="#" href="#avalon/time/${mediaFragment.start},${mediaFragment.stop}/quality/Medium${canvasHash}" class="media-structure-uri" >${data.label}</a></li>`)
           this.createStructure(data.members, list, canvasId)
         } else {
           list.push(`<ul class='canvas-range'><a data-target="#" data-turbolinks='false' class='canvas-url' href=''>${data.label}</a></li>`)
@@ -135,6 +139,46 @@ export default class MediaPlayer {
     })
     list.push('</ul>')
     return list.join('')
+  }
+
+  getCanvasIndex (canvasId = '') {
+    /**
+     * Parse canvasId URI for the canvas index
+     *
+     * @method MediaPlayer#getCanvasIndex
+     * @param {string} canvasId - key in manifest
+     * @returns {string} canvasIndex - URI canvas index
+     */
+    let canvasPos = canvasId.indexOf('canvas')
+    let canvasIndex = ''
+
+    if (canvasPos > -1) {
+      canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1, canvasId.indexOf('#', canvasPos))
+    }
+    return canvasIndex
+  }
+
+  getCanvasByIndex (index) {
+    /**
+     * Get a canvas object from manifest 'canvases' array
+     *
+     * @method MediaPlayer#getCanvasIndex
+     * @param {string} index - target canvas index
+     * @returns {object} canvasObject or empty object
+     */
+    if (!index) { return {} }
+
+    // TODO: Eventually we'll want to track current sequence index as well.  For now assume first sequence
+    const canvases = this.manifest.sequences[0].canvases
+    let canvasObject = {}
+
+    canvases.forEach((canvas) => {
+      const canvasIndex = canvas.id.slice(canvas.id.lastIndexOf('/') + 1)
+      if (canvasIndex === index) {
+        canvasObject = canvas
+      }
+    })
+    return canvasObject
   }
 
   getExtentForCanvas (el, splits, newSplits) {

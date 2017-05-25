@@ -1,5 +1,7 @@
 export default class HashHandler {
   constructor (options) {
+    this.currentCanvasIndex = undefined
+    this.instance = options.instance
     this.qualityChoices = options.qualityChoices
   }
 
@@ -15,12 +17,25 @@ export default class HashHandler {
     }
   }
 
+  canvasesInManifest () {
+    return this.instance.manifest.sequences && this.instance.manifest.sequences[0].canvases
+  }
+
   playFromHash (hash) {
     /**
      * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
      **/
     var mediaPlayer = document.getElementById('iiif-av-player')
     var options = this.processHash(hash)
+    let canvasesExist = this.canvasesInManifest()
+
+    // Is canvas in the hash different from canvas currently in the player?
+    if (canvasesExist && (options.canvas !== this.currentCanvasIndex)) {
+      // Get current canvas object from canvas index
+      let canvasObj = this.instance.getCanvasByIndex(options.canvas)
+      this.qualityChoices = this.instance.getQualityChoices(canvasObj)
+      this.currentCanvasIndex = options.canvas
+    }
 
     this.qualityChoices.forEach((choice) => {
       if (choice.label === options.quality) {

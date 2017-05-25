@@ -4,11 +4,14 @@ import HashHandler from './hash-handler'
 export default class AudioPlayer extends MediaPlayer {
   constructor (options) {
     super(options)
+
     // Default use the first sequence to grab canvases
     this.canvases = options.manifest.sequences[0].canvases
     this.currentCanvas = this.getCanvas(this.canvases[0].id)
-    console.log(this.getQualityChoices())
-    this.hashHandler = new HashHandler({'qualityChoices': this.getQualityChoices()})
+    this.hashHandler = new HashHandler({
+      'qualityChoices': this.getQualityChoices(this.currentCanvas),
+      'instance': this
+    })
     this.render(options)
     this.getLinks()
   }
@@ -58,10 +61,10 @@ export default class AudioPlayer extends MediaPlayer {
           const audioStructure = this.createStructure(this.manifest['structures'], [])
 
           this.target.innerHTML = `
-            <div class='av-player'>
-              <div class='av-controls'>${audioElement}</div>
-            </div>
-            ${audioStructure}
+            <section class="ui stackable two column grid">
+              <article class="six wide column">${audioStructure}</article>
+              <article class="ten wide column player-wrapper">${audioElement}</article>
+            </section>
           `
           let audioPlayer = new MediaElementPlayer('iiif-av-player', this.getAudioConfig())
 
