@@ -1,3 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: media-player.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: media-player.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import HashHandler from './hash-handler'
 import $ from 'jquery'
 import '../../node_modules/mediaelement/src/css/mediaelementplayer.css'
 import QualitySelector from './quality-selector'
@@ -46,20 +75,19 @@ export default class MediaPlayer {
     return subtitle
   }
 
-  getQualityChoices (canvas) {
-    let choices = []
-    let content = (canvas) ? canvas.content : this.manifest.content
-
-    content[0].items.forEach((item) => {
-      item.body.forEach((body) => {
-        if (body.type === 'Choice') {
-          body.items.forEach((item) => {
-            choices.push(item)
-          })
-        }
+  getQualityChoices () {
+    var choices = []
+    if (this.manifest.content) {
+      this.manifest.content[0].items.forEach((item) => {
+        item.body.forEach((body) => {
+          if (body.type === 'Choice') {
+            body.items.forEach((item) => {
+              choices.push(item)
+            })
+          }
+        })
       })
-    })
-
+    }
     return choices
   }
 
@@ -97,6 +125,7 @@ export default class MediaPlayer {
       const fragment = uri.split('#t=')[1]
       if (fragment !== undefined) {
         const splitFragment = fragment.split(',')
+        const duration = splitFragment[1] - splitFragment[0]
         return { 'start': splitFragment[0],
           'stop': splitFragment[1] }
       } else {
@@ -125,59 +154,16 @@ export default class MediaPlayer {
         if (this.getMediaFragment(canvasId) !== undefined) {
           let mediaFragment = this.getMediaFragment(canvasId)
 
-          let canvasIndex = this.getCanvasIndex(canvasId)
-          let canvasHash = (canvasIndex !== '') ? `/canvas/${canvasIndex}` : ''
-
-          list.push(`<ul><li><a data-turbolinks='false' data-target="#" href="#avalon/time/${mediaFragment.start},${mediaFragment.stop}/quality/Medium${canvasHash}" class="media-structure-uri" >${data.label}</a></li>`)
+          list.push(`&lt;ul>&lt;li>&lt;a data-turbolinks='false' data-target="#" href="#avalon/time/${mediaFragment.start},${mediaFragment.stop}/quality/Medium" class="media-structure-uri" >${data.label}&lt;/a>&lt;/li>`)
           this.createStructure(data.members, list, canvasId)
         } else {
-          list.push(`<ul class='canvas-range'><a data-target="#" data-turbolinks='false' class='canvas-url' href=''>${data.label}</a></li>`)
+          list.push(`&lt;ul class='canvas-range'>&lt;a data-target="#" data-turbolinks='false' class='canvas-url' href=''>${data.label}&lt;/a>&lt;/li>`)
           this.createStructure(data.members, list, canvasId)
         }
       }
     })
-    list.push('</ul>')
+    list.push('&lt;/ul>')
     return list.join('')
-  }
-
-  getCanvasIndex (canvasId = '') {
-    /**
-     * Parse canvasId URI for the canvas index
-     *
-     * @method MediaPlayer#getCanvasIndex
-     * @param {string} canvasId - key in manifest
-     * @returns {string} canvasIndex - URI canvas index
-     */
-    let canvasPos = canvasId.indexOf('canvas')
-    let canvasIndex = ''
-
-    if (canvasPos > -1) {
-      canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1, canvasId.indexOf('#', canvasPos))
-    }
-    return canvasIndex
-  }
-
-  getCanvasByIndex (index) {
-    /**
-     * Get a canvas object from manifest 'canvases' array
-     *
-     * @method MediaPlayer#getCanvasIndex
-     * @param {string} index - target canvas index
-     * @returns {object} canvasObject or empty object
-     */
-    if (!index) { return {} }
-
-    // TODO: Eventually we'll want to track current sequence index as well.  For now assume first sequence
-    const canvases = this.manifest.sequences[0].canvases
-    let canvasObject = {}
-
-    canvases.forEach((canvas) => {
-      const canvasIndex = canvas.id.slice(canvas.id.lastIndexOf('/') + 1)
-      if (canvasIndex === index) {
-        canvasObject = canvas
-      }
-    })
-    return canvasObject
   }
 
   getExtentForCanvas (el, splits, newSplits) {
@@ -206,7 +192,7 @@ export default class MediaPlayer {
   qualitySelectorMarkup () {
     let qs = new QualitySelector()
     let choices = qs.qualityChoices(this.manifest, '', [])
-
+    
     return qs.renderChoices(choices)
   }
 
@@ -222,15 +208,38 @@ export default class MediaPlayer {
       }
       if (data.hasOwnProperty('members')) {
         if (this.getMediaFragment(canvasId) !== undefined) {
-          list.push(`<ul><li><a class="media-structure-uri" data-media-fragment="${canvasId}">${data.label}</a></li>`)
+          list.push(`&lt;ul>&lt;li>&lt;a class="media-structure-uri" data-media-fragment="${canvasId}">${data.label}&lt;/a>&lt;/li>`)
           this.renderStructure(data.members, list, canvasId)
         } else {
-          list.push(`<ul><li>${data.label}</li>`)
+          list.push(`&lt;ul>&lt;li>${data.label}&lt;/li>`)
           this.renderStructure(data.members, list, canvasId)
         }
       }
     })
-    list.push('</ul>')
+    list.push('&lt;/ul>')
     return list.join('')
   }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="MediaPlayer.html">MediaPlayer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu May 25 2017 10:25:07 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

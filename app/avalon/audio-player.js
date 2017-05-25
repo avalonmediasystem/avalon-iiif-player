@@ -66,7 +66,7 @@ export default class AudioPlayer extends MediaPlayer {
               <article class="ten wide column player-wrapper">${audioElement}</article>
             </section>
           `
-          let audioPlayer = new MediaElementPlayer('iiif-av-player', this.getAudioConfig())
+          let audioPlayer = new MediaElementPlayer('iiif-av-player', this.getAudioConfig()) // eslint-disable-line
 
           // Start listening for changes in the hash
           this.hashHandler.bindHashChange()

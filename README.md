@@ -1,6 +1,7 @@
 # Avalon IIIF-AV player 
 
-[![Build Status](https://travis-ci.org/avalonmediasystem/avalon-poc-standalone.svg?branch=master)](https://travis-ci.org/avalonmediasystem/avalon-poc-standalone)
+[![Build Status](https://travis-ci.org/avalonmediasystem/avalon-poc-standalone.svg?branch=master)](https://travis-ci.org/avalonmediasystem/avalon-poc-standalone) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 
 This is a JavaScript player that displays a player and navagation when given IIIF-AV 
 JSON. 
@@ -41,6 +42,10 @@ To build the bundle:
  </html>
 ```
 The `data-iiifav-source` attribute should link to a publically accesible IIIF-AV manifest.
+
+## JSDoc Documentation
+
+Documentation generated from JSDoc comments is published <a href="https://avalonmediasystem.github.io/avalon-poc-standalone/out/">here</a>. 
 
 ## Using with GitHub Pages
 
