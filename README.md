@@ -1,6 +1,7 @@
 # Avalon IIIF-AV player 
 
-[![Build Status](https://travis-ci.org/avalonmediasystem/avalon-poc-standalone.svg?branch=master)](https://travis-ci.org/avalonmediasystem/avalon-poc-standalone)
+[![Build Status](https://travis-ci.org/avalonmediasystem/avalon-poc-standalone.svg?branch=master)](https://travis-ci.org/avalonmediasystem/avalon-poc-standalone) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 
 This is a JavaScript player that displays a player and navagation when given IIIF-AV 
 JSON. 
