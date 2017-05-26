@@ -39,7 +39,7 @@ export default class HashHandler {
 
     this.qualityChoices.forEach((choice) => {
       if (choice.label === options.quality) {
-        mediaPlayer.src = choice.id
+        mediaPlayer.setSrc(choice.id)
       }
     })
 

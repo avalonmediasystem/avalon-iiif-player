@@ -131,7 +131,7 @@ export default class MediaPlayer {
           list.push(`<ul><li><a data-turbolinks='false' data-target="#" href="#avalon/time/${mediaFragment.start},${mediaFragment.stop}/quality/Medium${canvasHash}" class="media-structure-uri" >${data.label}</a></li>`)
           this.createStructure(data.members, list, canvasId)
         } else {
-          list.push(`<ul class='canvas-range'><a data-target="#" data-turbolinks='false' class='canvas-url' href=''>${data.label}</a></li>`)
+          list.push(`<ul class='canvas-range'><li><a data-target="#" data-turbolinks='false' class='canvas-url' href=''>${data.label}</a></li>`)
           this.createStructure(data.members, list, canvasId)
         }
       }
