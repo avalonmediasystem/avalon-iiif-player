@@ -10,6 +10,10 @@ body {
   sans-serif;
 }
 
+nav {
+  margin: 2rem 0;
+}
+
 .av-player {
   display: inline-flex;
 }
@@ -17,4 +21,12 @@ body {
 .av-controls {
   padding: 1em;
   margin-right: 2em;
+}
+
+.player-wrapper {
+  margin: 2rem 0;
+}
+
+.content-wrapper {
+  margin: 2rem 0;
 }

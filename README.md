@@ -17,6 +17,13 @@ To run the project's tests:
 
 ```base
 ./node_modules/karma/bin/karma start
+
+```
+
+## Travis Runs...
+```base
+standard
+karma start --single-run --browsers PhantomJS
 ```
 
 ## Building 

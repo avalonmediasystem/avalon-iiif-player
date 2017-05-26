@@ -63,340 +63,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var HashHandler = function () {
-  function HashHandler(options) {
-    _classCallCheck(this, HashHandler);
-
-    this.qualityChoices = options.qualityChoices;
-  }
-
-  _createClass(HashHandler, [{
-    key: 'bindHashChange',
-    value: function bindHashChange() {
-      var _this = this;
-
-      /**
-       * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
-       **/
-      if (window.location.hash.indexOf('#avalon') >= 0) {
-        this.playFromHash(window.location.hash);
-      }
-      window.onhashchange = function () {
-        _this.playFromHash(window.location.hash);
-      };
-    }
-  }, {
-    key: 'playFromHash',
-    value: function playFromHash(hash) {
-      /**
-       * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
-       **/
-      var mediaPlayer = document.getElementById('iiif-av-player');
-      var options = this.processHash(hash);
-
-      this.qualityChoices.forEach(function (choice) {
-        if (choice.label === options.quality) {
-          mediaPlayer.src = choice.id;
-        }
-      });
-
-      mediaPlayer.setCurrentTime(options.start);
-      mediaPlayer.play();
-    }
-  }, {
-    key: 'processHash',
-    value: function processHash(hash) {
-      /**
-       * This method processes a window.location.hash and creates an object.
-       * It can take any number of parameters. Strings at even locations are keys
-       * and odd locations are values.
-       * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
-       * @param {string} hash - a window.location.hash
-       * @return {object}
-       **/
-
-      return hash.split('/').splice(1).reduce(function (result, item, index, array) {
-        if (index % 2 === 0) {
-          if (item === 'time') {
-            var time = array[index + 1].split(',');
-            result['start'] = time[0];
-            result['stop'] = time[1];
-          }
-          result[item] = array[index + 1];
-        }
-        return result;
-      }, {});
-    }
-  }]);
-
-  return HashHandler;
-}();
-
-exports.default = HashHandler;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = "\"data:image/svg+xml,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='400px' height='120px' viewBox='0 0 400 120' style='enable-background:new 0 0 400 120;' xml:space='preserve'%3E %3Cstyle type='text/css'%3E .st0%7Bfill:%23FFFFFF;width:16px;height:16px%7D .st1%7Bfill:none;stroke:%23FFFFFF;stroke-width:1.5;stroke-linecap:round;%7D .st2%7Bfill:none;stroke:%23FFFFFF;stroke-width:2;stroke-linecap:round;%7D .st3%7Bfill:none;stroke:%23FFFFFF;%7D .st4%7Bfill:%23231F20;%7D .st5%7Bopacity:0.75;fill:none;stroke:%23FFFFFF;stroke-width:5;enable-background:new;%7D .st6%7Bfill:none;stroke:%23FFFFFF;stroke-width:5;%7D .st7%7Bopacity:0.4;fill:%23FFFFFF;enable-background:new;%7D .st8%7Bopacity:0.6;fill:%23FFFFFF;enable-background:new;%7D .st9%7Bopacity:0.8;fill:%23FFFFFF;enable-background:new;%7D .st10%7Bopacity:0.9;fill:%23FFFFFF;enable-background:new;%7D .st11%7Bopacity:0.3;fill:%23FFFFFF;enable-background:new;%7D .st12%7Bopacity:0.5;fill:%23FFFFFF;enable-background:new;%7D .st13%7Bopacity:0.7;fill:%23FFFFFF;enable-background:new;%7D %3C/style%3E %3Cg id='controls'%3E %3Cg id='play'%3E %3Cpath class='st0' d='M16.5,8.5c0.3,0.1,0.4,0.5,0.2,0.8c-0.1,0.1-0.1,0.2-0.2,0.2l-11.4,7c-0.5,0.3-0.8,0.1-0.8-0.5V2 c0-0.5,0.4-0.8,0.8-0.5L16.5,8.5z'/%3E %3C/g%3E %3Cg id='pause'%3E %3Cg%3E %3Cpath class='st0' d='M24,1h2.2c0.6,0,1,0.4,1,1v14c0,0.6-0.4,1-1,1H24c-0.6,0-1-0.4-1-1V2C23,1.5,23.4,1,24,1z'/%3E %3Cpath class='st0' d='M33.8,1H36c0.6,0,1,0.4,1,1v14c0,0.6-0.4,1-1,1h-2.2c-0.6,0-1-0.4-1-1V2C32.8,1.5,33.2,1,33.8,1z'/%3E %3C/g%3E %3C/g%3E %3Cg id='fullscreen'%3E %3Cg id='enter'%3E %3Cpath class='st0' d='M81,1.4c0-0.6,0.4-1,1-1h5.4c0.6,0,0.7,0.3,0.3,0.7l-6,6C81.3,7.5,81,7.4,81,6.8V1.4z'/%3E %3Cpath class='st0' d='M81,17.2c0,0.6,0.4,1,1,1h5.4c0.6,0,0.7-0.3,0.3-0.7l-6-6c-0.4-0.4-0.7-0.3-0.7,0.3L81,17.2z'/%3E %3Cpath class='st0' d='M98.8,1.4c0-0.6-0.4-1-1-1h-5.4c-0.6,0-0.7,0.3-0.3,0.7l6,6c0.4,0.4,0.7,0.3,0.7-0.3 C98.8,6.8,98.8,1.4,98.8,1.4z'/%3E %3Cpath class='st0' d='M98.8,17.2c0,0.6-0.4,1-1,1h-5.4c-0.6,0-0.7-0.3-0.3-0.7l6-6c0.4-0.4,0.7-0.3,0.7,0.3 C98.8,11.8,98.8,17.2,98.8,17.2z'/%3E %3C/g%3E %3Cg id='exit'%3E %3Cg%3E %3Cpath class='st0' d='M112.7,5c0,0.6,0.4,1,1,1h4.1c0.6,0,0.7-0.3,0.3-0.7l-4.7-4.7c-0.4-0.4-0.7-0.3-0.7,0.3 C112.7,0.9,112.7,5,112.7,5z'/%3E %3Cpath class='st0' d='M105.6,6c0.6,0,1-0.4,1-1V0.9c0-0.6-0.3-0.7-0.7-0.3l-4.7,4.7c-0.4,0.4-0.3,0.7,0.3,0.7L105.6,6z'/%3E %3Cpath class='st0' d='M106.6,13.1c0-0.6-0.4-1-1-1h-4.1c-0.6,0-0.7,0.3-0.3,0.7l4.7,4.7c0.4,0.4,0.7,0.3,0.7-0.3 C106.6,17.2,106.6,13.1,106.6,13.1z'/%3E %3Cpath class='st0' d='M113.7,12.1c-0.6,0-1,0.4-1,1v4.1c0,0.5,0.3,0.7,0.7,0.3l4.7-4.7c0.4-0.4,0.3-0.7-0.3-0.7H113.7z'/%3E %3C/g%3E %3C/g%3E %3C/g%3E %3Cg id='volume'%3E %3Cg id='unmuted'%3E %3Cpath class='st0' d='M67,5.8c-0.5,0.4-1.2,0.6-1.8,0.6H62c-0.6,0-1,0.4-1,1v5.7c0,0.6,0.4,1,1,1h3.2c0.3,0,0.7,0,1,0 c0.3,0.2,0.5,0.4,0.8,0.6l3.5,2.6c0.4,0.3,0.8,0.1,0.8-0.4V3.5c0-0.5-0.4-0.7-0.8-0.4L67,5.8z'/%3E %3Cpath class='st1' d='M73.9,2.5c0,0,3.9-0.8,3.9,7.7S73.9,18,73.9,18'/%3E %3Cpath class='st1' d='M72.6,6.4c0,0,2.6-0.4,2.6,3.8s-2.6,3.9-2.6,3.9'/%3E %3C/g%3E %3Cg id='muted'%3E %3Cpath class='st0' d='M47,5.8c-0.5,0.4-1.2,0.6-1.8,0.6H42c-0.6,0-1,0.4-1,1v5.7c0,0.6,0.4,1,1,1h3.2c0.3,0,0.7,0,1,0 c0.3,0.2,0.5,0.4,0.8,0.6l3.5,2.6c0.4,0.3,0.8,0.1,0.8-0.4V3.5c0-0.5-0.4-0.7-0.8-0.4L47,5.8z'/%3E %3Cline class='st2' x1='52.8' y1='7' x2='58.2' y2='12.4'/%3E %3Cline class='st2' x1='52.8' y1='12.4' x2='58.2' y2='7'/%3E %3C/g%3E %3C/g%3E %3Cg id='closed_captions'%3E %3Cpath class='st3' d='M128.7,8.6c-6.2-4.2-6.5,7.8,0,3.9'/%3E %3Cpath class='st3' d='M135.2,8.6c-6.2-4.2-6.5,7.8,0,3.9'/%3E %3Cpath class='st0' d='M122.2,3.4h15.7v13.1h-15.7V3.4z M120.8,2v15.7h18.3V2H120.8z'/%3E %3C/g%3E %3Cg%3E %3Cpath class='st0' d='M143.2,3h14c1.1,0,2,0.9,2,2v10c0,1.1-0.9,2-2,2h-14c-1.1,0-2-0.9-2-2V5C141.2,3.9,142.1,3,143.2,3z'/%3E %3Cpath class='st4' d='M146.4,13.8c-0.8,0-1.6-0.4-2.1-1c-1.1-1.4-1-3.4,0.1-4.8c0.5-0.6,2-1.7,4.6,0.2L148.4,9 c-1.4-1-2.6-1.1-3.3-0.3c-0.8,1-0.8,2.4-0.1,3.5c0.7,0.9,1.9,0.8,3.4-0.1l0.5,0.9C148.2,13.5,147.3,13.7,146.4,13.8z'/%3E %3Cpath class='st4' d='M153.9,13.8c-0.8,0-1.6-0.4-2.1-1c-1.1-1.4-1-3.4,0.1-4.8c0.5-0.6,2-1.7,4.6,0.2L156,9 c-1.4-1-2.6-1.1-3.3-0.3c-0.8,1-0.8,2.4-0.1,3.5c0.7,0.9,1.9,0.8,3.4-0.1l0.5,0.9C155.7,13.5,154.8,13.7,153.9,13.8z'/%3E %3C/g%3E %3C/g%3E %3Cg id='big_play'%3E %3Cg id='big_play_opaque'%3E %3Cpath class='st0' d='M60.3,77c0.6,0.2,0.8,0.8,0.6,1.4c-0.1,0.3-0.3,0.5-0.6,0.6L30,96.5c-1,0.6-1.7,0.1-1.7-1v-35 c0-1.1,0.8-1.5,1.7-1L60.3,77z'/%3E %3Cpath class='st5' d='M2.5,79c0-20.7,16.8-37.5,37.5-37.5S77.5,58.3,77.5,79S60.7,116.5,40,116.5S2.5,99.7,2.5,79L2.5,79z'/%3E %3C/g%3E %3Cg id='big_play_hover'%3E %3Cpath class='st0' d='M140.3,77c0.6,0.2,0.8,0.8,0.6,1.4c-0.1,0.3-0.3,0.5-0.6,0.6L110,96.5c-1,0.6-1.7,0.1-1.7-1v-35 c0-1.1,0.8-1.5,1.7-1L140.3,77z'/%3E %3Cpath class='st6' d='M82.5,79c0-20.7,16.8-37.5,37.5-37.5s37.5,16.8,37.5,37.5s-16.8,37.5-37.5,37.5S82.5,99.7,82.5,79z'/%3E %3C/g%3E %3Cg id='loading'%3E %3Ccircle class='st0' cx='201.9' cy='47.1' r='8.1'/%3E %3Ccircle class='st7' cx='233.9' cy='79' r='5'/%3E %3Ccircle class='st8' cx='201.9' cy='110.9' r='6'/%3E %3Ccircle class='st9' cx='170.1' cy='79' r='7'/%3E %3Ccircle class='st10' cx='178.2' cy='56.3' r='7.5'/%3E %3Ccircle class='st11' cx='226.3' cy='56.1' r='4.5'/%3E %3Ccircle class='st12' cx='225.8' cy='102.8' r='5.5'/%3E %3Ccircle class='st13' cx='178.2' cy='102.8' r='6.5'/%3E %3C/g%3E %3C/g%3E %3Cg id='replay'%3E %3Cpath class='st0' d='M178,9.4c0,0.4-0.4,0.7-0.9,0.7c-0.1,0-0.2,0-0.2-0.1l-4.9-1.8c-0.5-0.2-0.6-0.6-0.1-0.8l6.2-3.6 c0.5-0.3,0.8-0.1,0.7,0.5L178,9.4z'/%3E %3Cpath class='st0' d='M169.4,15.9c-1,0-2-0.2-2.9-0.7c-2-1-3.2-3-3.2-5.2c0.1-3.4,2.9-6,6.3-6c2.5,0.1,4.8,1.7,5.6,4.1l0.1-0.1 l2.1,1.1c-0.6-4.4-4.7-7.5-9.1-6.9c-3.9,0.6-6.9,3.9-7,7.9c0,2.9,1.7,5.6,4.3,7c1.2,0.6,2.5,0.9,3.8,1c2.6,0,5-1.2,6.6-3.3 l-1.8-0.9C173,15.1,171.2,15.9,169.4,15.9z'/%3E %3C/g%3E %3Cg id='chapters'%3E %3Cpath class='st0' d='M183.4,3.2L183.4,3.2c0.8,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5l0,0c-0.8,0-1.5-0.7-1.5-1.5l0,0 C181.9,3.8,182.6,3.2,183.4,3.2z'/%3E %3Cpath class='st0' d='M188.5,3.2h8.5c0.9,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5h-8.5c-0.9,0-1.5-0.7-1.5-1.5l0,0 C186.9,3.8,187.6,3.2,188.5,3.2z'/%3E %3Cpath class='st0' d='M183.4,8.2L183.4,8.2c0.8,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5l0,0c-0.8,0-1.5-0.7-1.5-1.5l0,0 C181.9,8.8,182.6,8.2,183.4,8.2z'/%3E %3Cpath class='st0' d='M188.5,8.2h8.5c0.9,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5h-8.5c-0.9,0-1.5-0.7-1.5-1.5l0,0 C186.9,8.8,187.6,8.2,188.5,8.2z'/%3E %3Cpath class='st0' d='M183.4,13.2L183.4,13.2c0.8,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5l0,0c-0.8,0-1.5-0.7-1.5-1.5l0,0 C181.9,13.8,182.6,13.2,183.4,13.2z'/%3E %3Cpath class='st0' d='M188.5,13.2h8.5c0.9,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5h-8.5c-0.9,0-1.5-0.7-1.5-1.5l0,0 C186.9,13.8,187.6,13.2,188.5,13.2z'/%3E %3C/g%3E %3C/svg%3E\""
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _hashHandler = __webpack_require__(0);
-
-var _hashHandler2 = _interopRequireDefault(_hashHandler);
-
-var _jquery = __webpack_require__(4);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-__webpack_require__(16);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/** Class representing a MediaPlayer
- * @class MediaPlayer
- */
-var MediaPlayer = function () {
-  function MediaPlayer(options) {
-    _classCallCheck(this, MediaPlayer);
-
-    /**
-     * Create a MediaPlayer
-     * @param {object} options - an object with the manifest and target
-     */
-    this.manifest = options.manifest;
-    this.target = document.getElementById(options.target);
-  }
-
-  _createClass(MediaPlayer, [{
-    key: 'getLinks',
-    value: function getLinks() {
-      var _this = this;
-
-      /**
-       * this method sets the link on parent Ranges that don't have their own time, but inherit it from children in the tree
-       *
-       * @method MediaPlayer#getLinks
-       */
-      (0, _jquery2.default)('.canvas-range').each(function (el) {
-        console.log(el);
-        try {
-          (0, _jquery2.default)('.canvas-range:eq( ' + el + ' )').find('.canvas-url').attr('href', '' + _this.getExtentForCanvas((0, _jquery2.default)('.canvas-range')[el], [], []));
-        } catch (e) {
-          console.log(e);
-        }
-      });
-    }
-  }, {
-    key: 'getSubtitles',
-    value: function getSubtitles() {
-      /**
-       * this method gets the first subtitle track from the manifest. It will probaly need to more robust in the future
-       *
-       * @method MediaPlayer#getSubtitles
-       * @return {string} subtitle - a URI that points to subtitles
-       */
-      var subtitle;
-      this.manifest.content[0].items.forEach(function (item) {
-        item.body.forEach(function (body) {
-          if (body.type === 'Text') {
-            subtitle = body;
-          }
-        });
-      });
-      return subtitle;
-    }
-  }, {
-    key: 'getQualityChoices',
-    value: function getQualityChoices() {
-      var choices = [];
-      if (this.manifest.content) {
-        this.manifest.content[0].items.forEach(function (item) {
-          item.body.forEach(function (body) {
-            if (body.type === 'Choice') {
-              body.items.forEach(function (item) {
-                choices.push(item);
-              });
-            }
-          });
-        });
-      }
-      return choices;
-    }
-  }, {
-    key: 'getVideoUri',
-    value: function getVideoUri() {
-      /**
-       *  this method returns the URI with Medium quality from the manfest
-       * @method MediaPlayer#getVideoUri
-       * @return {string} uri - a URI for the medium quality video
-       */
-      var uri;
-      this.manifest.content[0].items.forEach(function (item) {
-        item.body.forEach(function (body) {
-          if (body.type === 'Choice') {
-            body.items.forEach(function (item) {
-              if (item.label === 'Medium') {
-                uri = item;
-              }
-            });
-          }
-        });
-      });
-      return uri;
-    }
-  }, {
-    key: 'getMediaFragment',
-    value: function getMediaFragment(uri) {
-      /**
-       *
-       *  this takes a uri with a media fragment that looks like #=120,134 and returns an object with start/stop in seconds and the duration in milliseconds
-       * @method MediaPlayer#getMediaFragment
-       *
-       * @return {object}
-       */
-
-      if (uri !== undefined) {
-        var fragment = uri.split('#t=')[1];
-        if (fragment !== undefined) {
-          var splitFragment = fragment.split(',');
-          var duration = splitFragment[1] - splitFragment[0];
-          return { 'start': splitFragment[0],
-            'stop': splitFragment[1] };
-        } else {
-          return undefined;
-        }
-      } else {
-        return undefined;
-      }
-    }
-  }, {
-    key: 'createStructure',
-    value: function createStructure(manifest, list, canvasId) {
-      var _this2 = this;
-
-      /**
-       * Recurses the manifest structure and creates an html tree
-       *  @method MediaPlayer#createStructure
-       *
-       *  @return {string} list - a string version of the html tree
-       */
-      manifest.map(function (data, index) {
-        if (data.type === 'Range') {
-          if (manifest[index].members[0].id !== undefined) {
-            canvasId = manifest[index].members[0].id;
-          }
-        }
-        if (data.hasOwnProperty('members')) {
-          // Parent elements
-          if (_this2.getMediaFragment(canvasId) !== undefined) {
-            var mediaFragment = _this2.getMediaFragment(canvasId);
-
-            list.push('<ul><li><a data-turbolinks=\'false\' data-target="#" href="#avalon/time/' + mediaFragment.start + ',' + mediaFragment.stop + '/quality/Medium" class="media-structure-uri" >' + data.label + '</a></li>');
-            _this2.createStructure(data.members, list, canvasId);
-          } else {
-            list.push('<ul class=\'canvas-range\'><a data-target="#" data-turbolinks=\'false\' class=\'canvas-url\' href=\'\'>' + data.label + '</a></li>');
-            _this2.createStructure(data.members, list, canvasId);
-          }
-        }
-      });
-      list.push('</ul>');
-      return list.join('');
-    }
-  }, {
-    key: 'getExtentForCanvas',
-    value: function getExtentForCanvas(el, splits, newSplits) {
-      console.log(el);
-      /**
-       * This method takes a jQuery selector and calculates the extent of the parent based on the duration of the children
-       *
-       * @method MediaPlayer#getExtentForCanvas
-       *
-       * @param {string} el - a jQuery selector
-       * @param {array} splits - an empty array
-       * @param {array} newSplits - an empty array
-       * @return {string} - a mediafragment
-       **/
-      (0, _jquery2.default)(el).children().find('a').each(function () {
-        var splitHref = (0, _jquery2.default)(this).attr('href').split('#t=');
-
-        splitHref.forEach(function (split) {
-          if (split !== '') {
-            splits.push(split);
-          }
-          newSplits = splits.join(',').split(',');
-        });
-      });
-      return newSplits[0] + ',' + newSplits[newSplits.length - 1];
-    }
-  }, {
-    key: 'renderStructure',
-    value: function renderStructure(manifest, list, canvasId) {
-      var _this3 = this;
-
-      /**
-       * Recurses the manifest structure and creates an html tree
-       * @method MediaPlayer#renderStructure
-       *
-       */
-      manifest.map(function (data, index) {
-        if (data.type === 'Range') {
-          canvasId = manifest[index].members[0].id;
-        }
-        if (data.hasOwnProperty('members')) {
-          if (_this3.getMediaFragment(canvasId) !== undefined) {
-            list.push('<ul><li><a class="media-structure-uri" data-media-fragment="' + canvasId + '">' + data.label + '</a></li>');
-            _this3.renderStructure(data.members, list, canvasId);
-          } else {
-            list.push('<ul><li>' + data.label + '</li>');
-            _this3.renderStructure(data.members, list, canvasId);
-          }
-        }
-      });
-      list.push('</ul>');
-      return list.join('');
-    }
-  }]);
-
-  return MediaPlayer;
-}();
-
-exports.default = MediaPlayer;
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports) {
 
 /*
@@ -478,7 +149,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 4 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10738,7 +10409,7 @@ return jQuery;
 
 
 /***/ }),
-/* 5 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -10775,7 +10446,7 @@ var stylesInDom = {},
 	singletonElement = null,
 	singletonCounter = 0,
 	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(15);
+	fixUrls = __webpack_require__(17);
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -11051,6 +10722,408 @@ function updateLink(linkElement, options, obj) {
 
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = "\"data:image/svg+xml,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='400px' height='120px' viewBox='0 0 400 120' style='enable-background:new 0 0 400 120;' xml:space='preserve'%3E %3Cstyle type='text/css'%3E .st0%7Bfill:%23FFFFFF;width:16px;height:16px%7D .st1%7Bfill:none;stroke:%23FFFFFF;stroke-width:1.5;stroke-linecap:round;%7D .st2%7Bfill:none;stroke:%23FFFFFF;stroke-width:2;stroke-linecap:round;%7D .st3%7Bfill:none;stroke:%23FFFFFF;%7D .st4%7Bfill:%23231F20;%7D .st5%7Bopacity:0.75;fill:none;stroke:%23FFFFFF;stroke-width:5;enable-background:new;%7D .st6%7Bfill:none;stroke:%23FFFFFF;stroke-width:5;%7D .st7%7Bopacity:0.4;fill:%23FFFFFF;enable-background:new;%7D .st8%7Bopacity:0.6;fill:%23FFFFFF;enable-background:new;%7D .st9%7Bopacity:0.8;fill:%23FFFFFF;enable-background:new;%7D .st10%7Bopacity:0.9;fill:%23FFFFFF;enable-background:new;%7D .st11%7Bopacity:0.3;fill:%23FFFFFF;enable-background:new;%7D .st12%7Bopacity:0.5;fill:%23FFFFFF;enable-background:new;%7D .st13%7Bopacity:0.7;fill:%23FFFFFF;enable-background:new;%7D %3C/style%3E %3Cg id='controls'%3E %3Cg id='play'%3E %3Cpath class='st0' d='M16.5,8.5c0.3,0.1,0.4,0.5,0.2,0.8c-0.1,0.1-0.1,0.2-0.2,0.2l-11.4,7c-0.5,0.3-0.8,0.1-0.8-0.5V2 c0-0.5,0.4-0.8,0.8-0.5L16.5,8.5z'/%3E %3C/g%3E %3Cg id='pause'%3E %3Cg%3E %3Cpath class='st0' d='M24,1h2.2c0.6,0,1,0.4,1,1v14c0,0.6-0.4,1-1,1H24c-0.6,0-1-0.4-1-1V2C23,1.5,23.4,1,24,1z'/%3E %3Cpath class='st0' d='M33.8,1H36c0.6,0,1,0.4,1,1v14c0,0.6-0.4,1-1,1h-2.2c-0.6,0-1-0.4-1-1V2C32.8,1.5,33.2,1,33.8,1z'/%3E %3C/g%3E %3C/g%3E %3Cg id='fullscreen'%3E %3Cg id='enter'%3E %3Cpath class='st0' d='M81,1.4c0-0.6,0.4-1,1-1h5.4c0.6,0,0.7,0.3,0.3,0.7l-6,6C81.3,7.5,81,7.4,81,6.8V1.4z'/%3E %3Cpath class='st0' d='M81,17.2c0,0.6,0.4,1,1,1h5.4c0.6,0,0.7-0.3,0.3-0.7l-6-6c-0.4-0.4-0.7-0.3-0.7,0.3L81,17.2z'/%3E %3Cpath class='st0' d='M98.8,1.4c0-0.6-0.4-1-1-1h-5.4c-0.6,0-0.7,0.3-0.3,0.7l6,6c0.4,0.4,0.7,0.3,0.7-0.3 C98.8,6.8,98.8,1.4,98.8,1.4z'/%3E %3Cpath class='st0' d='M98.8,17.2c0,0.6-0.4,1-1,1h-5.4c-0.6,0-0.7-0.3-0.3-0.7l6-6c0.4-0.4,0.7-0.3,0.7,0.3 C98.8,11.8,98.8,17.2,98.8,17.2z'/%3E %3C/g%3E %3Cg id='exit'%3E %3Cg%3E %3Cpath class='st0' d='M112.7,5c0,0.6,0.4,1,1,1h4.1c0.6,0,0.7-0.3,0.3-0.7l-4.7-4.7c-0.4-0.4-0.7-0.3-0.7,0.3 C112.7,0.9,112.7,5,112.7,5z'/%3E %3Cpath class='st0' d='M105.6,6c0.6,0,1-0.4,1-1V0.9c0-0.6-0.3-0.7-0.7-0.3l-4.7,4.7c-0.4,0.4-0.3,0.7,0.3,0.7L105.6,6z'/%3E %3Cpath class='st0' d='M106.6,13.1c0-0.6-0.4-1-1-1h-4.1c-0.6,0-0.7,0.3-0.3,0.7l4.7,4.7c0.4,0.4,0.7,0.3,0.7-0.3 C106.6,17.2,106.6,13.1,106.6,13.1z'/%3E %3Cpath class='st0' d='M113.7,12.1c-0.6,0-1,0.4-1,1v4.1c0,0.5,0.3,0.7,0.7,0.3l4.7-4.7c0.4-0.4,0.3-0.7-0.3-0.7H113.7z'/%3E %3C/g%3E %3C/g%3E %3C/g%3E %3Cg id='volume'%3E %3Cg id='unmuted'%3E %3Cpath class='st0' d='M67,5.8c-0.5,0.4-1.2,0.6-1.8,0.6H62c-0.6,0-1,0.4-1,1v5.7c0,0.6,0.4,1,1,1h3.2c0.3,0,0.7,0,1,0 c0.3,0.2,0.5,0.4,0.8,0.6l3.5,2.6c0.4,0.3,0.8,0.1,0.8-0.4V3.5c0-0.5-0.4-0.7-0.8-0.4L67,5.8z'/%3E %3Cpath class='st1' d='M73.9,2.5c0,0,3.9-0.8,3.9,7.7S73.9,18,73.9,18'/%3E %3Cpath class='st1' d='M72.6,6.4c0,0,2.6-0.4,2.6,3.8s-2.6,3.9-2.6,3.9'/%3E %3C/g%3E %3Cg id='muted'%3E %3Cpath class='st0' d='M47,5.8c-0.5,0.4-1.2,0.6-1.8,0.6H42c-0.6,0-1,0.4-1,1v5.7c0,0.6,0.4,1,1,1h3.2c0.3,0,0.7,0,1,0 c0.3,0.2,0.5,0.4,0.8,0.6l3.5,2.6c0.4,0.3,0.8,0.1,0.8-0.4V3.5c0-0.5-0.4-0.7-0.8-0.4L47,5.8z'/%3E %3Cline class='st2' x1='52.8' y1='7' x2='58.2' y2='12.4'/%3E %3Cline class='st2' x1='52.8' y1='12.4' x2='58.2' y2='7'/%3E %3C/g%3E %3C/g%3E %3Cg id='closed_captions'%3E %3Cpath class='st3' d='M128.7,8.6c-6.2-4.2-6.5,7.8,0,3.9'/%3E %3Cpath class='st3' d='M135.2,8.6c-6.2-4.2-6.5,7.8,0,3.9'/%3E %3Cpath class='st0' d='M122.2,3.4h15.7v13.1h-15.7V3.4z M120.8,2v15.7h18.3V2H120.8z'/%3E %3C/g%3E %3Cg%3E %3Cpath class='st0' d='M143.2,3h14c1.1,0,2,0.9,2,2v10c0,1.1-0.9,2-2,2h-14c-1.1,0-2-0.9-2-2V5C141.2,3.9,142.1,3,143.2,3z'/%3E %3Cpath class='st4' d='M146.4,13.8c-0.8,0-1.6-0.4-2.1-1c-1.1-1.4-1-3.4,0.1-4.8c0.5-0.6,2-1.7,4.6,0.2L148.4,9 c-1.4-1-2.6-1.1-3.3-0.3c-0.8,1-0.8,2.4-0.1,3.5c0.7,0.9,1.9,0.8,3.4-0.1l0.5,0.9C148.2,13.5,147.3,13.7,146.4,13.8z'/%3E %3Cpath class='st4' d='M153.9,13.8c-0.8,0-1.6-0.4-2.1-1c-1.1-1.4-1-3.4,0.1-4.8c0.5-0.6,2-1.7,4.6,0.2L156,9 c-1.4-1-2.6-1.1-3.3-0.3c-0.8,1-0.8,2.4-0.1,3.5c0.7,0.9,1.9,0.8,3.4-0.1l0.5,0.9C155.7,13.5,154.8,13.7,153.9,13.8z'/%3E %3C/g%3E %3C/g%3E %3Cg id='big_play'%3E %3Cg id='big_play_opaque'%3E %3Cpath class='st0' d='M60.3,77c0.6,0.2,0.8,0.8,0.6,1.4c-0.1,0.3-0.3,0.5-0.6,0.6L30,96.5c-1,0.6-1.7,0.1-1.7-1v-35 c0-1.1,0.8-1.5,1.7-1L60.3,77z'/%3E %3Cpath class='st5' d='M2.5,79c0-20.7,16.8-37.5,37.5-37.5S77.5,58.3,77.5,79S60.7,116.5,40,116.5S2.5,99.7,2.5,79L2.5,79z'/%3E %3C/g%3E %3Cg id='big_play_hover'%3E %3Cpath class='st0' d='M140.3,77c0.6,0.2,0.8,0.8,0.6,1.4c-0.1,0.3-0.3,0.5-0.6,0.6L110,96.5c-1,0.6-1.7,0.1-1.7-1v-35 c0-1.1,0.8-1.5,1.7-1L140.3,77z'/%3E %3Cpath class='st6' d='M82.5,79c0-20.7,16.8-37.5,37.5-37.5s37.5,16.8,37.5,37.5s-16.8,37.5-37.5,37.5S82.5,99.7,82.5,79z'/%3E %3C/g%3E %3Cg id='loading'%3E %3Ccircle class='st0' cx='201.9' cy='47.1' r='8.1'/%3E %3Ccircle class='st7' cx='233.9' cy='79' r='5'/%3E %3Ccircle class='st8' cx='201.9' cy='110.9' r='6'/%3E %3Ccircle class='st9' cx='170.1' cy='79' r='7'/%3E %3Ccircle class='st10' cx='178.2' cy='56.3' r='7.5'/%3E %3Ccircle class='st11' cx='226.3' cy='56.1' r='4.5'/%3E %3Ccircle class='st12' cx='225.8' cy='102.8' r='5.5'/%3E %3Ccircle class='st13' cx='178.2' cy='102.8' r='6.5'/%3E %3C/g%3E %3C/g%3E %3Cg id='replay'%3E %3Cpath class='st0' d='M178,9.4c0,0.4-0.4,0.7-0.9,0.7c-0.1,0-0.2,0-0.2-0.1l-4.9-1.8c-0.5-0.2-0.6-0.6-0.1-0.8l6.2-3.6 c0.5-0.3,0.8-0.1,0.7,0.5L178,9.4z'/%3E %3Cpath class='st0' d='M169.4,15.9c-1,0-2-0.2-2.9-0.7c-2-1-3.2-3-3.2-5.2c0.1-3.4,2.9-6,6.3-6c2.5,0.1,4.8,1.7,5.6,4.1l0.1-0.1 l2.1,1.1c-0.6-4.4-4.7-7.5-9.1-6.9c-3.9,0.6-6.9,3.9-7,7.9c0,2.9,1.7,5.6,4.3,7c1.2,0.6,2.5,0.9,3.8,1c2.6,0,5-1.2,6.6-3.3 l-1.8-0.9C173,15.1,171.2,15.9,169.4,15.9z'/%3E %3C/g%3E %3Cg id='chapters'%3E %3Cpath class='st0' d='M183.4,3.2L183.4,3.2c0.8,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5l0,0c-0.8,0-1.5-0.7-1.5-1.5l0,0 C181.9,3.8,182.6,3.2,183.4,3.2z'/%3E %3Cpath class='st0' d='M188.5,3.2h8.5c0.9,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5h-8.5c-0.9,0-1.5-0.7-1.5-1.5l0,0 C186.9,3.8,187.6,3.2,188.5,3.2z'/%3E %3Cpath class='st0' d='M183.4,8.2L183.4,8.2c0.8,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5l0,0c-0.8,0-1.5-0.7-1.5-1.5l0,0 C181.9,8.8,182.6,8.2,183.4,8.2z'/%3E %3Cpath class='st0' d='M188.5,8.2h8.5c0.9,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5h-8.5c-0.9,0-1.5-0.7-1.5-1.5l0,0 C186.9,8.8,187.6,8.2,188.5,8.2z'/%3E %3Cpath class='st0' d='M183.4,13.2L183.4,13.2c0.8,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5l0,0c-0.8,0-1.5-0.7-1.5-1.5l0,0 C181.9,13.8,182.6,13.2,183.4,13.2z'/%3E %3Cpath class='st0' d='M188.5,13.2h8.5c0.9,0,1.5,0.7,1.5,1.5l0,0c0,0.8-0.7,1.5-1.5,1.5h-8.5c-0.9,0-1.5-0.7-1.5-1.5l0,0 C186.9,13.8,187.6,13.2,188.5,13.2z'/%3E %3C/g%3E %3C/svg%3E\""
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var HashHandler = function () {
+  function HashHandler(options) {
+    _classCallCheck(this, HashHandler);
+
+    this.currentCanvasIndex = undefined;
+    this.instance = options.instance;
+    this.qualityChoices = options.qualityChoices;
+  }
+
+  _createClass(HashHandler, [{
+    key: 'bindHashChange',
+    value: function bindHashChange() {
+      var _this = this;
+
+      /**
+       * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
+       **/
+      if (window.location.hash.indexOf('#avalon') >= 0) {
+        this.playFromHash(window.location.hash);
+      }
+      window.onhashchange = function () {
+        _this.playFromHash(window.location.hash);
+      };
+    }
+  }, {
+    key: 'canvasesInManifest',
+    value: function canvasesInManifest() {
+      return this.instance.manifest.sequences && this.instance.manifest.sequences[0].canvases;
+    }
+  }, {
+    key: 'playFromHash',
+    value: function playFromHash(hash) {
+      /**
+       * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
+       **/
+      var mediaPlayer = document.getElementById('iiif-av-player');
+      var options = this.processHash(hash);
+      var canvasesExist = this.canvasesInManifest();
+
+      // Is canvas in the hash different from canvas currently in the player?
+      if (canvasesExist && options.canvas !== this.currentCanvasIndex) {
+        // Get current canvas object from canvas index
+        var canvasObj = this.instance.getCanvasByIndex(options.canvas);
+        this.qualityChoices = this.instance.getQualityChoices(canvasObj);
+        this.currentCanvasIndex = options.canvas;
+      }
+
+      this.qualityChoices.forEach(function (choice) {
+        if (choice.label === options.quality) {
+          mediaPlayer.setSrc(choice.id);
+        }
+      });
+
+      mediaPlayer.setCurrentTime(options.start);
+      mediaPlayer.play();
+    }
+  }, {
+    key: 'processHash',
+    value: function processHash(hash) {
+      /**
+       * This method processes a window.location.hash and creates an object.
+       * It can take any number of parameters. Strings at even locations are keys
+       * and odd locations are values.
+       * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
+       * @param {string} hash - a window.location.hash
+       * @return {object}
+       **/
+
+      return hash.split('/').splice(1).reduce(function (result, item, index, array) {
+        if (index % 2 === 0) {
+          if (item === 'time') {
+            var time = array[index + 1].split(',');
+            result['start'] = time[0];
+            result['stop'] = time[1];
+          }
+          result[item] = array[index + 1];
+        }
+        return result;
+      }, {});
+    }
+  }]);
+
+  return HashHandler;
+}();
+
+exports.default = HashHandler;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(1);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+__webpack_require__(19);
+
+var _qualitySelector = __webpack_require__(9);
+
+var _qualitySelector2 = _interopRequireDefault(_qualitySelector);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/** Class representing a MediaPlayer
+ * @class MediaPlayer
+ */
+var MediaPlayer = function () {
+  function MediaPlayer(options) {
+    _classCallCheck(this, MediaPlayer);
+
+    /**
+     * Create a MediaPlayer
+     * @param {object} options - an object with the manifest and target
+     */
+    this.manifest = options.manifest;
+    this.target = document.getElementById(options.target);
+  }
+
+  _createClass(MediaPlayer, [{
+    key: 'getLinks',
+    value: function getLinks() {
+      var _this = this;
+
+      /**
+       * this method sets the link on parent Ranges that don't have their own time, but inherit it from children in the tree
+       *
+       * @method MediaPlayer#getLinks
+       */
+      (0, _jquery2.default)('.canvas-range').each(function (el) {
+        console.log(el);
+        try {
+          (0, _jquery2.default)('.canvas-range:eq( ' + el + ' )').find('.canvas-url').attr('href', '' + _this.getExtentForCanvas((0, _jquery2.default)('.canvas-range')[el], [], []));
+        } catch (e) {
+          console.log(e);
+        }
+      });
+    }
+  }, {
+    key: 'getSubtitles',
+    value: function getSubtitles() {
+      /**
+       * this method gets the first subtitle track from the manifest. It will probaly need to more robust in the future
+       *
+       * @method MediaPlayer#getSubtitles
+       * @return {string} subtitle - a URI that points to subtitles
+       */
+      var subtitle;
+      this.manifest.content[0].items.forEach(function (item) {
+        item.body.forEach(function (body) {
+          if (body.type === 'Text') {
+            subtitle = body;
+          }
+        });
+      });
+      return subtitle;
+    }
+  }, {
+    key: 'getQualityChoices',
+    value: function getQualityChoices(canvas) {
+      var choices = [];
+      var content = canvas ? canvas.content : this.manifest.content;
+
+      content[0].items.forEach(function (item) {
+        item.body.forEach(function (body) {
+          if (body.type === 'Choice') {
+            body.items.forEach(function (item) {
+              choices.push(item);
+            });
+          }
+        });
+      });
+
+      return choices;
+    }
+  }, {
+    key: 'getVideoUri',
+    value: function getVideoUri() {
+      /**
+       *  this method returns the URI with Medium quality from the manfest
+       * @method MediaPlayer#getVideoUri
+       * @return {string} uri - a URI for the medium quality video
+       */
+      var uri;
+      this.manifest.content[0].items.forEach(function (item) {
+        item.body.forEach(function (body) {
+          if (body.type === 'Choice') {
+            body.items.forEach(function (item) {
+              if (item.label === 'Medium') {
+                uri = item;
+              }
+            });
+          }
+        });
+      });
+      return uri;
+    }
+  }, {
+    key: 'getMediaFragment',
+    value: function getMediaFragment(uri) {
+      /**
+       *
+       *  this takes a uri with a media fragment that looks like #=120,134 and returns an object with start/stop in seconds and the duration in milliseconds
+       * @method MediaPlayer#getMediaFragment
+       *
+       * @return {object}
+       */
+
+      if (uri !== undefined) {
+        var fragment = uri.split('#t=')[1];
+        if (fragment !== undefined) {
+          var splitFragment = fragment.split(',');
+          return { 'start': splitFragment[0],
+            'stop': splitFragment[1] };
+        } else {
+          return undefined;
+        }
+      } else {
+        return undefined;
+      }
+    }
+  }, {
+    key: 'createStructure',
+    value: function createStructure(manifest, list, canvasId) {
+      var _this2 = this;
+
+      /**
+       * Recurses the manifest structure and creates an html tree
+       *  @method MediaPlayer#createStructure
+       *
+       *  @return {string} list - a string version of the html tree
+       */
+      manifest.map(function (data, index) {
+        if (data.type === 'Range') {
+          if (manifest[index].members[0].id !== undefined) {
+            canvasId = manifest[index].members[0].id;
+          }
+        }
+        if (data.hasOwnProperty('members')) {
+          // Parent elements
+          if (_this2.getMediaFragment(canvasId) !== undefined) {
+            var mediaFragment = _this2.getMediaFragment(canvasId);
+
+            var canvasIndex = _this2.getCanvasIndex(canvasId);
+            var canvasHash = canvasIndex !== '' ? '/canvas/' + canvasIndex : '';
+
+            list.push('<ul><li><a data-turbolinks=\'false\' data-target="#" href="#avalon/time/' + mediaFragment.start + ',' + mediaFragment.stop + '/quality/Medium' + canvasHash + '" class="media-structure-uri" >' + data.label + '</a></li>');
+            _this2.createStructure(data.members, list, canvasId);
+          } else {
+            list.push('<ul class=\'canvas-range\'><li><a data-target="#" data-turbolinks=\'false\' class=\'canvas-url\' href=\'\'>' + data.label + '</a></li>');
+            _this2.createStructure(data.members, list, canvasId);
+          }
+        }
+      });
+      list.push('</ul>');
+      return list.join('');
+    }
+  }, {
+    key: 'getCanvasIndex',
+    value: function getCanvasIndex() {
+      var canvasId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+      /**
+       * Parse canvasId URI for the canvas index
+       *
+       * @method MediaPlayer#getCanvasIndex
+       * @param {string} canvasId - key in manifest
+       * @returns {string} canvasIndex - URI canvas index
+       */
+      var canvasPos = canvasId.indexOf('canvas');
+      var canvasIndex = '';
+
+      if (canvasPos > -1) {
+        canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1, canvasId.indexOf('#', canvasPos));
+      }
+      return canvasIndex;
+    }
+  }, {
+    key: 'getCanvasByIndex',
+    value: function getCanvasByIndex(index) {
+      /**
+       * Get a canvas object from manifest 'canvases' array
+       *
+       * @method MediaPlayer#getCanvasIndex
+       * @param {string} index - target canvas index
+       * @returns {object} canvasObject or empty object
+       */
+      if (!index) {
+        return {};
+      }
+
+      // TODO: Eventually we'll want to track current sequence index as well.  For now assume first sequence
+      var canvases = this.manifest.sequences[0].canvases;
+      var canvasObject = {};
+
+      canvases.forEach(function (canvas) {
+        var canvasIndex = canvas.id.slice(canvas.id.lastIndexOf('/') + 1);
+        if (canvasIndex === index) {
+          canvasObject = canvas;
+        }
+      });
+      return canvasObject;
+    }
+  }, {
+    key: 'getExtentForCanvas',
+    value: function getExtentForCanvas(el, splits, newSplits) {
+      console.log(el);
+      /**
+       * This method takes a jQuery selector and calculates the extent of the parent based on the duration of the children
+       *
+       * @method MediaPlayer#getExtentForCanvas
+       *
+       * @param {string} el - a jQuery selector
+       * @param {array} splits - an empty array
+       * @param {array} newSplits - an empty array
+       * @return {string} - a mediafragment
+       **/
+      (0, _jquery2.default)(el).children().find('a').each(function () {
+        var splitHref = (0, _jquery2.default)(this).attr('href').split('#t=');
+
+        splitHref.forEach(function (split) {
+          if (split !== '') {
+            splits.push(split);
+          }
+          newSplits = splits.join(',').split(',');
+        });
+      });
+      return newSplits[0] + ',' + newSplits[newSplits.length - 1];
+    }
+  }, {
+    key: 'qualitySelectorMarkup',
+    value: function qualitySelectorMarkup() {
+      var qs = new _qualitySelector2.default();
+      var choices = qs.qualityChoices(this.manifest, '', []);
+
+      return qs.renderChoices(choices);
+    }
+  }, {
+    key: 'renderStructure',
+    value: function renderStructure(manifest, list, canvasId) {
+      var _this3 = this;
+
+      /**
+       * Recurses the manifest structure and creates an html tree
+       * @method MediaPlayer#renderStructure
+       *
+       */
+      manifest.map(function (data, index) {
+        if (data.type === 'Range') {
+          canvasId = manifest[index].members[0].id;
+        }
+        if (data.hasOwnProperty('members')) {
+          if (_this3.getMediaFragment(canvasId) !== undefined) {
+            list.push('<ul><li><a class="media-structure-uri" data-media-fragment="' + canvasId + '">' + data.label + '</a></li>');
+            _this3.renderStructure(data.members, list, canvasId);
+          } else {
+            list.push('<ul><li>' + data.label + '</li>');
+            _this3.renderStructure(data.members, list, canvasId);
+          }
+        }
+      });
+      list.push('</ul>');
+      return list.join('');
+    }
+  }]);
+
+  return MediaPlayer;
+}();
+
+exports.default = MediaPlayer;
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11063,7 +11136,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(4);
+var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -11071,7 +11144,7 @@ var _audioPlayer = __webpack_require__(8);
 
 var _audioPlayer2 = _interopRequireDefault(_audioPlayer);
 
-var _videoPlayer = __webpack_require__(9);
+var _videoPlayer = __webpack_require__(10);
 
 var _videoPlayer2 = _interopRequireDefault(_videoPlayer);
 
@@ -11149,7 +11222,7 @@ exports.default = Avalon;
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(11);
+var content = __webpack_require__(12);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11157,7 +11230,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(2)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -11186,11 +11259,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _mediaPlayer = __webpack_require__(2);
+var _mediaPlayer = __webpack_require__(5);
 
 var _mediaPlayer2 = _interopRequireDefault(_mediaPlayer);
 
-var _hashHandler = __webpack_require__(0);
+var _hashHandler = __webpack_require__(4);
 
 var _hashHandler2 = _interopRequireDefault(_hashHandler);
 
@@ -11213,8 +11286,10 @@ var AudioPlayer = function (_MediaPlayer) {
 
     _this.canvases = options.manifest.sequences[0].canvases;
     _this.currentCanvas = _this.getCanvas(_this.canvases[0].id);
-    console.log(_this.getQualityChoices());
-    _this.hashHandler = new _hashHandler2.default({ 'qualityChoices': _this.getQualityChoices() });
+    _this.hashHandler = new _hashHandler2.default({
+      'qualityChoices': _this.getQualityChoices(_this.currentCanvas),
+      'instance': _this
+    });
     _this.render(options);
     _this.getLinks();
     return _this;
@@ -11272,8 +11347,8 @@ var AudioPlayer = function (_MediaPlayer) {
             var audioElement = '<audio controls id="iiif-av-player" width="100%">\n              <source src="' + item.id + '" type="audio/mp3" data-quality="' + item.label + '">\n            </audio>';
             var audioStructure = _this2.createStructure(_this2.manifest['structures'], []);
 
-            _this2.target.innerHTML = '\n            <div class=\'av-player\'>\n              <div class=\'av-controls\'>' + audioElement + '</div>\n            </div>\n            ' + audioStructure + '\n          ';
-            var audioPlayer = new MediaElementPlayer('iiif-av-player', _this2.getAudioConfig());
+            _this2.target.innerHTML = '\n            <section class="ui stackable two column grid">\n              <article class="six wide column">' + audioStructure + '</article>\n              <article class="ten wide column player-wrapper">' + audioElement + '</article>\n            </section>\n          ';
+            var audioPlayer = new MediaElementPlayer('iiif-av-player', _this2.getAudioConfig()); // eslint-disable-line
 
             // Start listening for changes in the hash
             _this2.hashHandler.bindHashChange();
@@ -11299,17 +11374,124 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _mediaPlayer = __webpack_require__(2);
+var _jquery = __webpack_require__(1);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+__webpack_require__(18);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var QualitySelector = function () {
+  function QualitySelector() {
+    _classCallCheck(this, QualitySelector);
+  }
+
+  _createClass(QualitySelector, [{
+    key: 'changeQualityMarkup',
+    value: function changeQualityMarkup(markup, original, replacement) {
+      var re = new RegExp(original, 'g');return markup.replace(re, replacement);
+    }
+  }, {
+    key: 'currentQuality',
+    value: function currentQuality(windowLocationHash) {
+      return windowLocationHash.split('/quality/')[1];
+    }
+  }, {
+    key: 'qualityChoices',
+    value: function qualityChoices(obj, stack, choices) {
+      for (var property in obj) {
+        if (obj.hasOwnProperty(property)) {
+          if (_typeof(obj[property]) === 'object') {
+            if (obj.type === 'Choice') {
+              choices.push(obj.items);
+            }
+            this.qualityChoices(obj[property], stack + '.' + property, choices);
+          }
+        }
+      }
+      return choices[0];
+    }
+  }, {
+    key: 'renderChoices',
+    value: function renderChoices(ch) {
+      console.log(ch);
+      var choiceList = ch.map(function (choice) {
+        return '<li class=\'quality-choice\' data-quality-choice=\'' + choice.id + '\'>' + choice.label + '</li>';
+      });
+      this.bindClick();
+      this.bindSettings();
+      return '<ul class=\'quality-selector\'><li class=\'quality-settings\'>Quality</li>' + choiceList.join(',').replace(/,/g, '') + '</ul>';
+    }
+  }, {
+    key: 'bindSettings',
+    value: function bindSettings() {
+      (0, _jquery2.default)('body').on('click', '.quality-settings', function (event) {
+        (0, _jquery2.default)('.quality-choice').toggle();
+      });
+    }
+  }, {
+    key: 'bindClick',
+    value: function bindClick() {
+      var _this = this;
+
+      (0, _jquery2.default)('body').on('click', '.quality-choice', function (event) {
+        (0, _jquery2.default)('.quality-choice').removeClass('quality-selected');
+        (0, _jquery2.default)('.quality-choice').toggle();
+        (0, _jquery2.default)(event.target).addClass('quality-selected');
+        var newMarkup;
+        // Change or add the hash to the url
+        if (window.location.hash.search('/quality/') >= 0) {
+          newMarkup = _this.changeQualityMarkup((0, _jquery2.default)('.av-controls > ul').html(), _this.currentQuality(window.location.hash), event.target.innerText);
+          // Change the links in the structure
+          (0, _jquery2.default)('.av-controls > ul').html(newMarkup);
+          window.location.hash = window.location.hash.replace('/quality/' + _this.currentQuality(window.location.hash), '/quality/' + event.target.innerText);
+        } else {
+          // In case there isn't a hash in the url already, Medium is the default so replace that
+          newMarkup = _this.changeQualityMarkup((0, _jquery2.default)('.av-controls > ul').html(), 'Medium', event.target.innerText);
+          (0, _jquery2.default)('.av-controls > ul').html(newMarkup);
+          window.location.hash = '#avalon/quality/' + event.target.innerText;
+        }
+      });
+    }
+  }, {
+    key: 'highlightQualityChoice',
+    value: function highlightQualityChoice() {}
+  }]);
+
+  return QualitySelector;
+}();
+
+exports.default = QualitySelector;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _mediaPlayer = __webpack_require__(5);
 
 var _mediaPlayer2 = _interopRequireDefault(_mediaPlayer);
 
-var _hashHandler = __webpack_require__(0);
+var _hashHandler = __webpack_require__(4);
 
 var _hashHandler2 = _interopRequireDefault(_hashHandler);
 
-__webpack_require__(14);
+__webpack_require__(16);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11327,7 +11509,10 @@ var VideoPlayer = function (_MediaPlayer) {
 
     var _this = _possibleConstructorReturn(this, (VideoPlayer.__proto__ || Object.getPrototypeOf(VideoPlayer)).call(this, options));
 
-    _this.hashHandler = new _hashHandler2.default({ 'qualityChoices': _this.getQualityChoices() });
+    _this.hashHandler = new _hashHandler2.default({
+      'qualityChoices': _this.getQualityChoices(),
+      'instance': _this
+    });
     _this.render();
     _this.getLinks();
     return _this;
@@ -11349,10 +11534,12 @@ var VideoPlayer = function (_MediaPlayer) {
       this.target.innerHTML = '<div class=\'av-player\'><div class=\'av-controls\'>' + videoStructure + '</div><div class=\'av-controls\'>' + videoElement + '</div></div>';
 
       // Activate MediaElement
-      var player = new MediaElementPlayer('iiif-av-player', {});
+      var player = new MediaElementPlayer('iiif-av-player', {}); // eslint-disable-line
 
       // Start listening for changes in the hash
       this.hashHandler.bindHashChange();
+      var iiifPlayer = document.getElementById('iiif-av-player');
+      iiifPlayer.insertAdjacentHTML('beforeend', this.qualitySelectorMarkup());
     }
   }]);
 
@@ -11362,7 +11549,7 @@ var VideoPlayer = function (_MediaPlayer) {
 exports.default = VideoPlayer;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11380,35 +11567,49 @@ var avalon = new _avalon2.default();
 avalon.initialize();
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(undefined);
+exports = module.exports = __webpack_require__(0)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "/* Accessibility: hide screen reader texts (and prefer \"top\" for RTL languages).\nReference: http://blog.rrwd.nl/2015/04/04/the-screen-reader-text-class-why-and-how/ */\n.mejs__offscreen {\n    clip: rect(1px, 1px, 1px, 1px); /* IE8-IE11 - no support for clip-path */\n    clip-path: polygon(0px 0px, 0px 0px, 0px 0px, 0px 0px);\n    position: absolute !important;\n    height: 1px;\n    width: 1px;\n    overflow: hidden;\n}\n\n.mejs__container {\n    position: relative;\n    background: #000;\n    font-family: \"Helvetica\", Arial, serif;\n    text-align: left;\n    vertical-align: top;\n    text-indent: 0;\n    box-sizing: border-box;\n    min-width: 250px;\n}\n\n.mejs__container .mejs__video {\n    min-height: 140px;\n}\n\n.mejs__container * {\n    box-sizing: border-box;\n}\n\n/* Hide native play button from iOS to favor plugin button */\n.mejs__container video::-webkit-media-controls-start-playback-button {\n    display: none !important;\n    -webkit-appearance: none;\n}\n\n.mejs__fill-container,\n.mejs__fill-container .mejs__container {\n    width: 100%;\n    height: 100%;\n}\n\n.mejs__fill-container {\n    overflow: hidden;\n    position: relative;\n    margin: 0 auto;\n    background: transparent;\n}\n\n.mejs__container:focus {\n    outline: none;\n}\n\n.mejs__iframe-overlay {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n}\n\n.mejs__embed,\n.mejs__embed body {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    background: #000;\n    overflow: hidden;\n}\n\n.mejs__fullscreen {\n    overflow: hidden !important;\n}\n\n.mejs__container-fullscreen {\n    position: fixed;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    overflow: hidden;\n    z-index: 1000;\n}\n\n.mejs__container-fullscreen .mejs__mediaelement,\n.mejs__container-fullscreen video {\n    width: 100% !important;\n    height: 100% !important;\n}\n\n.mejs__clear {\n    clear: both;\n}\n\n/* Start: LAYERS */\n.mejs__background {\n    position: absolute;\n    top: 0;\n    left: 0;\n}\n\n.mejs__mediaelement {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    z-index: 0;\n}\n\n.mejs__poster {\n    position: absolute;\n    top: 0;\n    left: 0;\n    background-size: contain;\n    background-position: 50% 50%;\n    background-repeat: no-repeat;\n    z-index: 1;\n}\n\n:root .mejs__poster-img {\n    display: none;\n}\n\n.mejs__poster-img {\n    border: 0;\n    padding: 0;\n}\n\n.mejs__overlay {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n}\n\n.mejs__layer {\n    z-index: 1;\n}\n\n.mejs__overlay-play {\n    cursor: pointer;\n}\n\n.mejs__overlay-button {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    width: 80px;\n    height: 80px;\n    margin: -40px 0 0 -40px;\n    background: url(" + __webpack_require__(1) + ") no-repeat;\n    background-position: 0 -39px;\n    overflow: hidden;\n    z-index: 1;\n}\n\n.mejs__overlay:hover > .mejs__overlay-button {\n    background-position: -80px -39px;\n}\n\n.mejs__overlay-loading {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    width: 80px;\n    height: 80px;\n    margin: -40px 0 0 -40px;\n}\n\n.mejs__overlay-loading-bg-img {\n    display: block;\n    width: 80px;\n    height: 80px;\n    background: transparent url(" + __webpack_require__(1) + ") -160px -40px no-repeat;\n    -webkit-animation: mejs-loading-spinner 1s linear infinite;\n    -moz-animation: mejs-loading-spinner 1s linear infinite;\n    animation: mejs-loading-spinner 1s linear infinite;\n    z-index: 1;\n}\n\n@-moz-keyframes mejs-loading-spinner {\n    100% {\n        -moz-transform: rotate(360deg);\n    }\n}\n\n@-webkit-keyframes mejs-loading-spinner {\n    100% {\n        -webkit-transform: rotate(360deg);\n    }\n}\n\n@keyframes mejs-loading-spinner {\n    100% {\n        -webkit-transform: rotate(360deg);\n        transform: rotate(360deg);\n    }\n}\n\n/* End: LAYERS */\n\n/* Start: CONTROL BAR */\n.mejs__controls {\n    position: absolute;\n    list-style-type: none;\n    margin: 0;\n    padding: 0 10px;\n    bottom: 0;\n    left: 0;\n    height: 40px;\n    width: 100%;\n    z-index: 1;\n}\n\n.mejs__controls:not([style*=\"display: none\"]) {\n    background: rgba(255, 0, 0, 0.7);\n    background: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.35));\n}\n\n.mejs__button,\n.mejs__time,\n.mejs__time-rail {\n    float: left;\n    margin: 0;\n    width: 32px;\n    height: 40px;\n    font-size: 10px;\n    line-height: 10px;\n}\n\n.mejs__button > button {\n    cursor: pointer;\n    display: block;\n    font-size: 0;\n    line-height: 0;\n    text-decoration: none;\n    margin: 10px 6px;\n    padding: 0;\n    position: absolute;\n    height: 20px;\n    width: 20px;\n    border: 0;\n    background: transparent url(" + __webpack_require__(1) + ");\n    overflow: hidden;\n}\n\n/* :focus for accessibility */\n.mejs__button > button:focus {\n    outline: dotted 1px #999;\n}\n\n.mejs__container-keyboard-inactive a,\n.mejs__container-keyboard-inactive a:focus,\n.mejs__container-keyboard-inactive button,\n.mejs__container-keyboard-inactive button:focus,\n.mejs__container-keyboard-inactive [role=slider],\n.mejs__container-keyboard-inactive [role=slider]:focus {\n    outline: 0;\n}\n\n/* End: CONTROL BAR */\n\n/* Start: Time (Current / Duration) */\n.mejs__time {\n    color: #fff;\n    display: block;\n    height: 24px;\n    width: auto;\n    font-weight: bold;\n    font-size: 11px;\n    padding: 16px 6px 0 6px;\n    overflow: hidden;\n    text-align: center;\n    box-sizing: content-box;\n}\n\n/* End: Time (Current / Duration) */\n\n/* Start: Play/Pause/Stop */\n.mejs__play > button {\n    background-position: 0 0;\n}\n\n.mejs__pause > button {\n    background-position: -20px 0;\n}\n\n.mejs__replay > button {\n    background-position: -160px 0;\n}\n\n/* End: Play/Pause/Stop */\n\n/* Start: Progress Bar */\n.mejs__time-rail {\n    direction: ltr;\n    width: 200px;\n    padding-top: 10px;\n    height: 40px;\n    position: relative;\n    margin: 0 10px;\n}\n\n.mejs__time-total,\n.mejs__time-buffering,\n.mejs__time-loaded,\n.mejs__time-current,\n.mejs__time-float,\n.mejs__time-hovered,\n.mejs__time-float-current,\n.mejs__time-float-corner,\n.mejs__time-marker {\n    cursor: pointer;\n    display: block;\n    position: absolute;\n    height: 10px;\n    border-radius: 2px;\n}\n\n.mejs__time-total {\n    margin: 5px 0 0 0;\n    background: rgba(255, 255, 255, 0.3);\n    width: 100%;\n}\n\n.mejs__time-buffering {\n    width: 100%;\n    background: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);\n    background-size: 15px 15px;\n    animation: buffering-stripes 2s linear infinite;\n}\n\n@keyframes buffering-stripes {\n    from {\n        background-position: 0 0;\n    }\n    to {\n        background-position: 30px 0;\n    }\n}\n\n.mejs__time-loaded {\n    background: rgba(255, 255, 255, .3);\n}\n\n.mejs__time-current, .mejs__time-handle-content {\n    background: rgba(255, 255, 255, 0.9);\n}\n\n.mejs__time-hovered {\n    background: rgba(255, 255, 255, .5);\n    z-index: 10;\n}\n\n.mejs__time-hovered.negative {\n    background: rgba(0, 0, 0, 0.2);\n}\n\n.mejs__time-current, .mejs__time-buffering, .mejs__time-loaded, .mejs__time-hovered {\n    width: 100%;\n    left: 0;\n    -ms-transform-origin: 0 0;\n    transform-origin: 0 0;\n    -ms-transform: scaleX(0);\n    transform: scaleX(0);\n    transition: .15s ease-in all;\n}\n\n.mejs__time-hovered {\n    transition: height .1s cubic-bezier(0.44, 0.0, 1, 1);\n}\n\n.mejs__time-hovered.no-hover {\n    -ms-transform: scaleX(0) !important;\n    transform: scaleX(0) !important;\n}\n\n.mejs__time-handle, .mejs__time-handle-content {\n    position: absolute;\n    cursor: pointer;\n    width: 10px;\n    height: 10px;\n    border: 4px solid transparent;\n    z-index: 11;\n    left: 0;\n    -ms-transform: translateX(0px);\n    transform: translateX(0px);\n}\n\n.mejs__time-handle-content {\n    left: -4px;\n    border: 4px solid rgba(255, 255, 255, 0.9);\n    -ms-transform: scale(0);\n    transform: scale(0);\n    top: -4px;\n    border-radius: 50%;\n}\n\n.mejs__time-rail:hover .mejs__time-handle-content, .mejs__time-rail .mejs__time-handle-content:focus, .mejs__time-rail .mejs__time-handle-content:active {\n    -ms-transform: scale(1);\n    transform: scale(1);\n}\n\n.mejs__time-float {\n    position: absolute;\n    display: none;\n    background: #eee;\n    width: 36px;\n    height: 17px;\n    border: solid 1px #333;\n    top: -26px;\n    margin-left: -18px;\n    text-align: center;\n    color: #111;\n}\n\n.mejs__time-float-current {\n    margin: 2px;\n    width: 30px;\n    display: block;\n    text-align: center;\n    left: 0;\n}\n\n.mejs__time-float-corner {\n    position: absolute;\n    display: block;\n    width: 0;\n    height: 0;\n    line-height: 0;\n    border: solid 5px #eee;\n    border-color: #eee transparent transparent transparent;\n    border-radius: 0;\n    top: 15px;\n    left: 13px;\n}\n\n.mejs__long-video .mejs__time-float {\n    width: 64px;\n    margin-left: -23px;\n}\n\n.mejs__long-video .mejs__time-float-current {\n    width: 60px;\n}\n\n.mejs__long-video .mejs__time-float-corner {\n    left: 18px;\n}\n\n.mejs__broadcast {\n    color: #fff;\n    position: absolute;\n    width: 100%;\n    height: 10px;\n    top: 15px;\n}\n\n/* End: Progress Bar */\n\n/* Start: Fullscreen */\n.mejs__fullscreen-button > button {\n    background-position: -80px 0;\n}\n\n.mejs__unfullscreen > button {\n    background-position: -100px 0;\n}\n\n/* End: Fullscreen */\n\n/* Start: Mute/Volume */\n.mejs__mute > button {\n    background-position: -60px 0;\n}\n\n.mejs__unmute > button {\n    background-position: -40px 0;\n}\n\n.mejs__volume-button {\n    position: relative;\n}\n\n.mejs__volume-button > .mejs__volume-slider {\n    display: none;\n    height: 115px;\n    width: 25px;\n    background: rgba(50, 50, 50, 0.7);\n    border-radius: 0;\n    top: -115px;\n    left: 5px;\n    z-index: 1;\n    position: absolute;\n    margin: 0;\n}\n\n.mejs__volume-button:hover {\n    border-radius: 0 0 4px 4px;\n}\n\n.mejs__volume-total {\n    position: absolute;\n    left: 11px;\n    top: 8px;\n    width: 2px;\n    height: 100px;\n    background: rgba(255, 255, 255, 0.5);\n    margin: 0;\n}\n\n.mejs__volume-current {\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    width: 100%;\n    height: 100%;\n    background: rgba(255, 255, 255, 0.9);\n    margin: 0;\n}\n\n.mejs__volume-handle {\n    position: absolute;\n    left: 0;\n    bottom: 100%;\n    width: 16px;\n    height: 6px;\n    margin: 0 0 -3px -7px;\n    background: rgba(255, 255, 255, 0.9);\n    cursor: ns-resize;\n    border-radius: 1px;\n}\n\n.mejs__horizontal-volume-slider {\n    height: 36px;\n    width: 56px;\n    position: relative;\n    display: block;\n    float: left;\n    vertical-align: middle;\n}\n\n.mejs__horizontal-volume-total {\n    position: absolute;\n    left: 0;\n    top: 16px;\n    width: 50px;\n    height: 8px;\n    margin: 0;\n    padding: 0;\n    font-size: 1px;\n    border-radius: 2px;\n    background: rgba(50, 50, 50, 0.8);\n}\n\n.mejs__horizontal-volume-current {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    font-size: 1px;\n    border-radius: 2px;\n    background: rgba(255, 255, 255, 0.8);\n}\n\n.mejs__horizontal-volume-handle {\n    display: none;\n}\n\n/* End: Mute/Volume */\n\n/* Start: Track (Captions and Chapters) */\n.mejs__captions-button, .mejs__chapters-button {\n    position: relative;\n}\n\n.mejs__captions-button > button {\n    background-position: -140px 0;\n}\n\n.mejs__chapters-button > button {\n    background-position: -180px 0;\n}\n\n.mejs__captions-button > .mejs__captions-selector, .mejs__chapters-button > .mejs__chapters-selector {\n    visibility: hidden;\n    position: absolute;\n    bottom: 40px;\n    right: -51px;\n    width: 85px;\n    background: rgba(50, 50, 50, 0.7);\n    border: solid 1px transparent;\n    padding: 0;\n    overflow: hidden;\n    border-radius: 0;\n}\n\n.mejs__chapters-button > .mejs__chapters-selector {\n    width: 110px;\n}\n\n.mejs__captions-button > .mejs__captions-selector, .mejs__chapters-button > .mejs__chapters-selector {\n    visibility: visible;\n}\n\n.mejs__captions-selector-list, .mejs__chapters-selector-list {\n    margin: 0;\n    padding: 0;\n    display: block;\n    list-style-type: none !important;\n    overflow: hidden;\n}\n\n.mejs__captions-selector-list-item, .mejs__chapters-selector-list-item {\n    margin: 0 0 6px 0;\n    padding: 0 10px;\n    list-style-type: none !important;\n    display: block;\n    color: #fff;\n    overflow: hidden;\n    cursor: pointer;\n}\n\n.mejs__captions-selector-list-item:hover, .mejs__chapters-selector-list-item:hover {\n    background-color: rgb(200, 200, 200) !important;\n    background-color: rgba(255, 255, 255, 0.4) !important;\n}\n\n.mejs__captions-selector-input, .mejs__chapters-selector-input {\n    clear: both;\n    float: left;\n    margin: 3px 3px 0 5px;\n    position: absolute;\n    left: -1000px;\n}\n\n.mejs__captions-selector-label, .mejs__chapters-selector-label {\n    width: 55px;\n    float: left;\n    padding: 4px 0 0 0;\n    line-height: 15px;\n    font-size: 10px;\n    cursor: pointer;\n}\n\n.mejs__captions-selected, .mejs__chapters-selected {\n    color: rgba(33, 248, 248, 1);\n}\n\n.mejs__captions-translations {\n    font-size: 10px;\n    margin: 0 0 5px 0;\n}\n\n.mejs__captions-layer {\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    text-align: center;\n    line-height: 20px;\n    font-size: 16px;\n    color: #fff;\n}\n\n.mejs__captions-layer a {\n    color: #fff;\n    text-decoration: underline;\n}\n\n.mejs__captions-layer[lang=ar] {\n    font-size: 20px;\n    font-weight: normal;\n}\n\n.mejs__captions-position {\n    position: absolute;\n    width: 100%;\n    bottom: 15px;\n    left: 0;\n}\n\n.mejs__captions-position-hover {\n    bottom: 35px;\n}\n\n.mejs__captions-text, .mejs__captions-text * {\n    padding: 0;\n    background: rgba(20, 20, 20, 0.5);\n    white-space: pre-wrap;\n    box-shadow: 5px 0 0 rgba(20, 20, 20, 0.5), -5px 0 0 rgba(20, 20, 20, 0.5);\n}\n\n.mejs__container.mejs__hide-cues video::-webkit-media-text-track-container {\n    display: none;\n}\n\n/* End: Track (Captions and Chapters) */\n\n/* Start: Error */\n.me_cannotplay a {\n    font-weight: bold;\n}\n\n.mejs__container .me_cannotplay a {\n    color: #fff;\n}\n\n.me_cannotplay span {\n    padding: 15px;\n    display: block;\n}\n\n/* End: Error */\n", ""]);
+exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\nnav {\n  margin: 2rem 0;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n\n.player-wrapper {\n  margin: 2rem 0;\n}\n\n.content-wrapper {\n  margin: 2rem 0;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".quality-selector {\n    position: absolute;\n    overflow: hidden;\n    background: rgba(28,28,28,0.9);\n    text-shadow: 0 0 2px rgba(0,0,0,.5);\n    margin:0;\n    padding:0;\n    width:10%;\n    color:white;\n    padding-top: 5px;\n    padding-bottom: 3px;\n    text-align:center;\n}\n\n.quality-choice {\n    padding: 4px 0 0 0;\n    line-height: 15px;\n    font-size:0.7em;\n    cursor: pointer;\n    display:none;\n    text-align:center;\n    \n}\n\n.quality-choice:hover {\n    background:grey;\n}\n\n.quality-selected {\n    color:rgba(33, 248, 248, 1)\n}\n\n.quality-settings {\n    font-size:0.7em;\n    cursor:pointer;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "/* Accessibility: hide screen reader texts (and prefer \"top\" for RTL languages).\nReference: http://blog.rrwd.nl/2015/04/04/the-screen-reader-text-class-why-and-how/ */\n.mejs__offscreen {\n    clip: rect(1px, 1px, 1px, 1px); /* IE8-IE11 - no support for clip-path */\n    clip-path: polygon(0px 0px, 0px 0px, 0px 0px, 0px 0px);\n    position: absolute !important;\n    height: 1px;\n    width: 1px;\n    overflow: hidden;\n}\n\n.mejs__container {\n    position: relative;\n    background: #000;\n    font-family: \"Helvetica\", Arial, serif;\n    text-align: left;\n    vertical-align: top;\n    text-indent: 0;\n    box-sizing: border-box;\n    min-width: 250px;\n}\n\n.mejs__container .mejs__video {\n    min-height: 140px;\n}\n\n.mejs__container * {\n    box-sizing: border-box;\n}\n\n/* Hide native play button from iOS to favor plugin button */\n.mejs__container video::-webkit-media-controls-start-playback-button {\n    display: none !important;\n    -webkit-appearance: none;\n}\n\n.mejs__fill-container,\n.mejs__fill-container .mejs__container {\n    width: 100%;\n    height: 100%;\n}\n\n.mejs__fill-container {\n    overflow: hidden;\n    position: relative;\n    margin: 0 auto;\n    background: transparent;\n}\n\n.mejs__container:focus {\n    outline: none;\n}\n\n.mejs__iframe-overlay {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n}\n\n.mejs__embed,\n.mejs__embed body {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    background: #000;\n    overflow: hidden;\n}\n\n.mejs__fullscreen {\n    overflow: hidden !important;\n}\n\n.mejs__container-fullscreen {\n    position: fixed;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    overflow: hidden;\n    z-index: 1000;\n}\n\n.mejs__container-fullscreen .mejs__mediaelement,\n.mejs__container-fullscreen video {\n    width: 100% !important;\n    height: 100% !important;\n}\n\n.mejs__clear {\n    clear: both;\n}\n\n/* Start: LAYERS */\n.mejs__background {\n    position: absolute;\n    top: 0;\n    left: 0;\n}\n\n.mejs__mediaelement {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    z-index: 0;\n}\n\n.mejs__poster {\n    position: absolute;\n    top: 0;\n    left: 0;\n    background-size: contain;\n    background-position: 50% 50%;\n    background-repeat: no-repeat;\n    z-index: 1;\n}\n\n:root .mejs__poster-img {\n    display: none;\n}\n\n.mejs__poster-img {\n    border: 0;\n    padding: 0;\n}\n\n.mejs__overlay {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n}\n\n.mejs__layer {\n    z-index: 1;\n}\n\n.mejs__overlay-play {\n    cursor: pointer;\n}\n\n.mejs__overlay-button {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    width: 80px;\n    height: 80px;\n    margin: -40px 0 0 -40px;\n    background: url(" + __webpack_require__(3) + ") no-repeat;\n    background-position: 0 -39px;\n    overflow: hidden;\n    z-index: 1;\n}\n\n.mejs__overlay:hover > .mejs__overlay-button {\n    background-position: -80px -39px;\n}\n\n.mejs__overlay-loading {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    width: 80px;\n    height: 80px;\n    margin: -40px 0 0 -40px;\n}\n\n.mejs__overlay-loading-bg-img {\n    display: block;\n    width: 80px;\n    height: 80px;\n    background: transparent url(" + __webpack_require__(3) + ") -160px -40px no-repeat;\n    -webkit-animation: mejs-loading-spinner 1s linear infinite;\n    -moz-animation: mejs-loading-spinner 1s linear infinite;\n    animation: mejs-loading-spinner 1s linear infinite;\n    z-index: 1;\n}\n\n@-moz-keyframes mejs-loading-spinner {\n    100% {\n        -moz-transform: rotate(360deg);\n    }\n}\n\n@-webkit-keyframes mejs-loading-spinner {\n    100% {\n        -webkit-transform: rotate(360deg);\n    }\n}\n\n@keyframes mejs-loading-spinner {\n    100% {\n        -webkit-transform: rotate(360deg);\n        transform: rotate(360deg);\n    }\n}\n\n/* End: LAYERS */\n\n/* Start: CONTROL BAR */\n.mejs__controls {\n    position: absolute;\n    list-style-type: none;\n    margin: 0;\n    padding: 0 10px;\n    bottom: 0;\n    left: 0;\n    height: 40px;\n    width: 100%;\n    z-index: 1;\n}\n\n.mejs__controls:not([style*=\"display: none\"]) {\n    background: rgba(255, 0, 0, 0.7);\n    background: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.35));\n}\n\n.mejs__button,\n.mejs__time,\n.mejs__time-rail {\n    float: left;\n    margin: 0;\n    width: 32px;\n    height: 40px;\n    font-size: 10px;\n    line-height: 10px;\n}\n\n.mejs__button > button {\n    cursor: pointer;\n    display: block;\n    font-size: 0;\n    line-height: 0;\n    text-decoration: none;\n    margin: 10px 6px;\n    padding: 0;\n    position: absolute;\n    height: 20px;\n    width: 20px;\n    border: 0;\n    background: transparent url(" + __webpack_require__(3) + ");\n    overflow: hidden;\n}\n\n/* :focus for accessibility */\n.mejs__button > button:focus {\n    outline: dotted 1px #999;\n}\n\n.mejs__container-keyboard-inactive a,\n.mejs__container-keyboard-inactive a:focus,\n.mejs__container-keyboard-inactive button,\n.mejs__container-keyboard-inactive button:focus,\n.mejs__container-keyboard-inactive [role=slider],\n.mejs__container-keyboard-inactive [role=slider]:focus {\n    outline: 0;\n}\n\n/* End: CONTROL BAR */\n\n/* Start: Time (Current / Duration) */\n.mejs__time {\n    color: #fff;\n    display: block;\n    height: 24px;\n    width: auto;\n    font-weight: bold;\n    font-size: 11px;\n    padding: 16px 6px 0 6px;\n    overflow: hidden;\n    text-align: center;\n    box-sizing: content-box;\n}\n\n/* End: Time (Current / Duration) */\n\n/* Start: Play/Pause/Stop */\n.mejs__play > button {\n    background-position: 0 0;\n}\n\n.mejs__pause > button {\n    background-position: -20px 0;\n}\n\n.mejs__replay > button {\n    background-position: -160px 0;\n}\n\n/* End: Play/Pause/Stop */\n\n/* Start: Progress Bar */\n.mejs__time-rail {\n    direction: ltr;\n    width: 200px;\n    padding-top: 10px;\n    height: 40px;\n    position: relative;\n    margin: 0 10px;\n}\n\n.mejs__time-total,\n.mejs__time-buffering,\n.mejs__time-loaded,\n.mejs__time-current,\n.mejs__time-float,\n.mejs__time-hovered,\n.mejs__time-float-current,\n.mejs__time-float-corner,\n.mejs__time-marker {\n    cursor: pointer;\n    display: block;\n    position: absolute;\n    height: 10px;\n    border-radius: 2px;\n}\n\n.mejs__time-total {\n    margin: 5px 0 0 0;\n    background: rgba(255, 255, 255, 0.3);\n    width: 100%;\n}\n\n.mejs__time-buffering {\n    width: 100%;\n    background: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);\n    background-size: 15px 15px;\n    animation: buffering-stripes 2s linear infinite;\n}\n\n@keyframes buffering-stripes {\n    from {\n        background-position: 0 0;\n    }\n    to {\n        background-position: 30px 0;\n    }\n}\n\n.mejs__time-loaded {\n    background: rgba(255, 255, 255, .3);\n}\n\n.mejs__time-current, .mejs__time-handle-content {\n    background: rgba(255, 255, 255, 0.9);\n}\n\n.mejs__time-hovered {\n    background: rgba(255, 255, 255, .5);\n    z-index: 10;\n}\n\n.mejs__time-hovered.negative {\n    background: rgba(0, 0, 0, 0.2);\n}\n\n.mejs__time-current, .mejs__time-buffering, .mejs__time-loaded, .mejs__time-hovered {\n    width: 100%;\n    left: 0;\n    -ms-transform-origin: 0 0;\n    transform-origin: 0 0;\n    -ms-transform: scaleX(0);\n    transform: scaleX(0);\n    transition: .15s ease-in all;\n}\n\n.mejs__time-hovered {\n    transition: height .1s cubic-bezier(0.44, 0.0, 1, 1);\n}\n\n.mejs__time-hovered.no-hover {\n    -ms-transform: scaleX(0) !important;\n    transform: scaleX(0) !important;\n}\n\n.mejs__time-handle, .mejs__time-handle-content {\n    position: absolute;\n    cursor: pointer;\n    width: 10px;\n    height: 10px;\n    border: 4px solid transparent;\n    z-index: 11;\n    left: 0;\n    -ms-transform: translateX(0px);\n    transform: translateX(0px);\n}\n\n.mejs__time-handle-content {\n    left: -4px;\n    border: 4px solid rgba(255, 255, 255, 0.9);\n    -ms-transform: scale(0);\n    transform: scale(0);\n    top: -4px;\n    border-radius: 50%;\n}\n\n.mejs__time-rail:hover .mejs__time-handle-content, .mejs__time-rail .mejs__time-handle-content:focus, .mejs__time-rail .mejs__time-handle-content:active {\n    -ms-transform: scale(1);\n    transform: scale(1);\n}\n\n.mejs__time-float {\n    position: absolute;\n    display: none;\n    background: #eee;\n    width: 36px;\n    height: 17px;\n    border: solid 1px #333;\n    top: -26px;\n    margin-left: -18px;\n    text-align: center;\n    color: #111;\n}\n\n.mejs__time-float-current {\n    margin: 2px;\n    width: 30px;\n    display: block;\n    text-align: center;\n    left: 0;\n}\n\n.mejs__time-float-corner {\n    position: absolute;\n    display: block;\n    width: 0;\n    height: 0;\n    line-height: 0;\n    border: solid 5px #eee;\n    border-color: #eee transparent transparent transparent;\n    border-radius: 0;\n    top: 15px;\n    left: 13px;\n}\n\n.mejs__long-video .mejs__time-float {\n    width: 64px;\n    margin-left: -23px;\n}\n\n.mejs__long-video .mejs__time-float-current {\n    width: 60px;\n}\n\n.mejs__long-video .mejs__time-float-corner {\n    left: 18px;\n}\n\n.mejs__broadcast {\n    color: #fff;\n    position: absolute;\n    width: 100%;\n    height: 10px;\n    top: 15px;\n}\n\n/* End: Progress Bar */\n\n/* Start: Fullscreen */\n.mejs__fullscreen-button > button {\n    background-position: -80px 0;\n}\n\n.mejs__unfullscreen > button {\n    background-position: -100px 0;\n}\n\n/* End: Fullscreen */\n\n/* Start: Mute/Volume */\n.mejs__mute > button {\n    background-position: -60px 0;\n}\n\n.mejs__unmute > button {\n    background-position: -40px 0;\n}\n\n.mejs__volume-button {\n    position: relative;\n}\n\n.mejs__volume-button > .mejs__volume-slider {\n    display: none;\n    height: 115px;\n    width: 25px;\n    background: rgba(50, 50, 50, 0.7);\n    border-radius: 0;\n    top: -115px;\n    left: 5px;\n    z-index: 1;\n    position: absolute;\n    margin: 0;\n}\n\n.mejs__volume-button:hover {\n    border-radius: 0 0 4px 4px;\n}\n\n.mejs__volume-total {\n    position: absolute;\n    left: 11px;\n    top: 8px;\n    width: 2px;\n    height: 100px;\n    background: rgba(255, 255, 255, 0.5);\n    margin: 0;\n}\n\n.mejs__volume-current {\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    width: 100%;\n    height: 100%;\n    background: rgba(255, 255, 255, 0.9);\n    margin: 0;\n}\n\n.mejs__volume-handle {\n    position: absolute;\n    left: 0;\n    bottom: 100%;\n    width: 16px;\n    height: 6px;\n    margin: 0 0 -3px -7px;\n    background: rgba(255, 255, 255, 0.9);\n    cursor: ns-resize;\n    border-radius: 1px;\n}\n\n.mejs__horizontal-volume-slider {\n    height: 36px;\n    width: 56px;\n    position: relative;\n    display: block;\n    float: left;\n    vertical-align: middle;\n}\n\n.mejs__horizontal-volume-total {\n    position: absolute;\n    left: 0;\n    top: 16px;\n    width: 50px;\n    height: 8px;\n    margin: 0;\n    padding: 0;\n    font-size: 1px;\n    border-radius: 2px;\n    background: rgba(50, 50, 50, 0.8);\n}\n\n.mejs__horizontal-volume-current {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    font-size: 1px;\n    border-radius: 2px;\n    background: rgba(255, 255, 255, 0.8);\n}\n\n.mejs__horizontal-volume-handle {\n    display: none;\n}\n\n/* End: Mute/Volume */\n\n/* Start: Track (Captions and Chapters) */\n.mejs__captions-button, .mejs__chapters-button {\n    position: relative;\n}\n\n.mejs__captions-button > button {\n    background-position: -140px 0;\n}\n\n.mejs__chapters-button > button {\n    background-position: -180px 0;\n}\n\n.mejs__captions-button > .mejs__captions-selector, .mejs__chapters-button > .mejs__chapters-selector {\n    visibility: hidden;\n    position: absolute;\n    bottom: 40px;\n    right: -51px;\n    width: 85px;\n    background: rgba(50, 50, 50, 0.7);\n    border: solid 1px transparent;\n    padding: 0;\n    overflow: hidden;\n    border-radius: 0;\n}\n\n.mejs__chapters-button > .mejs__chapters-selector {\n    width: 110px;\n}\n\n.mejs__captions-button > .mejs__captions-selector, .mejs__chapters-button > .mejs__chapters-selector {\n    visibility: visible;\n}\n\n.mejs__captions-selector-list, .mejs__chapters-selector-list {\n    margin: 0;\n    padding: 0;\n    display: block;\n    list-style-type: none !important;\n    overflow: hidden;\n}\n\n.mejs__captions-selector-list-item, .mejs__chapters-selector-list-item {\n    margin: 0 0 6px 0;\n    padding: 0 10px;\n    list-style-type: none !important;\n    display: block;\n    color: #fff;\n    overflow: hidden;\n    cursor: pointer;\n}\n\n.mejs__captions-selector-list-item:hover, .mejs__chapters-selector-list-item:hover {\n    background-color: rgb(200, 200, 200) !important;\n    background-color: rgba(255, 255, 255, 0.4) !important;\n}\n\n.mejs__captions-selector-input, .mejs__chapters-selector-input {\n    clear: both;\n    float: left;\n    margin: 3px 3px 0 5px;\n    position: absolute;\n    left: -1000px;\n}\n\n.mejs__captions-selector-label, .mejs__chapters-selector-label {\n    width: 55px;\n    float: left;\n    padding: 4px 0 0 0;\n    line-height: 15px;\n    font-size: 10px;\n    cursor: pointer;\n}\n\n.mejs__captions-selected, .mejs__chapters-selected {\n    color: rgba(33, 248, 248, 1);\n}\n\n.mejs__captions-translations {\n    font-size: 10px;\n    margin: 0 0 5px 0;\n}\n\n.mejs__captions-layer {\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    text-align: center;\n    line-height: 20px;\n    font-size: 16px;\n    color: #fff;\n}\n\n.mejs__captions-layer a {\n    color: #fff;\n    text-decoration: underline;\n}\n\n.mejs__captions-layer[lang=ar] {\n    font-size: 20px;\n    font-weight: normal;\n}\n\n.mejs__captions-position {\n    position: absolute;\n    width: 100%;\n    bottom: 15px;\n    left: 0;\n}\n\n.mejs__captions-position-hover {\n    bottom: 35px;\n}\n\n.mejs__captions-text, .mejs__captions-text * {\n    padding: 0;\n    background: rgba(20, 20, 20, 0.5);\n    white-space: pre-wrap;\n    box-shadow: 5px 0 0 rgba(20, 20, 20, 0.5), -5px 0 0 rgba(20, 20, 20, 0.5);\n}\n\n.mejs__container.mejs__hide-cues video::-webkit-media-text-track-container {\n    display: none;\n}\n\n/* End: Track (Captions and Chapters) */\n\n/* Start: Error */\n.me_cannotplay a {\n    font-weight: bold;\n}\n\n.mejs__container .me_cannotplay a {\n    color: #fff;\n}\n\n.me_cannotplay span {\n    padding: 15px;\n    display: block;\n}\n\n/* End: Error */\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -20704,17 +20905,17 @@ _mejs2.default.Utils.convertSMPTEtoSeconds = convertSMPTEtoSeconds;
 
 },{"6":6}]},{},[27,5,4,14,21,18,17,19,20,22,15,16,8,9,10,11,12,13]);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(15);
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 
@@ -20809,13 +21010,13 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(12);
+var content = __webpack_require__(13);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -20823,7 +21024,38 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(2)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!./quality-selector.css", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!./quality-selector.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(14);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(2)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -20840,7 +21072,7 @@ if(false) {
 }
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports) {
 
 var g;
