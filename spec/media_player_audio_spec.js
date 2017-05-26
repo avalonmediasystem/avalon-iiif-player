@@ -300,7 +300,6 @@ describe('an Avalon media audio player', () => {
     setFixtures(`<div id='media-player-audio-target'></div>`)
   })
 
-  /*
   it('creates HTML5 audio markup with default values when given a IIIF-AV manifest', () => {
     var av = new Avalon()
     var mediaPlayer = av.createAudioPlayer({
@@ -310,11 +309,13 @@ describe('an Avalon media audio player', () => {
     })
     var mediaPlayerMarkup = document.getElementById('media-player-audio-target').innerHTML
 
-    //console.log('mediaPlayerMarkup', mediaPlayerMarkup)
+    console.log('mediaPlayerMarkup:', mediaPlayerMarkup)
     expect(mediaPlayerMarkup).toContain('<ul class="canvas-range">')
+    /*
     expect($('#media-player-audio-target')).toContainElement('section.ui')
     expect($('#iiif-av-player > audio')).toHaveAttr('src', 'http://dlib.indiana.edu/iiif_av/mahler-symphony-3/CD1/medium/128Kbps.mp4')
     expect($('.mejs__container')).toHaveAttr('style', 'width: 100%; height: 50px;')
+    */
     // This is failing in PhantomJS, but not Chrome
     // expect($('#iiif-av-player > audio > source')).toHaveAttr('data-quality', 'Medium')
   })
@@ -329,7 +330,8 @@ describe('an Avalon media audio player', () => {
     var mediaPlayerMarkup = document.getElementById('media-player-audio-target').innerHTML
     // This is failing in PhantomJS, but not Chrome
     // expect($('#iiif-av-player > audio > source')).toHaveAttr('data-quality', 'High')
-    expect($('#iiif-av-player')).toContainElement('audio')
+
+    // expect($('#iiif-av-player')).toContainElement('audio')
   })
-  */
+
 })
