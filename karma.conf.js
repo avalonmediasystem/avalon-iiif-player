@@ -15,8 +15,8 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       'node_modules/jquery/dist/jquery.slim.min.js',
-      'spec/**/*_spec.js',
       'spec/helpers/jasmine-jquery.js',
+      'spec/**/*_spec.js',
       'spec/fixtures/*.js'
     ],
 
@@ -49,7 +49,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

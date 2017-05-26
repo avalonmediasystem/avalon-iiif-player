@@ -311,11 +311,9 @@ describe('an Avalon media audio player', () => {
 
     console.log('mediaPlayerMarkup:', mediaPlayerMarkup)
     expect(mediaPlayerMarkup).toContain('<ul class="canvas-range">')
-    /*
     expect($('#media-player-audio-target')).toContainElement('section.ui')
     expect($('#iiif-av-player > audio')).toHaveAttr('src', 'http://dlib.indiana.edu/iiif_av/mahler-symphony-3/CD1/medium/128Kbps.mp4')
     expect($('.mejs__container')).toHaveAttr('style', 'width: 100%; height: 50px;')
-    */
     // This is failing in PhantomJS, but not Chrome
     // expect($('#iiif-av-player > audio > source')).toHaveAttr('data-quality', 'Medium')
   })
@@ -331,7 +329,7 @@ describe('an Avalon media audio player', () => {
     // This is failing in PhantomJS, but not Chrome
     // expect($('#iiif-av-player > audio > source')).toHaveAttr('data-quality', 'High')
 
-    // expect($('#iiif-av-player')).toContainElement('audio')
+    expect($('#iiif-av-player')).toContainElement('audio')
   })
 
 })
