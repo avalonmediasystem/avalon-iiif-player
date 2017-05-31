@@ -10740,8 +10740,134 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _jquery = __webpack_require__(1);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _audioPlayer = __webpack_require__(8);
+
+var _audioPlayer2 = _interopRequireDefault(_audioPlayer);
+
+var _videoPlayer = __webpack_require__(10);
+
+var _videoPlayer2 = _interopRequireDefault(_videoPlayer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/** This class will look for certain data attributes in page markup
+ * and then initiqlize a player. It uses an XHR request to get the
+ * III-AV JSON.
+ * @class Avalon
+ */
+var Avalon = function () {
+  function Avalon() {
+    _classCallCheck(this, Avalon);
+  }
+
+  _createClass(Avalon, [{
+    key: 'initialize',
+    value: function initialize() {
+      /**
+      * this method checks the page markup for a iiif-av data attribute
+      *
+      * @method Avalon#initialize
+      */
+      if ((0, _jquery2.default)('[data-iiifav-source]').length > 0) {
+        this.mediaPlayerVideo();
+      }
+      if ((0, _jquery2.default)('[data-iiifav-audio-source]').length > 0) {
+        this.mediaPlayerAudio();
+      }
+    }
+  }, {
+    key: 'createAudioPlayer',
+    value: function createAudioPlayer(options) {
+      /**
+       * this method will initlize create an AudioPlayer instance
+       * @method Avalon#createAudioPlayer
+       */
+      return new _audioPlayer2.default(options);
+    }
+  }, {
+    key: 'createVideoPlayer',
+    value: function createVideoPlayer(options) {
+      /**
+      * this method will initlize create an VideoPlayer instance
+      * @method Avalon#createVideoPlayer
+      */
+      return new _videoPlayer2.default(options);
+    }
+  }, {
+    key: 'mediaPlayerAudio',
+    value: function mediaPlayerAudio(manifestUrl) {
+      var _this = this;
+
+      /**
+      * this method reads the manifest via XHR and then adds the player to the page
+      * @method Avalon#mediaPlayerAudio
+      */
+      var options = {};
+      var manifestSource = manifestUrl || (0, _jquery2.default)('[data-iiifav-audio-source]').data().iiifavAudioSource;
+      options.audio = {};
+      options.target = (0, _jquery2.default)('[data-iiifav-audio-source]').attr('id');
+
+      _jquery2.default.get(manifestSource, function (manifest) {
+        var json = '';
+        try {
+          json = JSON.parse(manifest);
+        } catch (e) {
+          json = manifest;
+        }
+        options.manifest = json;
+        _this.createAudioPlayer(options);
+      });
+    }
+  }, {
+    key: 'mediaPlayerVideo',
+    value: function mediaPlayerVideo() {
+      var _this2 = this;
+
+      /**
+      * this method reads the manifest via XHR and then adds the player to the page
+      * @method Avalon#mediaPlayerVideo
+      */
+      var options = {};
+      var manifestSource = (0, _jquery2.default)('[data-iiifav-source]').data().iiifavSource;
+      options.target = (0, _jquery2.default)('[data-iiifav-source]').attr('id');
+
+      _jquery2.default.get(manifestSource, function (manifest) {
+        options.manifest = manifest;
+        _this2.createVideoPlayer(options);
+      });
+    }
+  }]);
+
+  return Avalon;
+}();
+
+exports.default = Avalon;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/** Class representing a HashHandler
+ * this class is used for functionality based on the hash in the url
+ * @class HashHandler
+ */
 var HashHandler = function () {
   function HashHandler(options) {
     _classCallCheck(this, HashHandler);
@@ -10759,6 +10885,7 @@ var HashHandler = function () {
 
       /**
        * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
+       * @method HashHandler#bindHashChange
        **/
       // Get the player instance
       this.player = document.getElementById('iiif-av-player');
@@ -10773,6 +10900,9 @@ var HashHandler = function () {
   }, {
     key: 'canvasesInManifest',
     value: function canvasesInManifest() {
+      /**
+      * @method HashHandler#canvasesInManifest
+      **/
       return this.instance.manifest.sequences && this.instance.manifest.sequences[0].canvases;
     }
   }, {
@@ -10782,6 +10912,7 @@ var HashHandler = function () {
 
       /**
        * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
+       * @method HashHandler#playFromHash
        **/
       var options = this.processHash(hash);
       var canvasesExist = this.canvasesInManifest();
@@ -10821,10 +10952,12 @@ var HashHandler = function () {
     key: 'processHash',
     value: function processHash(hash) {
       /**
+       *
        * This method processes a window.location.hash and creates an object.
        * It can take any number of parameters. Strings at even locations are keys
        * and odd locations are values.
        * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
+       * @method HashHandler#processHash
        * @param {string} hash - a window.location.hash
        * @return {object}
        **/
@@ -10849,7 +10982,7 @@ var HashHandler = function () {
 exports.default = HashHandler;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10931,6 +11064,12 @@ var MediaPlayer = function () {
   }, {
     key: 'getQualityChoices',
     value: function getQualityChoices(canvas) {
+      /**
+       * this method retunrs an array containing the quality choices that are present in the manifest
+       *
+       * @method MediaPlayer#getQualityChoices
+       * @return {array} choices
+       */
       var choices = [];
       var content = canvas ? canvas.content : this.manifest.content;
 
@@ -11143,98 +11282,6 @@ var MediaPlayer = function () {
 exports.default = MediaPlayer;
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(1);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _audioPlayer = __webpack_require__(8);
-
-var _audioPlayer2 = _interopRequireDefault(_audioPlayer);
-
-var _videoPlayer = __webpack_require__(10);
-
-var _videoPlayer2 = _interopRequireDefault(_videoPlayer);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Avalon = function () {
-  function Avalon() {
-    _classCallCheck(this, Avalon);
-  }
-
-  _createClass(Avalon, [{
-    key: 'initialize',
-    value: function initialize() {
-      if ((0, _jquery2.default)('[data-iiifav-source]').length > 0) {
-        this.mediaPlayerVideo();
-      }
-      if ((0, _jquery2.default)('[data-iiifav-audio-source]').length > 0) {
-        this.mediaPlayerAudio();
-      }
-    }
-  }, {
-    key: 'createAudioPlayer',
-    value: function createAudioPlayer(options) {
-      return new _audioPlayer2.default(options);
-    }
-  }, {
-    key: 'createVideoPlayer',
-    value: function createVideoPlayer(options) {
-      return new _videoPlayer2.default(options);
-    }
-  }, {
-    key: 'mediaPlayerAudio',
-    value: function mediaPlayerAudio() {
-      var _this = this;
-
-      var options = {};
-      var manifestSource = (0, _jquery2.default)('[data-iiifav-audio-source]').data().iiifavAudioSource;
-      console.log(manifestSource);
-      options.audio = {};
-      options.target = (0, _jquery2.default)('[data-iiifav-audio-source]').attr('id');
-
-      _jquery2.default.get(manifestSource, function (manifest) {
-        options.manifest = manifest;
-        _this.createAudioPlayer(options);
-      });
-    }
-  }, {
-    key: 'mediaPlayerVideo',
-    value: function mediaPlayerVideo() {
-      var _this2 = this;
-
-      var options = {};
-      var manifestSource = (0, _jquery2.default)('[data-iiifav-source]').data().iiifavSource;
-      console.log(manifestSource);
-      options.target = (0, _jquery2.default)('[data-iiifav-source]').attr('id');
-
-      _jquery2.default.get(manifestSource, function (manifest) {
-        options.manifest = manifest;
-        _this2.createVideoPlayer(options);
-      });
-    }
-  }]);
-
-  return Avalon;
-}();
-
-exports.default = Avalon;
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11278,11 +11325,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _mediaPlayer = __webpack_require__(5);
+var _avalon = __webpack_require__(4);
+
+var _avalon2 = _interopRequireDefault(_avalon);
+
+var _mediaPlayer = __webpack_require__(6);
 
 var _mediaPlayer2 = _interopRequireDefault(_mediaPlayer);
 
-var _hashHandler = __webpack_require__(4);
+var _hashHandler = __webpack_require__(5);
 
 var _hashHandler2 = _interopRequireDefault(_hashHandler);
 
@@ -11300,9 +11351,11 @@ var AudioPlayer = function (_MediaPlayer) {
   function AudioPlayer(options) {
     _classCallCheck(this, AudioPlayer);
 
-    // Default use the first sequence to grab canvases
     var _this = _possibleConstructorReturn(this, (AudioPlayer.__proto__ || Object.getPrototypeOf(AudioPlayer)).call(this, options));
 
+    _this.avalon = new _avalon2.default();
+
+    // Default use the first sequence to grab canvases
     _this.canvases = options.manifest.sequences[0].canvases;
     _this.currentCanvas = _this.getCanvas(_this.canvases[0].id);
     _this.hashHandler = new _hashHandler2.default({
@@ -11369,12 +11422,32 @@ var AudioPlayer = function (_MediaPlayer) {
           var audioElement = '<audio controls id="iiif-av-player" width="100%">\n              <source src="' + item.id + '" type="audio/mp3" data-quality="' + item.label + '">\n            </audio>';
           var audioStructure = _this2.createStructure(_this2.manifest['structures'], []);
 
-          _this2.target.innerHTML = '\n            <section class="ui stackable two column grid">\n              <article class="six wide column">' + audioStructure + '</article>\n              <article class="ten wide column player-wrapper">' + audioElement + '</article>\n            </section>\n          ';
+          _this2.target.innerHTML = '\n            <div class="ui fluid action input manifest-url-wrapper">\n              <input type="text" placeholder="Manifest URL..." id="manifest-url">\n              <button class="ui button" id="manifest-url-button">Submit</button>\n            </div>\n            <section class="ui stackable two column grid">\n              <article class="six wide column">' + audioStructure + '</article>\n              <article class="ten wide column player-wrapper">' + audioElement + '</article>\n            </section>\n          ';
           var audioPlayer = new MediaElementPlayer('iiif-av-player', _this2.getAudioConfig()); // eslint-disable-line
 
           // Start listening for changes in the hash
           _this2.hashHandler.bindHashChange();
+
+          _this2.addEventListeners();
         }
+      });
+    }
+
+    /**
+     * Add event listeners
+     * @method AudioPlayer#addEventListeners
+     * return {void}
+     */
+
+  }, {
+    key: 'addEventListeners',
+    value: function addEventListeners() {
+      var avalon = this.avalon;
+
+      // Add event listener for manifest url button click
+      document.getElementById('manifest-url-button').addEventListener('click', function submitManifest(e) {
+        var url = document.getElementById('manifest-url');
+        avalon.mediaPlayerAudio(url.value);
       });
     }
   }]);
@@ -11416,17 +11489,33 @@ var QualitySelector = function () {
 
   _createClass(QualitySelector, [{
     key: 'changeQualityMarkup',
+
+    /**
+     * this class creates a UI compontent that controls the quality of the video
+     *
+     * @class QualitySelector
+     */
     value: function changeQualityMarkup(markup, original, replacement) {
       var re = new RegExp(original, 'g');return markup.replace(re, replacement);
     }
   }, {
     key: 'currentQuality',
     value: function currentQuality(windowLocationHash) {
+      /**
+       * this method returns the current quality if it's present in the URL hash
+       *
+       * @method QualitySelector#currentQuality
+       */
       return windowLocationHash.split('/quality/')[1];
     }
   }, {
     key: 'qualityChoices',
     value: function qualityChoices(obj, stack, choices) {
+      /**
+       * this method returns the quality choices in the manifest
+       *
+       * @method QualitySelector#qualityChoices
+       */
       for (var property in obj) {
         if (obj.hasOwnProperty(property)) {
           if (_typeof(obj[property]) === 'object') {
@@ -11442,6 +11531,11 @@ var QualitySelector = function () {
   }, {
     key: 'renderChoices',
     value: function renderChoices(ch) {
+      /**
+       * this method will render markup containing an html list of the quality choices
+       *
+       * @method QualitySelector#renderChoices
+       */
       console.log(ch);
       var choiceList = ch.map(function (choice) {
         return '<li class=\'quality-choice\' data-quality-choice=\'' + choice.id + '\'>' + choice.label + '</li>';
@@ -11453,6 +11547,11 @@ var QualitySelector = function () {
   }, {
     key: 'bindSettings',
     value: function bindSettings() {
+      /**
+       * this method toggles the display of the list of choices
+       *
+       * @method QualitySelector#bindSettings
+       */
       (0, _jquery2.default)('body').on('click', '.quality-settings', function (event) {
         (0, _jquery2.default)('.quality-choice').toggle();
       });
@@ -11462,6 +11561,11 @@ var QualitySelector = function () {
     value: function bindClick() {
       var _this = this;
 
+      /**
+       * this method controls the behavior of the quality selection interface
+       *
+       * @method QualitySelector#bindClick
+       */
       (0, _jquery2.default)('body').on('click', '.quality-choice', function (event) {
         (0, _jquery2.default)('.quality-choice').removeClass('quality-selected');
         (0, _jquery2.default)('.quality-choice').toggle();
@@ -11504,11 +11608,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _mediaPlayer = __webpack_require__(5);
+var _mediaPlayer = __webpack_require__(6);
 
 var _mediaPlayer2 = _interopRequireDefault(_mediaPlayer);
 
-var _hashHandler = __webpack_require__(4);
+var _hashHandler = __webpack_require__(5);
 
 var _hashHandler2 = _interopRequireDefault(_hashHandler);
 
@@ -11576,7 +11680,7 @@ exports.default = VideoPlayer;
 "use strict";
 
 
-var _avalon = __webpack_require__(6);
+var _avalon = __webpack_require__(4);
 
 var _avalon2 = _interopRequireDefault(_avalon);
 
@@ -11596,7 +11700,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\nnav {\n  margin: 2rem 0;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n\n.player-wrapper {\n  margin: 2rem 0;\n}\n\n.content-wrapper {\n  margin: 2rem 0;\n}\n", ""]);
+exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\nnav {\n  margin: 2rem 0;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n\n.player-wrapper {\n  margin: 2rem 0;\n}\n\n.content-wrapper {\n  margin: 2rem 0;\n}\n\n.manifest-url-wrapper {\n  padding: 2rem 0;\n}\n", ""]);
 
 // exports
 

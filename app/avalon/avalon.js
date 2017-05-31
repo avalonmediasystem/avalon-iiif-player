@@ -37,18 +37,24 @@ export default class Avalon {
     return new VideoPlayer(options)
   }
 
-  mediaPlayerAudio () {
+  mediaPlayerAudio (manifestUrl) {
      /**
      * this method reads the manifest via XHR and then adds the player to the page
      * @method Avalon#mediaPlayerAudio
      */
     var options = {}
-    var manifestSource = $('[data-iiifav-audio-source]').data().iiifavAudioSource
+    var manifestSource = manifestUrl || $('[data-iiifav-audio-source]').data().iiifavAudioSource
     options.audio = {}
     options.target = $('[data-iiifav-audio-source]').attr('id')
 
     $.get(manifestSource, (manifest) => {
-      options.manifest = manifest
+      let json = ''
+      try {
+        json = JSON.parse(manifest)
+      } catch (e) {
+        json = manifest
+      }
+      options.manifest = json
       this.createAudioPlayer(options)
     })
   }
