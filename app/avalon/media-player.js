@@ -47,6 +47,12 @@ export default class MediaPlayer {
   }
 
   getQualityChoices (canvas) {
+    /**
+     * this method retunrs an array containing the quality choices that are present in the manifest
+     *
+     * @method MediaPlayer#getQualityChoices
+     * @return {array} choices
+     */
     let choices = []
     let content = (canvas) ? canvas.content : this.manifest.content
 
