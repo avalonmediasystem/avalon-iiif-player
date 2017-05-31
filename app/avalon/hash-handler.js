@@ -3,12 +3,16 @@ export default class HashHandler {
     this.currentCanvasIndex = undefined
     this.instance = options.instance
     this.qualityChoices = options.qualityChoices
+    this.player = undefined
   }
 
   bindHashChange () {
     /**
      * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
      **/
+    // Get the player instance
+    this.player = document.getElementById('iiif-av-player')
+
     if (window.location.hash.indexOf('#avalon') >= 0) {
       this.playFromHash(window.location.hash)
     }
@@ -25,9 +29,19 @@ export default class HashHandler {
     /**
      * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
      **/
-    var mediaPlayer = document.getElementById('iiif-av-player')
     var options = this.processHash(hash)
     let canvasesExist = this.canvasesInManifest()
+    let src = ''
+
+    // Safari will only setCurrentTime() after 'canplay' event is fired
+    let handler = (e) => {
+      // Ensure this handler only fires once
+      this.player.removeEventListener(e.type, handler)
+      this.player.setCurrentTime(parseInt(options.start))
+      this.player.play()
+    }
+
+    this.player.addEventListener('canplay', handler)
 
     // Is canvas in the hash different from canvas currently in the player?
     if (canvasesExist && (options.canvas !== this.currentCanvasIndex)) {
@@ -37,14 +51,17 @@ export default class HashHandler {
       this.currentCanvasIndex = options.canvas
     }
 
+    // Find the new source media file
     this.qualityChoices.forEach((choice) => {
       if (choice.label === options.quality) {
-        mediaPlayer.setSrc(choice.id)
+        src = choice.id
       }
     })
 
-    mediaPlayer.setCurrentTime(options.start)
-    mediaPlayer.play()
+    // Load the new source file
+    this.player.pause()
+    this.player.setSrc(src)
+    this.player.load()
   }
 
   processHash (hash) {
@@ -69,4 +86,5 @@ export default class HashHandler {
       return result
     }, {})
   }
+
 }

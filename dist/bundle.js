@@ -10749,6 +10749,7 @@ var HashHandler = function () {
     this.currentCanvasIndex = undefined;
     this.instance = options.instance;
     this.qualityChoices = options.qualityChoices;
+    this.player = undefined;
   }
 
   _createClass(HashHandler, [{
@@ -10759,6 +10760,9 @@ var HashHandler = function () {
       /**
        * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
        **/
+      // Get the player instance
+      this.player = document.getElementById('iiif-av-player');
+
       if (window.location.hash.indexOf('#avalon') >= 0) {
         this.playFromHash(window.location.hash);
       }
@@ -10774,12 +10778,24 @@ var HashHandler = function () {
   }, {
     key: 'playFromHash',
     value: function playFromHash(hash) {
+      var _this2 = this;
+
       /**
        * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
        **/
-      var mediaPlayer = document.getElementById('iiif-av-player');
       var options = this.processHash(hash);
       var canvasesExist = this.canvasesInManifest();
+      var src = '';
+
+      // Safari will only setCurrentTime() after 'canplay' event is fired
+      var handler = function handler(e) {
+        // Ensure this handler only fires once
+        _this2.player.removeEventListener(e.type, handler);
+        _this2.player.setCurrentTime(parseInt(options.start));
+        _this2.player.play();
+      };
+
+      this.player.addEventListener('canplay', handler);
 
       // Is canvas in the hash different from canvas currently in the player?
       if (canvasesExist && options.canvas !== this.currentCanvasIndex) {
@@ -10789,14 +10805,17 @@ var HashHandler = function () {
         this.currentCanvasIndex = options.canvas;
       }
 
+      // Find the new source media file
       this.qualityChoices.forEach(function (choice) {
         if (choice.label === options.quality) {
-          mediaPlayer.setSrc(choice.id);
+          src = choice.id;
         }
       });
 
-      mediaPlayer.setCurrentTime(options.start);
-      mediaPlayer.play();
+      // Load the new source file
+      this.player.pause();
+      this.player.setSrc(src);
+      this.player.load();
     }
   }, {
     key: 'processHash',
@@ -11341,20 +11360,22 @@ var AudioPlayer = function (_MediaPlayer) {
       options.audio = options.audio || {};
       options.audio.quality = options.audio.quality || 'Medium';
 
-      if (audioItems.length > 0) {
-        audioItems.forEach(function (item) {
-          if (item.label === options.audio.quality) {
-            var audioElement = '<audio controls id="iiif-av-player" width="100%">\n              <source src="' + item.id + '" type="audio/mp3" data-quality="' + item.label + '">\n            </audio>';
-            var audioStructure = _this2.createStructure(_this2.manifest['structures'], []);
-
-            _this2.target.innerHTML = '\n            <section class="ui stackable two column grid">\n              <article class="six wide column">' + audioStructure + '</article>\n              <article class="ten wide column player-wrapper">' + audioElement + '</article>\n            </section>\n          ';
-            var audioPlayer = new MediaElementPlayer('iiif-av-player', _this2.getAudioConfig()); // eslint-disable-line
-
-            // Start listening for changes in the hash
-            _this2.hashHandler.bindHashChange();
-          }
-        });
+      if (audioItems.length < 1) {
+        return;
       }
+
+      audioItems.forEach(function (item) {
+        if (item.label === options.audio.quality) {
+          var audioElement = '<audio controls id="iiif-av-player" width="100%">\n              <source src="' + item.id + '" type="audio/mp3" data-quality="' + item.label + '">\n            </audio>';
+          var audioStructure = _this2.createStructure(_this2.manifest['structures'], []);
+
+          _this2.target.innerHTML = '\n            <section class="ui stackable two column grid">\n              <article class="six wide column">' + audioStructure + '</article>\n              <article class="ten wide column player-wrapper">' + audioElement + '</article>\n            </section>\n          ';
+          var audioPlayer = new MediaElementPlayer('iiif-av-player', _this2.getAudioConfig()); // eslint-disable-line
+
+          // Start listening for changes in the hash
+          _this2.hashHandler.bindHashChange();
+        }
+      });
     }
   }]);
 
