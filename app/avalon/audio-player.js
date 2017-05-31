@@ -73,6 +73,5 @@ export default class AudioPlayer extends MediaPlayer {
         this.hashHandler.bindHashChange()
       }
     })
-
   }
 }
