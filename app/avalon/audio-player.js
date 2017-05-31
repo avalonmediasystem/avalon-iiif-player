@@ -51,27 +51,27 @@ export default class AudioPlayer extends MediaPlayer {
     options.audio = options.audio || {}
     options.audio.quality = options.audio.quality || 'Medium'
 
-    if (audioItems.length > 0) {
-      audioItems.forEach((item) => {
-        if (item.label === options.audio.quality) {
-          const audioElement =
-            `<audio controls id="iiif-av-player" width="100%">
+    if (audioItems.length < 1) { return }
+
+    audioItems.forEach((item) => {
+      if (item.label === options.audio.quality) {
+        const audioElement =
+          `<audio controls id="iiif-av-player" width="100%">
               <source src="${item.id}" type="audio/mp3" data-quality="${item.label}">
             </audio>`
-          const audioStructure = this.createStructure(this.manifest['structures'], [])
+        const audioStructure = this.createStructure(this.manifest['structures'], [])
 
-          this.target.innerHTML = `
+        this.target.innerHTML = `
             <section class="ui stackable two column grid">
               <article class="six wide column">${audioStructure}</article>
               <article class="ten wide column player-wrapper">${audioElement}</article>
             </section>
           `
-          let audioPlayer = new MediaElementPlayer('iiif-av-player', this.getAudioConfig()) // eslint-disable-line
+        let audioPlayer = new MediaElementPlayer('iiif-av-player', this.getAudioConfig()) // eslint-disable-line
 
-          // Start listening for changes in the hash
-          this.hashHandler.bindHashChange()
-        }
-      })
-    }
+        // Start listening for changes in the hash
+        this.hashHandler.bindHashChange()
+      }
+    })
   }
 }
