@@ -8,8 +8,16 @@ export default class HashHandler {
     this.instance = options.instance
     this.qualityChoices = options.qualityChoices
     this.player = undefined
+    this.bindHashLinkClick()
   }
 
+  bindHashLinkClick () {
+    document.addEventListener('click', (event) => {
+      if (event.srcElement.className.indexOf('media-structure-uri') > -1) {
+        this.playFromHash(window.location.hash)
+      }
+    })
+  }
   bindHashChange () {
     /**
      * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it

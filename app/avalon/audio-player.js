@@ -13,7 +13,6 @@ export default class AudioPlayer extends MediaPlayer {
       'instance': this
     })
     this.render(options)
-    this.getLinks()
   }
 
   // Audio player configurations

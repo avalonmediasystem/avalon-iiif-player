@@ -10,7 +10,6 @@ export default class VideoPlayer extends MediaPlayer {
       'instance': this
     })
     this.render()
-    this.getLinks()
   }
 
   render (mediaFragment) {
