@@ -1,4 +1,6 @@
 var path = require('path')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
 module.exports = {
   entry: path.resolve('./app/index.js'),
   output: {
@@ -33,5 +35,8 @@ module.exports = {
         use: [ 'svg-url-loader' ]
       }
     ]
-  }
+  },
+  plugins: [
+    new UglifyJSPlugin()
+  ]
 }
