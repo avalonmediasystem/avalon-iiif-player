@@ -1,9 +1,11 @@
+import Avalon from './avalon'
 import MediaPlayer from './media-player'
 import HashHandler from './hash-handler'
 
 export default class AudioPlayer extends MediaPlayer {
   constructor (options) {
     super(options)
+    this.avalon = new Avalon()
 
     // Default use the first sequence to grab canvases
     this.canvases = options.manifest.sequences[0].canvases
@@ -50,7 +52,9 @@ export default class AudioPlayer extends MediaPlayer {
     options.audio = options.audio || {}
     options.audio.quality = options.audio.quality || 'Medium'
 
-    if (audioItems.length < 1) { return }
+    if (audioItems.length < 1) {
+      return
+    }
 
     audioItems.forEach((item) => {
       if (item.label === options.audio.quality) {

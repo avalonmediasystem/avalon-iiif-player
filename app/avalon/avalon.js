@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import AudioPlayer from './audio-player'
 import VideoPlayer from './video-player'
+import UtilityHelpers from './utility-helpers'
 
 /** This class will look for certain data attributes in page markup
  * and then initiqlize a player. It uses an XHR request to get the
@@ -9,9 +10,8 @@ import VideoPlayer from './video-player'
  */
 export default class Avalon {
   initialize () {
-     /**
+    /**
      * this method checks the page markup for a iiif-av data attribute
-     *
      * @method Avalon#initialize
      */
     if ($('[data-iiifav-source]').length > 0) {
@@ -20,6 +20,7 @@ export default class Avalon {
     if ($('[data-iiifav-audio-source]').length > 0) {
       this.mediaPlayerAudio()
     }
+    this.prepareForm()
   }
 
   createAudioPlayer (options) {
@@ -30,31 +31,55 @@ export default class Avalon {
     return new AudioPlayer(options)
   }
   createVideoPlayer (options) {
-     /**
+    /**
      * this method will initlize create an VideoPlayer instance
      * @method Avalon#createVideoPlayer
      */
     return new VideoPlayer(options)
   }
 
-  mediaPlayerAudio () {
-     /**
+  mediaPlayerAudio (manifestUrl) {
+    /**
      * this method reads the manifest via XHR and then adds the player to the page
      * @method Avalon#mediaPlayerAudio
      */
-    var options = {}
-    var manifestSource = $('[data-iiifav-audio-source]').data().iiifavAudioSource
+    let utilityHelpers = new UtilityHelpers()
+    let options = {}
+    let $audioSource = $('[data-iiifav-audio-source]')
+    let manifestSource = manifestUrl || $audioSource.data().iiifavAudioSource
     options.audio = {}
-    options.target = $('[data-iiifav-audio-source]').attr('id')
+    options.target = $audioSource.attr('id')
 
-    $.get(manifestSource, (manifest) => {
-      options.manifest = manifest
-      this.createAudioPlayer(options)
-    })
+    $.get(manifestSource)
+      .done((manifest, textStatus, jqXHR) => {
+        let json = ''
+        try {
+          json = JSON.parse(manifest)
+        } catch (e) {
+          json = manifest
+        }
+        options.manifest = json
+
+        // New manifest URL, clear previous manifest's url hash
+        if (manifestUrl) {
+          utilityHelpers.clearHash()
+        }
+
+        // Create audio player
+        this.createAudioPlayer(options)
+
+        // Update current manifest message
+        document.getElementById('manifest-current').innerText = manifestSource
+      })
+      .fail(function (error) {
+        utilityHelpers.displayErrorMessage(`Manifest URL Error - ${error.statusText}`)
+      })
+      .always(function () {
+      })
   }
 
   mediaPlayerVideo () {
-     /**
+    /**
      * this method reads the manifest via XHR and then adds the player to the page
      * @method Avalon#mediaPlayerVideo
      */
@@ -66,6 +91,25 @@ export default class Avalon {
       options.manifest = manifest
       console.log(manifest)
       this.createVideoPlayer(options)
+    })
+  }
+
+  /**
+   * Set up listener for Manifest URL form
+   * @method Avalon#prepareForm
+   * @return {void}
+   */
+  prepareForm () {
+    let form = document.getElementById('manifest-url-form')
+    if (!form) {
+      return
+    }
+    let utilityHelpers = new UtilityHelpers()
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      utilityHelpers.removeErrorMessage()
+      this.mediaPlayerAudio(document.getElementById('manifest-url').value)
+      return false
     })
   }
 }
