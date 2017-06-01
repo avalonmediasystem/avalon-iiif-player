@@ -60,15 +60,16 @@ export default class Avalon {
         }
         options.manifest = json
 
+        // New manifest URL, clear previous manifest's url hash
         if (manifestUrl) {
-          // New manifest URL, clear previous manifest's url hash
           utilityHelpers.clearHash()
-        } else {
-          // Display source of manifest (local) to manifest url text input
-          document.getElementById('manifest-url').value = manifestSource
         }
+
         // Create audio player
         this.createAudioPlayer(options)
+
+        // Update current manifest message
+        document.getElementById('manifest-current').innerText = manifestSource
       })
       .fail(function (error) {
         utilityHelpers.displayErrorMessage(`Manifest URL Error - ${error.statusText}`)
@@ -99,6 +100,9 @@ export default class Avalon {
    */
   prepareForm () {
     let form = document.getElementById('manifest-url-form')
+    if (!form) {
+      return
+    }
     let utilityHelpers = new UtilityHelpers()
     form.addEventListener('submit', (e) => {
       e.preventDefault()

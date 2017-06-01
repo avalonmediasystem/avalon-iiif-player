@@ -10828,15 +10828,16 @@ var Avalon = function () {
         }
         options.manifest = json;
 
+        // New manifest URL, clear previous manifest's url hash
         if (manifestUrl) {
-          // New manifest URL, clear previous manifest's url hash
           utilityHelpers.clearHash();
-        } else {
-          // Display source of manifest (local) to manifest url text input
-          document.getElementById('manifest-url').value = manifestSource;
         }
+
         // Create audio player
         _this.createAudioPlayer(options);
+
+        // Update current manifest message
+        document.getElementById('manifest-current').innerText = manifestSource;
       }).fail(function (error) {
         utilityHelpers.displayErrorMessage('Manifest URL Error - ' + error.statusText);
       }).always(function () {});
@@ -10872,6 +10873,9 @@ var Avalon = function () {
       var _this3 = this;
 
       var form = document.getElementById('manifest-url-form');
+      if (!form) {
+        return;
+      }
       var utilityHelpers = new _utilityHelpers2.default();
       form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -11664,12 +11668,13 @@ var UtilityHelpers = function () {
   }, {
     key: 'displayErrorMessage',
     value: function displayErrorMessage(msg) {
-      var el = document.getElementsByClassName('manifest-url-wrapper')[0];
+      var el = document.getElementById('manifest-current-wrapper');
       var newNode = document.createElement('div');
-      var markup = '<div class="header">Error!</div><p>' + msg + '</p> ';
+      var markup = '<i class="icon warning circle"></i>\n                  <div class="content">\n                     <p>' + msg + '</p> \n                  </div>';
       newNode.classList.add(this.errorClass);
       newNode.classList.add('ui');
       newNode.classList.add('negative');
+      newNode.classList.add('icon');
       newNode.classList.add('message');
       newNode.innerHTML = markup;
       el.parentNode.insertBefore(newNode, el.nextSibling);

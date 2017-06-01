@@ -12,9 +12,16 @@
     <a href="audio.html" class="item active">Audio Player</a>
   </nav>
 
+  <div class="ui info message" id="manifest-current-wrapper">
+    <div class="header">
+      Current Manifest:
+    </div>
+    <p id="manifest-current"></p>
+  </div>
+
   <form class="ui form" id="manifest-url-form">
     <div class="field">
-      <label>Current Manifest</label>
+      <label>Update Manifest</label>
       <div class="ui fluid action input manifest-url-wrapper">
         <input type="text" placeholder="Manifest URL..." id="manifest-url">
         <button class="ui button" id="manifest-url-button">Submit</button>
