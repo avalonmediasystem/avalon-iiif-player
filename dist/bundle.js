@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10446,7 +10446,7 @@ var stylesInDom = {},
 	singletonElement = null,
 	singletonCounter = 0,
 	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(17);
+	fixUrls = __webpack_require__(18);
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -10748,9 +10748,13 @@ var _audioPlayer = __webpack_require__(8);
 
 var _audioPlayer2 = _interopRequireDefault(_audioPlayer);
 
-var _videoPlayer = __webpack_require__(10);
+var _videoPlayer = __webpack_require__(11);
 
 var _videoPlayer2 = _interopRequireDefault(_videoPlayer);
+
+var _utilityHelpers = __webpack_require__(10);
+
+var _utilityHelpers2 = _interopRequireDefault(_utilityHelpers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10770,16 +10774,16 @@ var Avalon = function () {
     key: 'initialize',
     value: function initialize() {
       /**
-      * this method checks the page markup for a iiif-av data attribute
-      *
-      * @method Avalon#initialize
-      */
+       * this method checks the page markup for a iiif-av data attribute
+       * @method Avalon#initialize
+       */
       if ((0, _jquery2.default)('[data-iiifav-source]').length > 0) {
         this.mediaPlayerVideo();
       }
       if ((0, _jquery2.default)('[data-iiifav-audio-source]').length > 0) {
         this.mediaPlayerAudio();
       }
+      this.prepareForm();
     }
   }, {
     key: 'createAudioPlayer',
@@ -10794,9 +10798,9 @@ var Avalon = function () {
     key: 'createVideoPlayer',
     value: function createVideoPlayer(options) {
       /**
-      * this method will initlize create an VideoPlayer instance
-      * @method Avalon#createVideoPlayer
-      */
+       * this method will initlize create an VideoPlayer instance
+       * @method Avalon#createVideoPlayer
+       */
       return new _videoPlayer2.default(options);
     }
   }, {
@@ -10805,15 +10809,17 @@ var Avalon = function () {
       var _this = this;
 
       /**
-      * this method reads the manifest via XHR and then adds the player to the page
-      * @method Avalon#mediaPlayerAudio
-      */
+       * this method reads the manifest via XHR and then adds the player to the page
+       * @method Avalon#mediaPlayerAudio
+       */
+      var utilityHelpers = new _utilityHelpers2.default();
       var options = {};
-      var manifestSource = manifestUrl || (0, _jquery2.default)('[data-iiifav-audio-source]').data().iiifavAudioSource;
+      var $audioSource = (0, _jquery2.default)('[data-iiifav-audio-source]');
+      var manifestSource = manifestUrl || $audioSource.data().iiifavAudioSource;
       options.audio = {};
-      options.target = (0, _jquery2.default)('[data-iiifav-audio-source]').attr('id');
+      options.target = $audioSource.attr('id');
 
-      _jquery2.default.get(manifestSource, function (manifest) {
+      _jquery2.default.get(manifestSource).done(function (manifest, textStatus, jqXHR) {
         var json = '';
         try {
           json = JSON.parse(manifest);
@@ -10821,8 +10827,19 @@ var Avalon = function () {
           json = manifest;
         }
         options.manifest = json;
+
+        if (manifestUrl) {
+          // New manifest URL, clear previous manifest's url hash
+          utilityHelpers.clearHash();
+        } else {
+          // Display source of manifest (local) to manifest url text input
+          document.getElementById('manifest-url').value = manifestSource;
+        }
+        // Create audio player
         _this.createAudioPlayer(options);
-      });
+      }).fail(function (error) {
+        utilityHelpers.displayErrorMessage('Manifest URL Error - ' + error.statusText);
+      }).always(function () {});
     }
   }, {
     key: 'mediaPlayerVideo',
@@ -10830,9 +10847,9 @@ var Avalon = function () {
       var _this2 = this;
 
       /**
-      * this method reads the manifest via XHR and then adds the player to the page
-      * @method Avalon#mediaPlayerVideo
-      */
+       * this method reads the manifest via XHR and then adds the player to the page
+       * @method Avalon#mediaPlayerVideo
+       */
       var options = {};
       var manifestSource = (0, _jquery2.default)('[data-iiifav-source]').data().iiifavSource;
       options.target = (0, _jquery2.default)('[data-iiifav-source]').attr('id');
@@ -10840,6 +10857,27 @@ var Avalon = function () {
       _jquery2.default.get(manifestSource, function (manifest) {
         options.manifest = manifest;
         _this2.createVideoPlayer(options);
+      });
+    }
+
+    /**
+     * Set up listener for Manifest URL form
+     * @method Avalon#prepareForm
+     * @return {void}
+     */
+
+  }, {
+    key: 'prepareForm',
+    value: function prepareForm() {
+      var _this3 = this;
+
+      var form = document.getElementById('manifest-url-form');
+      var utilityHelpers = new _utilityHelpers2.default();
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        utilityHelpers.removeErrorMessage();
+        _this3.mediaPlayerAudio(document.getElementById('manifest-url').value);
+        return false;
       });
     }
   }]);
@@ -10998,7 +11036,7 @@ var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-__webpack_require__(19);
+__webpack_require__(20);
 
 var _qualitySelector = __webpack_require__(9);
 
@@ -11288,7 +11326,7 @@ exports.default = MediaPlayer;
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(12);
+var content = __webpack_require__(13);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11422,32 +11460,12 @@ var AudioPlayer = function (_MediaPlayer) {
           var audioElement = '<audio controls id="iiif-av-player" width="100%">\n              <source src="' + item.id + '" type="audio/mp3" data-quality="' + item.label + '">\n            </audio>';
           var audioStructure = _this2.createStructure(_this2.manifest['structures'], []);
 
-          _this2.target.innerHTML = '\n            <div class="ui fluid action input manifest-url-wrapper">\n              <input type="text" placeholder="Manifest URL..." id="manifest-url">\n              <button class="ui button" id="manifest-url-button">Submit</button>\n            </div>\n            <section class="ui stackable two column grid">\n              <article class="six wide column">' + audioStructure + '</article>\n              <article class="ten wide column player-wrapper">' + audioElement + '</article>\n            </section>\n          ';
+          _this2.target.innerHTML = '\n            <section class="ui stackable two column grid">\n              <article class="six wide column">' + audioStructure + '</article>\n              <article class="ten wide column player-wrapper">' + audioElement + '</article>\n            </section>\n          ';
           var audioPlayer = new MediaElementPlayer('iiif-av-player', _this2.getAudioConfig()); // eslint-disable-line
 
           // Start listening for changes in the hash
           _this2.hashHandler.bindHashChange();
-
-          _this2.addEventListeners();
         }
-      });
-    }
-
-    /**
-     * Add event listeners
-     * @method AudioPlayer#addEventListeners
-     * return {void}
-     */
-
-  }, {
-    key: 'addEventListeners',
-    value: function addEventListeners() {
-      var avalon = this.avalon;
-
-      // Add event listener for manifest url button click
-      document.getElementById('manifest-url-button').addEventListener('click', function submitManifest(e) {
-        var url = document.getElementById('manifest-url');
-        avalon.mediaPlayerAudio(url.value);
       });
     }
   }]);
@@ -11476,7 +11494,7 @@ var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-__webpack_require__(18);
+__webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11608,6 +11626,82 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/** Class representing a MediaPlayer
+ * @class MediaPlayer
+ */
+var UtilityHelpers = function () {
+  /**
+   * Create a UtilityHelper
+   * @constructor
+   */
+  function UtilityHelpers() {
+    _classCallCheck(this, UtilityHelpers);
+
+    this.errorClass = 'error-message';
+  }
+
+  /**
+   * Clear the hash params from URL
+   * @method UtilityHelpers#clearHash
+   * @return {void}
+   */
+
+
+  _createClass(UtilityHelpers, [{
+    key: 'clearHash',
+    value: function clearHash() {
+      window.history.pushState('', document.title, window.location.pathname);
+    }
+
+    /**
+     * Display default error message
+     * @param msg
+     * @return void
+     */
+
+  }, {
+    key: 'displayErrorMessage',
+    value: function displayErrorMessage(msg) {
+      var el = document.getElementsByClassName('manifest-url-wrapper')[0];
+      var newNode = document.createElement('div');
+      var markup = '<div class="header">Error!</div><p>' + msg + '</p> ';
+      newNode.classList.add(this.errorClass);
+      newNode.classList.add('ui');
+      newNode.classList.add('negative');
+      newNode.classList.add('message');
+      newNode.innerHTML = markup;
+      el.parentNode.insertBefore(newNode, el.nextSibling);
+    }
+  }, {
+    key: 'removeErrorMessage',
+    value: function removeErrorMessage() {
+      var el = document.getElementsByClassName(this.errorClass)[0];
+      if (el) {
+        el.parentNode.removeChild(el);
+      }
+    }
+  }]);
+
+  return UtilityHelpers;
+}();
+
+exports.default = UtilityHelpers;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _mediaPlayer = __webpack_require__(6);
 
 var _mediaPlayer2 = _interopRequireDefault(_mediaPlayer);
@@ -11616,7 +11710,7 @@ var _hashHandler = __webpack_require__(5);
 
 var _hashHandler2 = _interopRequireDefault(_hashHandler);
 
-__webpack_require__(16);
+__webpack_require__(17);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11674,7 +11768,7 @@ var VideoPlayer = function (_MediaPlayer) {
 exports.default = VideoPlayer;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11692,20 +11786,6 @@ var avalon = new _avalon2.default();
 avalon.initialize();
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\nnav {\n  margin: 2rem 0;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n\n.player-wrapper {\n  margin: 2rem 0;\n}\n\n.content-wrapper {\n  margin: 2rem 0;\n}\n\n.manifest-url-wrapper {\n  padding: 2rem 0;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11714,7 +11794,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".quality-selector {\n    position: absolute;\n    overflow: hidden;\n    background: rgba(28,28,28,0.9);\n    text-shadow: 0 0 2px rgba(0,0,0,.5);\n    margin:0;\n    padding:0;\n    width:10%;\n    color:white;\n    padding-top: 5px;\n    padding-bottom: 3px;\n    text-align:center;\n}\n\n.quality-choice {\n    padding: 4px 0 0 0;\n    line-height: 15px;\n    font-size:0.7em;\n    cursor: pointer;\n    display:none;\n    text-align:center;\n    \n}\n\n.quality-choice:hover {\n    background:grey;\n}\n\n.quality-selected {\n    color:rgba(33, 248, 248, 1)\n}\n\n.quality-settings {\n    font-size:0.7em;\n    cursor:pointer;\n}\n", ""]);
+exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\nnav {\n  margin: 2rem 0;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n\n.error-message {\n  color: #8b0000;\n  padding: 1rem 0;\n}\n.player-wrapper {\n  margin: 2rem 0;\n}\n\n.content-wrapper {\n  margin: 2rem 0;\n}\n\n", ""]);
 
 // exports
 
@@ -11728,13 +11808,27 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "/* Accessibility: hide screen reader texts (and prefer \"top\" for RTL languages).\nReference: http://blog.rrwd.nl/2015/04/04/the-screen-reader-text-class-why-and-how/ */\n.mejs__offscreen {\n    clip: rect(1px, 1px, 1px, 1px); /* IE8-IE11 - no support for clip-path */\n    clip-path: polygon(0px 0px, 0px 0px, 0px 0px, 0px 0px);\n    position: absolute !important;\n    height: 1px;\n    width: 1px;\n    overflow: hidden;\n}\n\n.mejs__container {\n    position: relative;\n    background: #000;\n    font-family: \"Helvetica\", Arial, serif;\n    text-align: left;\n    vertical-align: top;\n    text-indent: 0;\n    box-sizing: border-box;\n    min-width: 250px;\n}\n\n.mejs__container .mejs__video {\n    min-height: 140px;\n}\n\n.mejs__container * {\n    box-sizing: border-box;\n}\n\n/* Hide native play button from iOS to favor plugin button */\n.mejs__container video::-webkit-media-controls-start-playback-button {\n    display: none !important;\n    -webkit-appearance: none;\n}\n\n.mejs__fill-container,\n.mejs__fill-container .mejs__container {\n    width: 100%;\n    height: 100%;\n}\n\n.mejs__fill-container {\n    overflow: hidden;\n    position: relative;\n    margin: 0 auto;\n    background: transparent;\n}\n\n.mejs__container:focus {\n    outline: none;\n}\n\n.mejs__iframe-overlay {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n}\n\n.mejs__embed,\n.mejs__embed body {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    background: #000;\n    overflow: hidden;\n}\n\n.mejs__fullscreen {\n    overflow: hidden !important;\n}\n\n.mejs__container-fullscreen {\n    position: fixed;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    overflow: hidden;\n    z-index: 1000;\n}\n\n.mejs__container-fullscreen .mejs__mediaelement,\n.mejs__container-fullscreen video {\n    width: 100% !important;\n    height: 100% !important;\n}\n\n.mejs__clear {\n    clear: both;\n}\n\n/* Start: LAYERS */\n.mejs__background {\n    position: absolute;\n    top: 0;\n    left: 0;\n}\n\n.mejs__mediaelement {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    z-index: 0;\n}\n\n.mejs__poster {\n    position: absolute;\n    top: 0;\n    left: 0;\n    background-size: contain;\n    background-position: 50% 50%;\n    background-repeat: no-repeat;\n    z-index: 1;\n}\n\n:root .mejs__poster-img {\n    display: none;\n}\n\n.mejs__poster-img {\n    border: 0;\n    padding: 0;\n}\n\n.mejs__overlay {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n}\n\n.mejs__layer {\n    z-index: 1;\n}\n\n.mejs__overlay-play {\n    cursor: pointer;\n}\n\n.mejs__overlay-button {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    width: 80px;\n    height: 80px;\n    margin: -40px 0 0 -40px;\n    background: url(" + __webpack_require__(3) + ") no-repeat;\n    background-position: 0 -39px;\n    overflow: hidden;\n    z-index: 1;\n}\n\n.mejs__overlay:hover > .mejs__overlay-button {\n    background-position: -80px -39px;\n}\n\n.mejs__overlay-loading {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    width: 80px;\n    height: 80px;\n    margin: -40px 0 0 -40px;\n}\n\n.mejs__overlay-loading-bg-img {\n    display: block;\n    width: 80px;\n    height: 80px;\n    background: transparent url(" + __webpack_require__(3) + ") -160px -40px no-repeat;\n    -webkit-animation: mejs-loading-spinner 1s linear infinite;\n    -moz-animation: mejs-loading-spinner 1s linear infinite;\n    animation: mejs-loading-spinner 1s linear infinite;\n    z-index: 1;\n}\n\n@-moz-keyframes mejs-loading-spinner {\n    100% {\n        -moz-transform: rotate(360deg);\n    }\n}\n\n@-webkit-keyframes mejs-loading-spinner {\n    100% {\n        -webkit-transform: rotate(360deg);\n    }\n}\n\n@keyframes mejs-loading-spinner {\n    100% {\n        -webkit-transform: rotate(360deg);\n        transform: rotate(360deg);\n    }\n}\n\n/* End: LAYERS */\n\n/* Start: CONTROL BAR */\n.mejs__controls {\n    position: absolute;\n    list-style-type: none;\n    margin: 0;\n    padding: 0 10px;\n    bottom: 0;\n    left: 0;\n    height: 40px;\n    width: 100%;\n    z-index: 1;\n}\n\n.mejs__controls:not([style*=\"display: none\"]) {\n    background: rgba(255, 0, 0, 0.7);\n    background: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.35));\n}\n\n.mejs__button,\n.mejs__time,\n.mejs__time-rail {\n    float: left;\n    margin: 0;\n    width: 32px;\n    height: 40px;\n    font-size: 10px;\n    line-height: 10px;\n}\n\n.mejs__button > button {\n    cursor: pointer;\n    display: block;\n    font-size: 0;\n    line-height: 0;\n    text-decoration: none;\n    margin: 10px 6px;\n    padding: 0;\n    position: absolute;\n    height: 20px;\n    width: 20px;\n    border: 0;\n    background: transparent url(" + __webpack_require__(3) + ");\n    overflow: hidden;\n}\n\n/* :focus for accessibility */\n.mejs__button > button:focus {\n    outline: dotted 1px #999;\n}\n\n.mejs__container-keyboard-inactive a,\n.mejs__container-keyboard-inactive a:focus,\n.mejs__container-keyboard-inactive button,\n.mejs__container-keyboard-inactive button:focus,\n.mejs__container-keyboard-inactive [role=slider],\n.mejs__container-keyboard-inactive [role=slider]:focus {\n    outline: 0;\n}\n\n/* End: CONTROL BAR */\n\n/* Start: Time (Current / Duration) */\n.mejs__time {\n    color: #fff;\n    display: block;\n    height: 24px;\n    width: auto;\n    font-weight: bold;\n    font-size: 11px;\n    padding: 16px 6px 0 6px;\n    overflow: hidden;\n    text-align: center;\n    box-sizing: content-box;\n}\n\n/* End: Time (Current / Duration) */\n\n/* Start: Play/Pause/Stop */\n.mejs__play > button {\n    background-position: 0 0;\n}\n\n.mejs__pause > button {\n    background-position: -20px 0;\n}\n\n.mejs__replay > button {\n    background-position: -160px 0;\n}\n\n/* End: Play/Pause/Stop */\n\n/* Start: Progress Bar */\n.mejs__time-rail {\n    direction: ltr;\n    width: 200px;\n    padding-top: 10px;\n    height: 40px;\n    position: relative;\n    margin: 0 10px;\n}\n\n.mejs__time-total,\n.mejs__time-buffering,\n.mejs__time-loaded,\n.mejs__time-current,\n.mejs__time-float,\n.mejs__time-hovered,\n.mejs__time-float-current,\n.mejs__time-float-corner,\n.mejs__time-marker {\n    cursor: pointer;\n    display: block;\n    position: absolute;\n    height: 10px;\n    border-radius: 2px;\n}\n\n.mejs__time-total {\n    margin: 5px 0 0 0;\n    background: rgba(255, 255, 255, 0.3);\n    width: 100%;\n}\n\n.mejs__time-buffering {\n    width: 100%;\n    background: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);\n    background-size: 15px 15px;\n    animation: buffering-stripes 2s linear infinite;\n}\n\n@keyframes buffering-stripes {\n    from {\n        background-position: 0 0;\n    }\n    to {\n        background-position: 30px 0;\n    }\n}\n\n.mejs__time-loaded {\n    background: rgba(255, 255, 255, .3);\n}\n\n.mejs__time-current, .mejs__time-handle-content {\n    background: rgba(255, 255, 255, 0.9);\n}\n\n.mejs__time-hovered {\n    background: rgba(255, 255, 255, .5);\n    z-index: 10;\n}\n\n.mejs__time-hovered.negative {\n    background: rgba(0, 0, 0, 0.2);\n}\n\n.mejs__time-current, .mejs__time-buffering, .mejs__time-loaded, .mejs__time-hovered {\n    width: 100%;\n    left: 0;\n    -ms-transform-origin: 0 0;\n    transform-origin: 0 0;\n    -ms-transform: scaleX(0);\n    transform: scaleX(0);\n    transition: .15s ease-in all;\n}\n\n.mejs__time-hovered {\n    transition: height .1s cubic-bezier(0.44, 0.0, 1, 1);\n}\n\n.mejs__time-hovered.no-hover {\n    -ms-transform: scaleX(0) !important;\n    transform: scaleX(0) !important;\n}\n\n.mejs__time-handle, .mejs__time-handle-content {\n    position: absolute;\n    cursor: pointer;\n    width: 10px;\n    height: 10px;\n    border: 4px solid transparent;\n    z-index: 11;\n    left: 0;\n    -ms-transform: translateX(0px);\n    transform: translateX(0px);\n}\n\n.mejs__time-handle-content {\n    left: -4px;\n    border: 4px solid rgba(255, 255, 255, 0.9);\n    -ms-transform: scale(0);\n    transform: scale(0);\n    top: -4px;\n    border-radius: 50%;\n}\n\n.mejs__time-rail:hover .mejs__time-handle-content, .mejs__time-rail .mejs__time-handle-content:focus, .mejs__time-rail .mejs__time-handle-content:active {\n    -ms-transform: scale(1);\n    transform: scale(1);\n}\n\n.mejs__time-float {\n    position: absolute;\n    display: none;\n    background: #eee;\n    width: 36px;\n    height: 17px;\n    border: solid 1px #333;\n    top: -26px;\n    margin-left: -18px;\n    text-align: center;\n    color: #111;\n}\n\n.mejs__time-float-current {\n    margin: 2px;\n    width: 30px;\n    display: block;\n    text-align: center;\n    left: 0;\n}\n\n.mejs__time-float-corner {\n    position: absolute;\n    display: block;\n    width: 0;\n    height: 0;\n    line-height: 0;\n    border: solid 5px #eee;\n    border-color: #eee transparent transparent transparent;\n    border-radius: 0;\n    top: 15px;\n    left: 13px;\n}\n\n.mejs__long-video .mejs__time-float {\n    width: 64px;\n    margin-left: -23px;\n}\n\n.mejs__long-video .mejs__time-float-current {\n    width: 60px;\n}\n\n.mejs__long-video .mejs__time-float-corner {\n    left: 18px;\n}\n\n.mejs__broadcast {\n    color: #fff;\n    position: absolute;\n    width: 100%;\n    height: 10px;\n    top: 15px;\n}\n\n/* End: Progress Bar */\n\n/* Start: Fullscreen */\n.mejs__fullscreen-button > button {\n    background-position: -80px 0;\n}\n\n.mejs__unfullscreen > button {\n    background-position: -100px 0;\n}\n\n/* End: Fullscreen */\n\n/* Start: Mute/Volume */\n.mejs__mute > button {\n    background-position: -60px 0;\n}\n\n.mejs__unmute > button {\n    background-position: -40px 0;\n}\n\n.mejs__volume-button {\n    position: relative;\n}\n\n.mejs__volume-button > .mejs__volume-slider {\n    display: none;\n    height: 115px;\n    width: 25px;\n    background: rgba(50, 50, 50, 0.7);\n    border-radius: 0;\n    top: -115px;\n    left: 5px;\n    z-index: 1;\n    position: absolute;\n    margin: 0;\n}\n\n.mejs__volume-button:hover {\n    border-radius: 0 0 4px 4px;\n}\n\n.mejs__volume-total {\n    position: absolute;\n    left: 11px;\n    top: 8px;\n    width: 2px;\n    height: 100px;\n    background: rgba(255, 255, 255, 0.5);\n    margin: 0;\n}\n\n.mejs__volume-current {\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    width: 100%;\n    height: 100%;\n    background: rgba(255, 255, 255, 0.9);\n    margin: 0;\n}\n\n.mejs__volume-handle {\n    position: absolute;\n    left: 0;\n    bottom: 100%;\n    width: 16px;\n    height: 6px;\n    margin: 0 0 -3px -7px;\n    background: rgba(255, 255, 255, 0.9);\n    cursor: ns-resize;\n    border-radius: 1px;\n}\n\n.mejs__horizontal-volume-slider {\n    height: 36px;\n    width: 56px;\n    position: relative;\n    display: block;\n    float: left;\n    vertical-align: middle;\n}\n\n.mejs__horizontal-volume-total {\n    position: absolute;\n    left: 0;\n    top: 16px;\n    width: 50px;\n    height: 8px;\n    margin: 0;\n    padding: 0;\n    font-size: 1px;\n    border-radius: 2px;\n    background: rgba(50, 50, 50, 0.8);\n}\n\n.mejs__horizontal-volume-current {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    font-size: 1px;\n    border-radius: 2px;\n    background: rgba(255, 255, 255, 0.8);\n}\n\n.mejs__horizontal-volume-handle {\n    display: none;\n}\n\n/* End: Mute/Volume */\n\n/* Start: Track (Captions and Chapters) */\n.mejs__captions-button, .mejs__chapters-button {\n    position: relative;\n}\n\n.mejs__captions-button > button {\n    background-position: -140px 0;\n}\n\n.mejs__chapters-button > button {\n    background-position: -180px 0;\n}\n\n.mejs__captions-button > .mejs__captions-selector, .mejs__chapters-button > .mejs__chapters-selector {\n    visibility: hidden;\n    position: absolute;\n    bottom: 40px;\n    right: -51px;\n    width: 85px;\n    background: rgba(50, 50, 50, 0.7);\n    border: solid 1px transparent;\n    padding: 0;\n    overflow: hidden;\n    border-radius: 0;\n}\n\n.mejs__chapters-button > .mejs__chapters-selector {\n    width: 110px;\n}\n\n.mejs__captions-button > .mejs__captions-selector, .mejs__chapters-button > .mejs__chapters-selector {\n    visibility: visible;\n}\n\n.mejs__captions-selector-list, .mejs__chapters-selector-list {\n    margin: 0;\n    padding: 0;\n    display: block;\n    list-style-type: none !important;\n    overflow: hidden;\n}\n\n.mejs__captions-selector-list-item, .mejs__chapters-selector-list-item {\n    margin: 0 0 6px 0;\n    padding: 0 10px;\n    list-style-type: none !important;\n    display: block;\n    color: #fff;\n    overflow: hidden;\n    cursor: pointer;\n}\n\n.mejs__captions-selector-list-item:hover, .mejs__chapters-selector-list-item:hover {\n    background-color: rgb(200, 200, 200) !important;\n    background-color: rgba(255, 255, 255, 0.4) !important;\n}\n\n.mejs__captions-selector-input, .mejs__chapters-selector-input {\n    clear: both;\n    float: left;\n    margin: 3px 3px 0 5px;\n    position: absolute;\n    left: -1000px;\n}\n\n.mejs__captions-selector-label, .mejs__chapters-selector-label {\n    width: 55px;\n    float: left;\n    padding: 4px 0 0 0;\n    line-height: 15px;\n    font-size: 10px;\n    cursor: pointer;\n}\n\n.mejs__captions-selected, .mejs__chapters-selected {\n    color: rgba(33, 248, 248, 1);\n}\n\n.mejs__captions-translations {\n    font-size: 10px;\n    margin: 0 0 5px 0;\n}\n\n.mejs__captions-layer {\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    text-align: center;\n    line-height: 20px;\n    font-size: 16px;\n    color: #fff;\n}\n\n.mejs__captions-layer a {\n    color: #fff;\n    text-decoration: underline;\n}\n\n.mejs__captions-layer[lang=ar] {\n    font-size: 20px;\n    font-weight: normal;\n}\n\n.mejs__captions-position {\n    position: absolute;\n    width: 100%;\n    bottom: 15px;\n    left: 0;\n}\n\n.mejs__captions-position-hover {\n    bottom: 35px;\n}\n\n.mejs__captions-text, .mejs__captions-text * {\n    padding: 0;\n    background: rgba(20, 20, 20, 0.5);\n    white-space: pre-wrap;\n    box-shadow: 5px 0 0 rgba(20, 20, 20, 0.5), -5px 0 0 rgba(20, 20, 20, 0.5);\n}\n\n.mejs__container.mejs__hide-cues video::-webkit-media-text-track-container {\n    display: none;\n}\n\n/* End: Track (Captions and Chapters) */\n\n/* Start: Error */\n.me_cannotplay a {\n    font-weight: bold;\n}\n\n.mejs__container .me_cannotplay a {\n    color: #fff;\n}\n\n.me_cannotplay span {\n    padding: 15px;\n    display: block;\n}\n\n/* End: Error */\n", ""]);
+exports.push([module.i, ".quality-selector {\n    position: absolute;\n    overflow: hidden;\n    background: rgba(28,28,28,0.9);\n    text-shadow: 0 0 2px rgba(0,0,0,.5);\n    margin:0;\n    padding:0;\n    width:10%;\n    color:white;\n    padding-top: 5px;\n    padding-bottom: 3px;\n    text-align:center;\n}\n\n.quality-choice {\n    padding: 4px 0 0 0;\n    line-height: 15px;\n    font-size:0.7em;\n    cursor: pointer;\n    display:none;\n    text-align:center;\n    \n}\n\n.quality-choice:hover {\n    background:grey;\n}\n\n.quality-selected {\n    color:rgba(33, 248, 248, 1)\n}\n\n.quality-settings {\n    font-size:0.7em;\n    cursor:pointer;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "/* Accessibility: hide screen reader texts (and prefer \"top\" for RTL languages).\nReference: http://blog.rrwd.nl/2015/04/04/the-screen-reader-text-class-why-and-how/ */\n.mejs__offscreen {\n    clip: rect(1px, 1px, 1px, 1px); /* IE8-IE11 - no support for clip-path */\n    clip-path: polygon(0px 0px, 0px 0px, 0px 0px, 0px 0px);\n    position: absolute !important;\n    height: 1px;\n    width: 1px;\n    overflow: hidden;\n}\n\n.mejs__container {\n    position: relative;\n    background: #000;\n    font-family: \"Helvetica\", Arial, serif;\n    text-align: left;\n    vertical-align: top;\n    text-indent: 0;\n    box-sizing: border-box;\n    min-width: 250px;\n}\n\n.mejs__container .mejs__video {\n    min-height: 140px;\n}\n\n.mejs__container * {\n    box-sizing: border-box;\n}\n\n/* Hide native play button from iOS to favor plugin button */\n.mejs__container video::-webkit-media-controls-start-playback-button {\n    display: none !important;\n    -webkit-appearance: none;\n}\n\n.mejs__fill-container,\n.mejs__fill-container .mejs__container {\n    width: 100%;\n    height: 100%;\n}\n\n.mejs__fill-container {\n    overflow: hidden;\n    position: relative;\n    margin: 0 auto;\n    background: transparent;\n}\n\n.mejs__container:focus {\n    outline: none;\n}\n\n.mejs__iframe-overlay {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n}\n\n.mejs__embed,\n.mejs__embed body {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    background: #000;\n    overflow: hidden;\n}\n\n.mejs__fullscreen {\n    overflow: hidden !important;\n}\n\n.mejs__container-fullscreen {\n    position: fixed;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    overflow: hidden;\n    z-index: 1000;\n}\n\n.mejs__container-fullscreen .mejs__mediaelement,\n.mejs__container-fullscreen video {\n    width: 100% !important;\n    height: 100% !important;\n}\n\n.mejs__clear {\n    clear: both;\n}\n\n/* Start: LAYERS */\n.mejs__background {\n    position: absolute;\n    top: 0;\n    left: 0;\n}\n\n.mejs__mediaelement {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    z-index: 0;\n}\n\n.mejs__poster {\n    position: absolute;\n    top: 0;\n    left: 0;\n    background-size: contain;\n    background-position: 50% 50%;\n    background-repeat: no-repeat;\n    z-index: 1;\n}\n\n:root .mejs__poster-img {\n    display: none;\n}\n\n.mejs__poster-img {\n    border: 0;\n    padding: 0;\n}\n\n.mejs__overlay {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n}\n\n.mejs__layer {\n    z-index: 1;\n}\n\n.mejs__overlay-play {\n    cursor: pointer;\n}\n\n.mejs__overlay-button {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    width: 80px;\n    height: 80px;\n    margin: -40px 0 0 -40px;\n    background: url(" + __webpack_require__(3) + ") no-repeat;\n    background-position: 0 -39px;\n    overflow: hidden;\n    z-index: 1;\n}\n\n.mejs__overlay:hover > .mejs__overlay-button {\n    background-position: -80px -39px;\n}\n\n.mejs__overlay-loading {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    width: 80px;\n    height: 80px;\n    margin: -40px 0 0 -40px;\n}\n\n.mejs__overlay-loading-bg-img {\n    display: block;\n    width: 80px;\n    height: 80px;\n    background: transparent url(" + __webpack_require__(3) + ") -160px -40px no-repeat;\n    -webkit-animation: mejs-loading-spinner 1s linear infinite;\n    -moz-animation: mejs-loading-spinner 1s linear infinite;\n    animation: mejs-loading-spinner 1s linear infinite;\n    z-index: 1;\n}\n\n@-moz-keyframes mejs-loading-spinner {\n    100% {\n        -moz-transform: rotate(360deg);\n    }\n}\n\n@-webkit-keyframes mejs-loading-spinner {\n    100% {\n        -webkit-transform: rotate(360deg);\n    }\n}\n\n@keyframes mejs-loading-spinner {\n    100% {\n        -webkit-transform: rotate(360deg);\n        transform: rotate(360deg);\n    }\n}\n\n/* End: LAYERS */\n\n/* Start: CONTROL BAR */\n.mejs__controls {\n    position: absolute;\n    list-style-type: none;\n    margin: 0;\n    padding: 0 10px;\n    bottom: 0;\n    left: 0;\n    height: 40px;\n    width: 100%;\n    z-index: 1;\n}\n\n.mejs__controls:not([style*=\"display: none\"]) {\n    background: rgba(255, 0, 0, 0.7);\n    background: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.35));\n}\n\n.mejs__button,\n.mejs__time,\n.mejs__time-rail {\n    float: left;\n    margin: 0;\n    width: 32px;\n    height: 40px;\n    font-size: 10px;\n    line-height: 10px;\n}\n\n.mejs__button > button {\n    cursor: pointer;\n    display: block;\n    font-size: 0;\n    line-height: 0;\n    text-decoration: none;\n    margin: 10px 6px;\n    padding: 0;\n    position: absolute;\n    height: 20px;\n    width: 20px;\n    border: 0;\n    background: transparent url(" + __webpack_require__(3) + ");\n    overflow: hidden;\n}\n\n/* :focus for accessibility */\n.mejs__button > button:focus {\n    outline: dotted 1px #999;\n}\n\n.mejs__container-keyboard-inactive a,\n.mejs__container-keyboard-inactive a:focus,\n.mejs__container-keyboard-inactive button,\n.mejs__container-keyboard-inactive button:focus,\n.mejs__container-keyboard-inactive [role=slider],\n.mejs__container-keyboard-inactive [role=slider]:focus {\n    outline: 0;\n}\n\n/* End: CONTROL BAR */\n\n/* Start: Time (Current / Duration) */\n.mejs__time {\n    color: #fff;\n    display: block;\n    height: 24px;\n    width: auto;\n    font-weight: bold;\n    font-size: 11px;\n    padding: 16px 6px 0 6px;\n    overflow: hidden;\n    text-align: center;\n    box-sizing: content-box;\n}\n\n/* End: Time (Current / Duration) */\n\n/* Start: Play/Pause/Stop */\n.mejs__play > button {\n    background-position: 0 0;\n}\n\n.mejs__pause > button {\n    background-position: -20px 0;\n}\n\n.mejs__replay > button {\n    background-position: -160px 0;\n}\n\n/* End: Play/Pause/Stop */\n\n/* Start: Progress Bar */\n.mejs__time-rail {\n    direction: ltr;\n    width: 200px;\n    padding-top: 10px;\n    height: 40px;\n    position: relative;\n    margin: 0 10px;\n}\n\n.mejs__time-total,\n.mejs__time-buffering,\n.mejs__time-loaded,\n.mejs__time-current,\n.mejs__time-float,\n.mejs__time-hovered,\n.mejs__time-float-current,\n.mejs__time-float-corner,\n.mejs__time-marker {\n    cursor: pointer;\n    display: block;\n    position: absolute;\n    height: 10px;\n    border-radius: 2px;\n}\n\n.mejs__time-total {\n    margin: 5px 0 0 0;\n    background: rgba(255, 255, 255, 0.3);\n    width: 100%;\n}\n\n.mejs__time-buffering {\n    width: 100%;\n    background: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);\n    background-size: 15px 15px;\n    animation: buffering-stripes 2s linear infinite;\n}\n\n@keyframes buffering-stripes {\n    from {\n        background-position: 0 0;\n    }\n    to {\n        background-position: 30px 0;\n    }\n}\n\n.mejs__time-loaded {\n    background: rgba(255, 255, 255, .3);\n}\n\n.mejs__time-current, .mejs__time-handle-content {\n    background: rgba(255, 255, 255, 0.9);\n}\n\n.mejs__time-hovered {\n    background: rgba(255, 255, 255, .5);\n    z-index: 10;\n}\n\n.mejs__time-hovered.negative {\n    background: rgba(0, 0, 0, 0.2);\n}\n\n.mejs__time-current, .mejs__time-buffering, .mejs__time-loaded, .mejs__time-hovered {\n    width: 100%;\n    left: 0;\n    -ms-transform-origin: 0 0;\n    transform-origin: 0 0;\n    -ms-transform: scaleX(0);\n    transform: scaleX(0);\n    transition: .15s ease-in all;\n}\n\n.mejs__time-hovered {\n    transition: height .1s cubic-bezier(0.44, 0.0, 1, 1);\n}\n\n.mejs__time-hovered.no-hover {\n    -ms-transform: scaleX(0) !important;\n    transform: scaleX(0) !important;\n}\n\n.mejs__time-handle, .mejs__time-handle-content {\n    position: absolute;\n    cursor: pointer;\n    width: 10px;\n    height: 10px;\n    border: 4px solid transparent;\n    z-index: 11;\n    left: 0;\n    -ms-transform: translateX(0px);\n    transform: translateX(0px);\n}\n\n.mejs__time-handle-content {\n    left: -4px;\n    border: 4px solid rgba(255, 255, 255, 0.9);\n    -ms-transform: scale(0);\n    transform: scale(0);\n    top: -4px;\n    border-radius: 50%;\n}\n\n.mejs__time-rail:hover .mejs__time-handle-content, .mejs__time-rail .mejs__time-handle-content:focus, .mejs__time-rail .mejs__time-handle-content:active {\n    -ms-transform: scale(1);\n    transform: scale(1);\n}\n\n.mejs__time-float {\n    position: absolute;\n    display: none;\n    background: #eee;\n    width: 36px;\n    height: 17px;\n    border: solid 1px #333;\n    top: -26px;\n    margin-left: -18px;\n    text-align: center;\n    color: #111;\n}\n\n.mejs__time-float-current {\n    margin: 2px;\n    width: 30px;\n    display: block;\n    text-align: center;\n    left: 0;\n}\n\n.mejs__time-float-corner {\n    position: absolute;\n    display: block;\n    width: 0;\n    height: 0;\n    line-height: 0;\n    border: solid 5px #eee;\n    border-color: #eee transparent transparent transparent;\n    border-radius: 0;\n    top: 15px;\n    left: 13px;\n}\n\n.mejs__long-video .mejs__time-float {\n    width: 64px;\n    margin-left: -23px;\n}\n\n.mejs__long-video .mejs__time-float-current {\n    width: 60px;\n}\n\n.mejs__long-video .mejs__time-float-corner {\n    left: 18px;\n}\n\n.mejs__broadcast {\n    color: #fff;\n    position: absolute;\n    width: 100%;\n    height: 10px;\n    top: 15px;\n}\n\n/* End: Progress Bar */\n\n/* Start: Fullscreen */\n.mejs__fullscreen-button > button {\n    background-position: -80px 0;\n}\n\n.mejs__unfullscreen > button {\n    background-position: -100px 0;\n}\n\n/* End: Fullscreen */\n\n/* Start: Mute/Volume */\n.mejs__mute > button {\n    background-position: -60px 0;\n}\n\n.mejs__unmute > button {\n    background-position: -40px 0;\n}\n\n.mejs__volume-button {\n    position: relative;\n}\n\n.mejs__volume-button > .mejs__volume-slider {\n    display: none;\n    height: 115px;\n    width: 25px;\n    background: rgba(50, 50, 50, 0.7);\n    border-radius: 0;\n    top: -115px;\n    left: 5px;\n    z-index: 1;\n    position: absolute;\n    margin: 0;\n}\n\n.mejs__volume-button:hover {\n    border-radius: 0 0 4px 4px;\n}\n\n.mejs__volume-total {\n    position: absolute;\n    left: 11px;\n    top: 8px;\n    width: 2px;\n    height: 100px;\n    background: rgba(255, 255, 255, 0.5);\n    margin: 0;\n}\n\n.mejs__volume-current {\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    width: 100%;\n    height: 100%;\n    background: rgba(255, 255, 255, 0.9);\n    margin: 0;\n}\n\n.mejs__volume-handle {\n    position: absolute;\n    left: 0;\n    bottom: 100%;\n    width: 16px;\n    height: 6px;\n    margin: 0 0 -3px -7px;\n    background: rgba(255, 255, 255, 0.9);\n    cursor: ns-resize;\n    border-radius: 1px;\n}\n\n.mejs__horizontal-volume-slider {\n    height: 36px;\n    width: 56px;\n    position: relative;\n    display: block;\n    float: left;\n    vertical-align: middle;\n}\n\n.mejs__horizontal-volume-total {\n    position: absolute;\n    left: 0;\n    top: 16px;\n    width: 50px;\n    height: 8px;\n    margin: 0;\n    padding: 0;\n    font-size: 1px;\n    border-radius: 2px;\n    background: rgba(50, 50, 50, 0.8);\n}\n\n.mejs__horizontal-volume-current {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    font-size: 1px;\n    border-radius: 2px;\n    background: rgba(255, 255, 255, 0.8);\n}\n\n.mejs__horizontal-volume-handle {\n    display: none;\n}\n\n/* End: Mute/Volume */\n\n/* Start: Track (Captions and Chapters) */\n.mejs__captions-button, .mejs__chapters-button {\n    position: relative;\n}\n\n.mejs__captions-button > button {\n    background-position: -140px 0;\n}\n\n.mejs__chapters-button > button {\n    background-position: -180px 0;\n}\n\n.mejs__captions-button > .mejs__captions-selector, .mejs__chapters-button > .mejs__chapters-selector {\n    visibility: hidden;\n    position: absolute;\n    bottom: 40px;\n    right: -51px;\n    width: 85px;\n    background: rgba(50, 50, 50, 0.7);\n    border: solid 1px transparent;\n    padding: 0;\n    overflow: hidden;\n    border-radius: 0;\n}\n\n.mejs__chapters-button > .mejs__chapters-selector {\n    width: 110px;\n}\n\n.mejs__captions-button > .mejs__captions-selector, .mejs__chapters-button > .mejs__chapters-selector {\n    visibility: visible;\n}\n\n.mejs__captions-selector-list, .mejs__chapters-selector-list {\n    margin: 0;\n    padding: 0;\n    display: block;\n    list-style-type: none !important;\n    overflow: hidden;\n}\n\n.mejs__captions-selector-list-item, .mejs__chapters-selector-list-item {\n    margin: 0 0 6px 0;\n    padding: 0 10px;\n    list-style-type: none !important;\n    display: block;\n    color: #fff;\n    overflow: hidden;\n    cursor: pointer;\n}\n\n.mejs__captions-selector-list-item:hover, .mejs__chapters-selector-list-item:hover {\n    background-color: rgb(200, 200, 200) !important;\n    background-color: rgba(255, 255, 255, 0.4) !important;\n}\n\n.mejs__captions-selector-input, .mejs__chapters-selector-input {\n    clear: both;\n    float: left;\n    margin: 3px 3px 0 5px;\n    position: absolute;\n    left: -1000px;\n}\n\n.mejs__captions-selector-label, .mejs__chapters-selector-label {\n    width: 55px;\n    float: left;\n    padding: 4px 0 0 0;\n    line-height: 15px;\n    font-size: 10px;\n    cursor: pointer;\n}\n\n.mejs__captions-selected, .mejs__chapters-selected {\n    color: rgba(33, 248, 248, 1);\n}\n\n.mejs__captions-translations {\n    font-size: 10px;\n    margin: 0 0 5px 0;\n}\n\n.mejs__captions-layer {\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    text-align: center;\n    line-height: 20px;\n    font-size: 16px;\n    color: #fff;\n}\n\n.mejs__captions-layer a {\n    color: #fff;\n    text-decoration: underline;\n}\n\n.mejs__captions-layer[lang=ar] {\n    font-size: 20px;\n    font-weight: normal;\n}\n\n.mejs__captions-position {\n    position: absolute;\n    width: 100%;\n    bottom: 15px;\n    left: 0;\n}\n\n.mejs__captions-position-hover {\n    bottom: 35px;\n}\n\n.mejs__captions-text, .mejs__captions-text * {\n    padding: 0;\n    background: rgba(20, 20, 20, 0.5);\n    white-space: pre-wrap;\n    box-shadow: 5px 0 0 rgba(20, 20, 20, 0.5), -5px 0 0 rgba(20, 20, 20, 0.5);\n}\n\n.mejs__container.mejs__hide-cues video::-webkit-media-text-track-container {\n    display: none;\n}\n\n/* End: Track (Captions and Chapters) */\n\n/* Start: Error */\n.me_cannotplay a {\n    font-weight: bold;\n}\n\n.mejs__container .me_cannotplay a {\n    color: #fff;\n}\n\n.me_cannotplay span {\n    padding: 15px;\n    display: block;\n}\n\n/* End: Error */\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -21030,17 +21124,17 @@ _mejs2.default.Utils.convertSMPTEtoSeconds = convertSMPTEtoSeconds;
 
 },{"6":6}]},{},[27,5,4,14,21,18,17,19,20,22,15,16,8,9,10,11,12,13]);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(15);
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
 
 /***/ }),
 /* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(16);
+
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports) {
 
 
@@ -21135,13 +21229,13 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(13);
+var content = __webpack_require__(14);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -21166,13 +21260,13 @@ if(false) {
 }
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(14);
+var content = __webpack_require__(15);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -21197,7 +21291,7 @@ if(false) {
 }
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 var g;

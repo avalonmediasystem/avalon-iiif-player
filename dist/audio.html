@@ -12,6 +12,16 @@
     <a href="audio.html" class="item active">Audio Player</a>
   </nav>
 
+  <form class="ui form" id="manifest-url-form">
+    <div class="field">
+      <label>Current Manifest</label>
+      <div class="ui fluid action input manifest-url-wrapper">
+        <input type="text" placeholder="Manifest URL..." id="manifest-url">
+        <button class="ui button" id="manifest-url-button">Submit</button>
+      </div>
+    </div>
+  </form>
+
   <section class="iiif-av-player"></section>
   <section id="data-iiifav-source" data-iiifav-audio-source="mahler-symphony-3.json"></section>
 

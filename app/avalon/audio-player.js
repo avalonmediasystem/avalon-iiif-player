@@ -53,7 +53,9 @@ export default class AudioPlayer extends MediaPlayer {
     options.audio = options.audio || {}
     options.audio.quality = options.audio.quality || 'Medium'
 
-    if (audioItems.length < 1) { return }
+    if (audioItems.length < 1) {
+      return
+    }
 
     audioItems.forEach((item) => {
       if (item.label === options.audio.quality) {
@@ -64,10 +66,6 @@ export default class AudioPlayer extends MediaPlayer {
         const audioStructure = this.createStructure(this.manifest['structures'], [])
 
         this.target.innerHTML = `
-            <div class="ui fluid action input manifest-url-wrapper">
-              <input type="text" placeholder="Manifest URL..." id="manifest-url">
-              <button class="ui button" id="manifest-url-button">Submit</button>
-            </div>
             <section class="ui stackable two column grid">
               <article class="six wide column">${audioStructure}</article>
               <article class="ten wide column player-wrapper">${audioElement}</article>
@@ -77,24 +75,7 @@ export default class AudioPlayer extends MediaPlayer {
 
         // Start listening for changes in the hash
         this.hashHandler.bindHashChange()
-
-        this.addEventListeners()
-        }
-      })
-    }
-
-  /**
-   * Add event listeners
-   * @method AudioPlayer#addEventListeners
-   * return {void}
-   */
-  addEventListeners() {
-    let avalon = this.avalon
-
-    // Add event listener for manifest url button click
-    document.getElementById('manifest-url-button').addEventListener('click', function submitManifest(e) {
-      let url = document.getElementById('manifest-url')
-      avalon.mediaPlayerAudio(url.value)
+      }
     })
   }
 }

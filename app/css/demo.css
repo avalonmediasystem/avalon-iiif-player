@@ -23,6 +23,10 @@ nav {
   margin-right: 2em;
 }
 
+.error-message {
+  color: #8b0000;
+  padding: 1rem 0;
+}
 .player-wrapper {
   margin: 2rem 0;
 }
@@ -31,6 +35,3 @@ nav {
   margin: 2rem 0;
 }
 
-.manifest-url-wrapper {
-  padding: 2rem 0;
-}
