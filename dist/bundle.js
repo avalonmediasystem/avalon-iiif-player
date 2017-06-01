@@ -503,7 +503,7 @@ var HashHandler = function () {
       var _this = this;
 
       document.addEventListener('click', function (event) {
-        if (event.srcElement.className.indexOf('media-structure-uri') > -1) {
+        if (event.srcElement.className.indexOf('media-structure-uri') > -1 && window.location.hash.search('/time/') > -1) {
           _this.playFromHash(window.location.hash);
         }
       });
