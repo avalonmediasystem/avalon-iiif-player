@@ -503,7 +503,7 @@ var HashHandler = function () {
       var _this = this;
 
       document.addEventListener('click', function (event) {
-        if (event.srcElement.className.indexOf('media-structure-uri') > -1 && window.location.hash.search('/time/') > -1) {
+        if (event.target.className.indexOf('media-structure-uri') > -1 && window.location.hash.search('/time/') > -1) {
           _this.playFromHash(window.location.hash);
         }
       });
@@ -596,6 +596,7 @@ var HashHandler = function () {
         if (index % 2 === 0) {
           if (item === 'time') {
             var time = array[index + 1].split(',');
+            console.log(time);
             result['start'] = time[0];
             result['stop'] = time[1];
           }
@@ -11646,7 +11647,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".quality-selector {\n    position: absolute;\n    overflow: hidden;\n    background: rgba(28,28,28,0.9);\n    text-shadow: 0 0 2px rgba(0,0,0,.5);\n    margin:0;\n    padding:0;\n    width:10%;\n    color:white;\n    padding-top: 5px;\n    padding-bottom: 3px;\n    text-align:center;\n}\n\n.quality-choice {\n    padding: 4px 0 0 0;\n    line-height: 15px;\n    font-size:0.7em;\n    cursor: pointer;\n    display:none;\n    text-align:center;\n    \n}\n\n.quality-choice:hover {\n    background:grey;\n}\n\n.quality-selected {\n    color:rgba(33, 248, 248, 1)\n}\n\n.quality-settings {\n    font-size:0.7em;\n    cursor:pointer;\n}\n", ""]);
+exports.push([module.i, ".quality-selector {\n    position: absolute;\n    overflow: hidden;\n    background: rgba(28,28,28,0.9);\n    text-shadow: 0 0 2px rgba(0,0,0,.5);\n    margin:0;\n    padding:0;\n    width:10%;\n    color:white;\n    padding-top: 5px;\n    padding-bottom: 3px;\n    text-align:center;\n    list-style-type:none;\n}\n\n.quality-choice {\n    padding: 4px 0 0 0;\n    line-height: 15px;\n    font-size:0.7em;\n    cursor: pointer;\n    display:none;\n    text-align:center;\n    \n}\n\n.quality-choice:hover {\n    background:grey;\n}\n\n.quality-selected {\n    color:rgba(33, 248, 248, 1)\n}\n\n.quality-settings {\n    font-size:0.7em;\n    cursor:pointer;\n}\n", ""]);
 
 // exports
 

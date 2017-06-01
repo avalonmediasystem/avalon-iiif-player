@@ -13,7 +13,7 @@ export default class HashHandler {
 
   bindHashLinkClick () {
     document.addEventListener('click', (event) => {
-      if (event.srcElement.className.indexOf('media-structure-uri') > -1 && window.location.hash.search('/time/') > -1) {
+      if (event.target.className.indexOf('media-structure-uri') > -1 && window.location.hash.search('/time/') > -1) {
         this.playFromHash(window.location.hash)
       }
     })
@@ -97,6 +97,7 @@ export default class HashHandler {
       if (index % 2 === 0) {
         if (item === 'time') {
           const time = array[index + 1].split(',')
+          console.log(time)
           result['start'] = time[0]
           result['stop'] = time[1]
         }
