@@ -89,6 +89,7 @@ export default class Avalon {
 
     $.get(manifestSource, (manifest) => {
       options.manifest = manifest
+      console.log(manifest)
       this.createVideoPlayer(options)
     })
   }
