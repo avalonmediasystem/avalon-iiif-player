@@ -16,8 +16,7 @@ module.exports = function (config) {
     files: [
       'node_modules/jquery/dist/jquery.slim.min.js',
       'spec/helpers/jasmine-jquery.js',
-      'spec/**/*_spec.js',
-      'spec/fixtures/*.js'
+      'spec/**/*_spec.js'
     ],
 
     // preprocess matching files before serving them to the browser

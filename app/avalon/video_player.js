@@ -1,5 +1,5 @@
-import MediaPlayer from './media-player'
-import HashHandler from './hash-handler'
+import MediaPlayer from './media_player'
+import HashHandler from './hash_handler'
 import 'mediaelement'
 
 export default class VideoPlayer extends MediaPlayer {
@@ -33,5 +33,11 @@ export default class VideoPlayer extends MediaPlayer {
     this.hashHandler.bindHashChange()
     var iiifPlayer = document.getElementById('iiif-av-player')
     iiifPlayer.insertAdjacentHTML('beforeend', this.qualitySelectorMarkup())
+
+    // set the implicit links
+    // this eventListenerer is only for getting the tests to pass with PhantomJS
+    document.addEventListener('DOMContentLoaded', () => {
+      this.addUrlsForParents()
+    })
   }
 }
