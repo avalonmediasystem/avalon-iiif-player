@@ -76,9 +76,7 @@ export default class AudioPlayer extends MediaPlayer {
         this.hashHandler.bindHashChange()
         // set the implicit links
 
-        document.addEventListener('DOMContentLoaded', () => {
-          window.onload = this.addUrlsForParents()
-        })
+        this.addUrlsForParents()
       }
     })
   }

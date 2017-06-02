@@ -36,8 +36,6 @@ export default class VideoPlayer extends MediaPlayer {
 
     // set the implicit links
     // this eventListenerer is only for getting the tests to pass with PhantomJS
-    document.addEventListener('DOMContentLoaded', () => {
-      this.addUrlsForParents()
-    })
+    this.addUrlsForParents()
   }
 }
