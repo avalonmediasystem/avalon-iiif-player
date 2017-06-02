@@ -21,24 +21,24 @@
                      "choiceHint":"user",
                      "items":[
                         {
-                           "id":"http://dlib.indiana.edu/iiif_av/lunchroom_manners/high/lunchroom_manners_1024kb.mp4",
+                           "id":"https://dlib.indiana.edu/iiif_av/lunchroom_manners/high/lunchroom_manners_1024kb.mp4",
                            "type":"Video",
                            "label":"High"
                         },
                         {
-                           "id":"http://dlib.indiana.edu/iiif_av/lunchroom_manners/medium/lunchroom_manners_512kb.mp4",
+                           "id":"https://dlib.indiana.edu/iiif_av/lunchroom_manners/medium/lunchroom_manners_512kb.mp4",
                            "type":"Video",
                            "label":"Medium"
                         },
                         {
-                           "id":"http://dlib.indiana.edu/iiif_av/lunchroom_manners/low/lunchroom_manners_256kb.mp4",
+                           "id":"https://dlib.indiana.edu/iiif_av/lunchroom_manners/low/lunchroom_manners_256kb.mp4",
                            "type":"Video",
                            "label":"Low"
                         }
                      ]
                   },
                   {
-                     "id":"http://dlib.indiana.edu/iiif_av/lunchroom_manners/lunchroom_manners.vtt",
+                     "id":"https://dlib.indiana.edu/iiif_av/lunchroom_manners/lunchroom_manners.vtt",
                      "type":"Text",
                      "format":"text/vtt",
                      "language":"en"
