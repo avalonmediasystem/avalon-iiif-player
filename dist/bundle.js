@@ -11499,9 +11499,7 @@ var AudioPlayer = function (_MediaPlayer) {
           _this2.hashHandler.bindHashChange
           // set the implicit links
 
-          ();document.addEventListener('DOMContentLoaded', function () {
-            window.onload = _this2.addUrlsForParents();
-          });
+          ();_this2.addUrlsForParents();
         }
       });
     }
@@ -11776,8 +11774,6 @@ var VideoPlayer = function (_MediaPlayer) {
   _createClass(VideoPlayer, [{
     key: 'render',
     value: function render(mediaFragment) {
-      var _this2 = this;
-
       /**
        * @param {object} mediaFragment - a mediaFragment
        * this method creates the video element
@@ -11800,9 +11796,7 @@ var VideoPlayer = function (_MediaPlayer) {
 
       // set the implicit links
       // this eventListenerer is only for getting the tests to pass with PhantomJS
-      );document.addEventListener('DOMContentLoaded', function () {
-        _this2.addUrlsForParents();
-      });
+      );this.addUrlsForParents();
     }
   }]);
 
