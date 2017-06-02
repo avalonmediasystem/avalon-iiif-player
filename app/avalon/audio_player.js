@@ -2,7 +2,6 @@ import Avalon from './avalon'
 import MediaPlayer from './media_player'
 import HashHandler from './hash_handler'
 
-
 export default class AudioPlayer extends MediaPlayer {
   constructor (options) {
     super(options)
