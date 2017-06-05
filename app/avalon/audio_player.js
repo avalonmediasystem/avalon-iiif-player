@@ -1,6 +1,6 @@
 import Avalon from './avalon'
-import MediaPlayer from './media-player'
-import HashHandler from './hash-handler'
+import MediaPlayer from './media_player'
+import HashHandler from './hash_handler'
 import UtilityHelpers from './utility-helpers'
 
 export default class AudioPlayer extends MediaPlayer {
@@ -81,6 +81,9 @@ export default class AudioPlayer extends MediaPlayer {
 
         // Start listening for changes in the hash
         this.hashHandler.bindHashChange()
+        // set the implicit links
+
+        this.addUrlsForParents()
       }
     })
   }

@@ -43,7 +43,6 @@ export default class QualitySelector {
  *
  * @method QualitySelector#renderChoices
  */
-    console.log(ch)
     var choiceList = ch.map((choice) => { return `<li class='quality-choice' data-quality-choice='${choice.id}'>${choice.label}</li>` })
     this.bindClick()
     this.bindSettings()

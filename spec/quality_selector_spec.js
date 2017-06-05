@@ -1,4 +1,4 @@
-import QualitySelector from '../app/avalon/quality-selector'
+import QualitySelector from '../app/avalon/quality_selector'
 
 describe('a quality selector', () => {
   var manifest = {

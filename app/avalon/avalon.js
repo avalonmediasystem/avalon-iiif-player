@@ -1,7 +1,7 @@
 import $ from 'jquery'
-import AudioPlayer from './audio-player'
-import VideoPlayer from './video-player'
-import UtilityHelpers from './utility-helpers'
+import AudioPlayer from './audio_player'
+import VideoPlayer from './video_player'
+import UtilityHelpers from './utility_helpers'
 
 /** This class will look for certain data attributes in page markup
  * and then initiqlize a player. It uses an XHR request to get the
@@ -89,7 +89,6 @@ export default class Avalon {
 
     $.get(manifestSource, (manifest) => {
       options.manifest = manifest
-      console.log(manifest)
       this.createVideoPlayer(options)
     })
   }

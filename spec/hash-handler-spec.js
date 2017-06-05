@@ -1,4 +1,4 @@
-import HashHandler from '../app/avalon/hash-handler'
+import HashHandler from '../app/avalon/hash_handler'
 
 describe('the Hash Handler class', () => {
   it('returns an object with starting/stopping time and quality when given a location hash', () => {

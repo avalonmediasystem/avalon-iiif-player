@@ -310,7 +310,7 @@ describe('an Avalon media audio player', () => {
     var mediaPlayerMarkup = document.getElementById('media-player-audio-target').innerHTML
 
     console.log('mediaPlayerMarkup:', mediaPlayerMarkup)
-    expect(mediaPlayerMarkup).toContain('<ul class="canvas-range">')
+    expect(mediaPlayerMarkup).toContain('<ul class="explicit av-structure">')
 
     // TODO: Fix these tests to pass in Travis CI
     /*
