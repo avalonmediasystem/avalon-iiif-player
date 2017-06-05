@@ -11,7 +11,7 @@ export default class HashHandler {
     this.qualityChoices = options.qualityChoices
     this.player = undefined
     this.updating = false
-    //this.bindHashLinkClick()
+    // this.bindHashLinkClick()
   }
 
   /**
