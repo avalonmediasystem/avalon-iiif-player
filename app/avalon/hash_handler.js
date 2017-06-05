@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 /** Class representing a HashHandler
  * this class is used for functionality based on the hash in the url
  * @class HashHandler
@@ -8,16 +10,26 @@ export default class HashHandler {
     this.instance = options.instance
     this.qualityChoices = options.qualityChoices
     this.player = undefined
-    this.bindHashLinkClick()
+    this.updating = false
+    // this.bindHashLinkClick()
   }
 
-  bindHashLinkClick () {
-    document.addEventListener('click', (event) => {
-      if (event.target.className.indexOf('media-structure-uri') > -1 && window.location.hash.search('/time/') > -1) {
-        this.playFromHash(window.location.hash)
-      }
-    })
-  }
+  /**
+   * The function adds and handles a click listener for structure links
+   * TODO: Fix this implementation, as it adds extra event listeners when a new manifest URL is loaded
+   *
+   * @method HashHandler#bindHashLinkClick
+   * @returns {void}
+   */
+  // bindHashLinkClick () {
+  //   let el = document.getElementById('data-iiifav-source').firstChild
+  //   el.addEventListener('click', (event) => {
+  //     if (event.target.className.indexOf('media-structure-uri') > -1 && window.location.hash.search('/time/') > -1) {
+  //       this.playFromHash(event.target.hash)
+  //     }
+  //   })
+  // }
+
   bindHashChange () {
     /**
      * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
@@ -46,19 +58,22 @@ export default class HashHandler {
      * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
      * @method HashHandler#playFromHash
      **/
-    var options = this.processHash(hash)
+    if (this.updating) {
+      return
+    }
+    this.updating = true
+    let options = this.processHash(hash)
     let canvasesExist = this.canvasesInManifest()
     let src = ''
 
     // Safari will only setCurrentTime() after 'canplay' event is fired
-    let handler = (e) => {
-      // Ensure this handler only fires once
-      this.player.removeEventListener(e.type, handler)
+    // Using jQuery's 'one' method ensures event only fires once, but there may be a better solution to limit
+    //   event listeners being unnecessarily added
+    $(this.player).one('canplay', () => {
       this.player.setCurrentTime(parseInt(options.start))
       this.player.play()
-    }
-
-    this.player.addEventListener('canplay', handler)
+      this.updating = false
+    })
 
     // Is canvas in the hash different from canvas currently in the player?
     if (canvasesExist && (options.canvas !== this.currentCanvasIndex)) {
@@ -97,6 +112,7 @@ export default class HashHandler {
       if (index % 2 === 0) {
         if (item === 'time') {
           const time = array[index + 1].split(',')
+          console.log('time', time)
           result['start'] = time[0]
           result['stop'] = time[1]
         }

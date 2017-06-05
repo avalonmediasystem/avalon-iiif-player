@@ -1,14 +1,21 @@
 import Avalon from './avalon'
 import MediaPlayer from './media_player'
 import HashHandler from './hash_handler'
+import UtilityHelpers from './utility_helpers'
 
 export default class AudioPlayer extends MediaPlayer {
   constructor (options) {
     super(options)
+    let utilityHelpers = new UtilityHelpers()
     this.avalon = new Avalon()
+    this.canvases = this.getCanvases(options)
 
-    // Default use the first sequence to grab canvases
-    this.canvases = options.manifest.sequences[0].canvases
+    // Display error message and remove player UI if no canvases exist in manifest
+    if (this.canvases.length === 0) {
+      utilityHelpers.displayErrorMessage('Problem with manifest structure')
+      document.getElementById('data-iiifav-source').innerHTML = ''
+      return
+    }
     this.currentCanvas = this.getCanvas(this.canvases[0].id)
     this.hashHandler = new HashHandler({
       'qualityChoices': this.getQualityChoices(this.currentCanvas),
@@ -66,7 +73,7 @@ export default class AudioPlayer extends MediaPlayer {
 
         this.target.innerHTML = `
             <section class="ui stackable two column grid">
-              <article class="six wide column">${audioStructure}</article>
+              <article id="structure" class="six wide column">${audioStructure}</article>
               <article class="ten wide column player-wrapper">${audioElement}</article>
             </section>
           `
