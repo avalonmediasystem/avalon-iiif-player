@@ -95,7 +95,7 @@ export default class Avalon {
   }
 
   /**
-   * Set up listener for Manifest URL form
+   * Set up listener for the Manifest Url form
    * @method Avalon#prepareForm
    * @return {void}
    */

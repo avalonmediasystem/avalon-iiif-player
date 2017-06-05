@@ -202,4 +202,14 @@ export default class MediaPlayer {
     list.push('</ul>')
     return list.join('')
   }
+
+  getCanvases (options) {
+    let canvases = []
+    let sequences = options.manifest.sequences
+    if (sequences && sequences.length > 0) {
+      // Default use the first sequence to grab canvases
+      canvases = sequences[0].canvases || []
+    }
+    return canvases
+  }
 }
