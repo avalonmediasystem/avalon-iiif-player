@@ -10845,8 +10845,6 @@ var Avalon = function () {
   }, {
     key: 'mediaPlayerVideo',
     value: function mediaPlayerVideo() {
-      var _this2 = this;
-
       /**
        * this method reads the manifest via XHR and then adds the player to the page
        * @method Avalon#mediaPlayerVideo
@@ -10857,7 +10855,7 @@ var Avalon = function () {
 
       _jquery2.default.get(manifestSource, function (manifest) {
         options.manifest = manifest;
-        _this2.createVideoPlayer(options);
+        thisfzzzz.createVideoPlayer(options);
       });
     }
 
@@ -10870,7 +10868,7 @@ var Avalon = function () {
   }, {
     key: 'prepareForm',
     value: function prepareForm() {
-      var _this3 = this;
+      var _this2 = this;
 
       var form = document.getElementById('manifest-url-form');
       if (!form) {
@@ -10880,7 +10878,7 @@ var Avalon = function () {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         utilityHelpers.removeErrorMessage();
-        _this3.mediaPlayerAudio(document.getElementById('manifest-url').value);
+        _this2.mediaPlayerAudio(document.getElementById('manifest-url').value);
         return false;
       });
     }
@@ -10980,6 +10978,7 @@ var HashHandler = function () {
        * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
        * @method HashHandler#playFromHash
        **/
+      console.log('YO dude');
       if (this.updating) {
         return;
       }

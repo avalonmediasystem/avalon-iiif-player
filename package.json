@@ -5,6 +5,8 @@
   "main": "app.js",
   "repository": "https://github.com/avalonmediasystem/avalon-poc-standalone",
   "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server",
     "test": "standard && karma start --single-run --browsers PhantomJS"
   },
   "keywords": [],

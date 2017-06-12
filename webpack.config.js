@@ -1,6 +1,7 @@
-var path = require('path')
+let path = require('path')
 
 module.exports = {
+  devtool: 'cheap-module-source-map',
   entry: path.resolve('./app/index.js'),
   output: {
     filename: './dist/bundle.js'
