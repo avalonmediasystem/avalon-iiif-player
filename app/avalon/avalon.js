@@ -21,6 +21,7 @@ export default class Avalon {
       this.mediaPlayerAudio()
     }
     this.prepareForm()
+    this.foo = 'you'
   }
 
   createAudioPlayer (options) {
