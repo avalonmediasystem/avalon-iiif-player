@@ -1,0 +1,36 @@
+<html>
+<head>
+  <title>Avalon Player Webpack Version</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
+</head>
+<body>
+<div class="ui container content-wrapper">
+
+  <h1>IIIF Manifest Standalone Player</h1>
+
+  <div class="ui info message" id="manifest-current-wrapper">
+    <div class="header">
+      Current Manifest:
+    </div>
+    <p id="manifest-current"></p>
+  </div>
+
+  <form class="ui form" id="manifest-url-form">
+    <div class="field">
+      <div class="ui fluid action input manifest-url-wrapper">
+        <input type="text" placeholder="Enter a manifest URL..." id="manifest-url">
+        <button class="ui button" id="manifest-url-button">Submit</button>
+      </div>
+    </div>
+  </form>
+
+  <section class="iiif-av-player"></section>
+  <section id="data-iiifav-source" data-iiifav-audio-source="mahler-symphony-3.json"></section>
+
+  <div id="iiif-standalone-player-mount"></div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

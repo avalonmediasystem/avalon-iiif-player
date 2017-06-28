@@ -1,4 +1,4 @@
-// import '../../node_modules/mediaelement/src/css/mediaelementplayer.css'
+import '../../node_modules/mediaelement/src/css/mediaelementplayer.css'
 import QualitySelector from './quality_selector'
 
 /** Class representing a MediaPlayer

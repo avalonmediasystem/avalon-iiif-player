@@ -1,97 +1,101 @@
 import $ from 'jquery'
 import AudioPlayer from './audio_player'
 import VideoPlayer from './video_player'
-import UtilityHelpers from './utility_helpers'
+import { utilityHelpers } from './utility_helpers'
 
-/** This class will look for certain data attributes in page markup
- * and then initiqlize a player. It uses an XHR request to get the
- * III-AV JSON.
- * @class Avalon
- */
+/** Class representing the avalon IIIF player */
 export default class Avalon {
-  initialize () {
-    /**
-     * this method checks the page markup for a iiif-av data attribute
-     * @method Avalon#initialize
-     */
-    if ($('[data-iiifav-source]').length > 0) {
-      this.mediaPlayerVideo()
-    }
-    if ($('[data-iiifav-audio-source]').length > 0) {
-      this.mediaPlayerAudio()
-    }
+  constructor () {
+    // Set a default local manifest to kick off application
+    this.defaultManifest = 'lunchroom_manners_v2.json'
+
+    // Save reference to manifest URL text input element
+    this.manifestUrlEl = document.getElementById('manifest-url')
+
+    // Map of current manifest properties we need for parsing decisions
+    this.manifestMap = {}
+
+    // Set up a manifest URL form listener
     this.prepareForm()
-    this.foo = 'you'
   }
 
-  createAudioPlayer (options) {
-    /**
-     * this method will initlize create an AudioPlayer instance
-     * @method Avalon#createAudioPlayer
-     */
-    return new AudioPlayer(options)
-  }
-  createVideoPlayer (options) {
-    /**
-     * this method will initlize create an VideoPlayer instance
-     * @method Avalon#createVideoPlayer
-     */
-    return new VideoPlayer(options)
-  }
-
-  mediaPlayerAudio (manifestUrl) {
-    /**
-     * this method reads the manifest via XHR and then adds the player to the page
-     * @method Avalon#mediaPlayerAudio
-     */
-    let utilityHelpers = new UtilityHelpers()
+  /**
+   * Handle AJAX success response of supplied manifest URL
+   * @param {object} manifest - AJAX data response
+   * @param {string} textStatus - AJAX text response
+   * @param {object} jqXHR - AJAX request response
+   * @returns {*}
+   */
+  ajaxSuccessHandler (manifest, textStatus, jqXHR) {
+    let json = ''
     let options = {}
-    let $audioSource = $('[data-iiifav-audio-source]')
-    let manifestSource = manifestUrl || $audioSource.data().iiifavAudioSource
-    options.audio = {}
-    options.target = $audioSource.attr('id')
+    let contentItem = {}
+    let playerType = ''
 
-    $.get(manifestSource)
-      .done((manifest, textStatus, jqXHR) => {
-        let json = ''
-        try {
-          json = JSON.parse(manifest)
-        } catch (e) {
-          json = manifest
-        }
-        options.manifest = json
+    try {
+      json = JSON.parse(manifest)
+    } catch (e) {
+      json = manifest
+    }
+    options.manifest = json
 
-        // New manifest URL, clear previous manifest's url hash
-        if (manifestUrl) {
-          utilityHelpers.clearHash()
-        }
+    // Clear previous manifest's url hash
+    utilityHelpers.clearHash()
 
-        // Create audio player
-        this.createAudioPlayer(options)
+    // Update current manifest message
+    document.getElementById('manifest-current').innerText = (this.manifestUrlEl.value !== '') ? this.manifestUrlEl.value : this.defaultManifest
 
-        // Update current manifest message
-        document.getElementById('manifest-current').innerText = manifestSource
-      })
+    // Get initial manifest structural info
+    this.manifestMap = this.buildManifestMap(json)
+
+    // Get first content item to feed player
+    contentItem = this.getFirstContentItem(json)
+
+    // Determine whether first canvas in manifest is audio or video file
+    playerType = utilityHelpers.determinePlayerType(contentItem)
+
+    if (playerType === 'Audio') {
+      return new AudioPlayer(options)
+    } else if (playerType === 'Video') {
+      return new VideoPlayer(options)
+    }
+  }
+
+  /**
+   * Get a manifest's content array
+   * @param {object} manifest - A json manifest
+   * @returns {object} The first element in content array
+   */
+  getFirstContentItem (manifest) {
+    let firstContent = {}
+
+    // No sequences, go right to content key
+    if (!this.manifestMap.hasSequences) {
+      firstContent = manifest.content
+
+    // Has sequences and canvases
+    } else if (this.manifestMap.hasSequences && this.manifestMap.hasCanvases) {
+      firstContent = manifest.sequences[0].canvases[0].content
+    }
+    return firstContent[0]
+  }
+
+  /**
+   * Retrieve a manifest via Ajax
+   * @param {string} url - Url of manifest, either 'http...' or a local file
+   * @return {void}
+   */
+  getManifestAJAX (url) {
+    $.ajax({
+      dataType: 'json',
+      url: url
+    })
+      .done(this.ajaxSuccessHandler.bind(this))
       .fail(function (error) {
         utilityHelpers.displayErrorMessage(`Manifest URL Error - ${error.statusText}`)
       })
       .always(function () {
       })
-  }
-
-  mediaPlayerVideo () {
-    /**
-     * this method reads the manifest via XHR and then adds the player to the page
-     * @method Avalon#mediaPlayerVideo
-     */
-    var options = {}
-    var manifestSource = $('[data-iiifav-source]').data().iiifavSource
-    options.target = $('[data-iiifav-source]').attr('id')
-
-    $.get(manifestSource, (manifest) => {
-      options.manifest = manifest
-      this.createVideoPlayer(options)
-    })
   }
 
   /**
@@ -101,15 +105,53 @@ export default class Avalon {
    */
   prepareForm () {
     let form = document.getElementById('manifest-url-form')
-    if (!form) {
-      return
+
+    if (!form) { return }
+
+    // Add form submit event listener
+    form.addEventListener('submit', this.submitURLHandler.bind(this))
+
+    // Initialize app with default local manifest
+    if (this.manifestUrlEl.value.trim() === '') {
+      this.getManifestAJAX(this.defaultManifest)
     }
-    let utilityHelpers = new UtilityHelpers()
-    form.addEventListener('submit', (e) => {
-      e.preventDefault()
-      utilityHelpers.removeErrorMessage()
-      this.mediaPlayerAudio(document.getElementById('manifest-url').value)
-      return false
-    })
+  }
+
+  /**
+   * Form submit event handler
+   * @param {object} e - the event object
+   * @returns {boolean}
+   */
+  submitURLHandler (e) {
+    e.preventDefault()
+
+    // Remove any existing error messages
+    utilityHelpers.removeErrorMessage()
+    this.mediaPlayerAudio(document.getElementById('manifest-url').value)
+    return false
+  }
+
+  /**
+   * Build a manifest map helper object for parsing
+   * @param {object} manifest - Manifest object
+   * @returns {object} A generated map object
+   */
+  buildManifestMap (manifest) {
+    let obj = {
+      hasCanvases: false,
+      hasMultipleCanvases: false,
+      hasSequences: false,
+      isAudio: false,
+      isVideo: false
+    }
+
+    obj.hasSequences = !!manifest.sequences
+    if (obj.hasSequences === true) {
+      obj.hasCanvases = !!obj.sequences.canvases
+      if (obj.hasCanvases === true) {
+        obj.hasMultipleCanvases = obj.sequences.canvases.length > 1
+      }
+    }
+    return obj
   }
 }

@@ -1,18 +1,10 @@
-/** Class representing a MediaPlayer
- * @class MediaPlayer
- */
 export default class UtilityHelpers {
-  /**
-   * Create a UtilityHelper
-   * @constructor
-   */
   constructor () {
     this.errorClass = 'error-message'
   }
 
   /**
    * Clear the hash params from URL
-   * @method UtilityHelpers#clearHash
    * @return {void}
    */
   clearHash () {
@@ -20,8 +12,31 @@ export default class UtilityHelpers {
   }
 
   /**
-   * Display default error message
-   * @param msg
+   * Parse what type of content the file is
+   * @param {object} contentItem - The content item for which to find type
+   * @returns {string} 'Audio' or 'Video' text (for now)
+   */
+  determinePlayerType (contentItem) {
+    let playerType = ''
+    let body = lookForBody(contentItem)
+
+    if (body[0].type === 'Choice') {
+      playerType = body[0].items[0].type
+    }
+    return playerType
+
+    function lookForBody (obj) {
+      if (obj.body) {
+        return obj.body
+      } else if (obj.items) {
+        return lookForBody(obj.items[0])
+      }
+    }
+  }
+
+  /**
+   * Create and display default error message
+   * @param {string} msg - Message to display
    * @return void
    */
   displayErrorMessage (msg) {
@@ -40,6 +55,10 @@ export default class UtilityHelpers {
     el.parentNode.insertBefore(newNode, el.nextSibling)
   }
 
+  /**
+   * Removes an error message if one exists
+   * return {void}
+   */
   removeErrorMessage () {
     let el = document.getElementsByClassName(this.errorClass)[0]
     if (el) {
@@ -47,3 +66,6 @@ export default class UtilityHelpers {
     }
   }
 }
+
+// This creates a singleton instance of utilityHelpers to pass around the application
+export let utilityHelpers = new UtilityHelpers()
