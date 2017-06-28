@@ -9,23 +9,24 @@ export default class Avalon {
   initialize () {
     // Configuration object to hold element values, ids and such in one place
     this.configObj = {
+      defaultManifest: 'lunchroom_manners_v2.json',
       mountElId: 'iiif-standalone-player-mount',
       playerElId: 'iiif-player-wrapper',
       structureElId: 'iiif-structure-wrapper',
       urlTextInputId: 'manifest-url'
     }
 
-    // Set a default local manifest to kick off application
-    this.defaultManifest = 'lunchroom_manners_v2.json'
-
     // Save reference to manifest URL text input element
     this.manifestUrlEl = document.getElementById(this.configObj.urlTextInputId)
 
-    // Map of current manifest properties we need for parsing decisions
-    this.manifestMap = {}
-
     // Root element necessary in HTML for our application to mount to
     this.mountEl = document.getElementById(this.configObj.mountElId)
+
+    // Set up initial markup for elements to mount to
+    this.setupMarkup()
+
+    // Map of current manifest properties we need for parsing decisions
+    this.manifestMap = {}
 
     // Set up a manifest URL form listener
     this.prepareForm()
@@ -57,7 +58,7 @@ export default class Avalon {
     utilityHelpers.clearHash()
 
     // Update current manifest message
-    document.getElementById('manifest-current').innerText = (this.manifestUrlEl.value !== '') ? this.manifestUrlEl.value : this.defaultManifest
+    document.getElementById('manifest-current').innerText = (this.manifestUrlEl.value !== '') ? this.manifestUrlEl.value : this.configObj.defaultManifest
 
     // Build helper map for parsing
     this.manifestMap = this.buildManifestMap(manifest)
@@ -96,9 +97,9 @@ export default class Avalon {
 
     obj.hasSequences = !!manifest.sequences
     if (obj.hasSequences === true) {
-      obj.hasCanvases = !!obj.sequences.canvases
+      obj.hasCanvases = !!manifest.sequences[0].canvases
       if (obj.hasCanvases === true) {
-        obj.hasMultipleCanvases = obj.sequences.canvases.length > 1
+        obj.hasMultipleCanvases = manifest.sequences[0].canvases.length > 1
       }
     }
     return obj
@@ -199,15 +200,7 @@ export default class Avalon {
    * Mount the structure tree markup to UI
    */
   mountStructure () {
-    let structureEl = document.createElement('div')
-    let playerEl = document.createElement('div')
-
-    structureEl.innerHTML = this.structureMarkup
-    structureEl.setAttribute('id', this.configObj.structureElId)
-    playerEl.setAttribute('id', this.configObj.playerElId)
-
-    this.mountEl.appendChild(structureEl)
-    this.mountEl.appendChild(playerEl)
+    document.getElementById(this.configObj.structureElId).innerHTML = this.structureMarkup
   }
 
   /**
@@ -225,8 +218,24 @@ export default class Avalon {
 
     // Initialize app with default local manifest
     if (this.manifestUrlEl.value.trim() === '') {
-      this.getManifestAJAX(this.defaultManifest)
+      this.getManifestAJAX(this.configObj.defaultManifest)
     }
+  }
+
+  /**
+   * Set up the initial markup wrappers for structures links and the player,
+   * then add markup to the DOM
+   * @return {void}
+   */
+  setupMarkup () {
+    let structureEl = document.createElement('div')
+    let playerEl = document.createElement('div')
+
+    structureEl.setAttribute('id', this.configObj.structureElId)
+    playerEl.setAttribute('id', this.configObj.playerElId)
+
+    this.mountEl.appendChild(structureEl)
+    this.mountEl.appendChild(playerEl)
   }
 
   /**
@@ -239,7 +248,7 @@ export default class Avalon {
 
     // Remove any existing error messages
     utilityHelpers.removeErrorMessage()
-    this.mediaPlayerAudio(document.getElementById('manifest-url').value)
+    this.getManifestAJAX(this.manifestUrlEl.value)
     return false
   }
 }
