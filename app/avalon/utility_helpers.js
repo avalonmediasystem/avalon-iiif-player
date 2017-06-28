@@ -56,6 +56,21 @@ export default class UtilityHelpers {
   }
 
   /**
+   * Parse canvasId URI for the canvas index
+   * @param {string} canvasId - key in manifest
+   * @returns {string} canvasIndex - URI canvas index
+   */
+  getCanvasIndex (canvasId = '') {
+    let canvasPos = canvasId.indexOf('canvas')
+    let canvasIndex = ''
+
+    if (canvasPos > -1) {
+      canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1, canvasId.indexOf('#', canvasPos))
+    }
+    return canvasIndex
+  }
+
+  /**
    * Removes an error message if one exists
    * return {void}
    */

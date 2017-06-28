@@ -35,3 +35,11 @@ nav {
   margin: 2rem 0;
 }
 
+/* New Styles */
+#iiif-standalone-player-mount {
+  display: flex;
+}
+#iiif-standalone-player-mount > div {
+  width: 50%;
+}
+

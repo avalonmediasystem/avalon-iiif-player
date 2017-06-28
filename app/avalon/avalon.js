@@ -1,43 +1,57 @@
 import $ from 'jquery'
 import AudioPlayer from './audio_player'
-import VideoPlayer from './video_player'
+// import VideoPlayer from './video_player'
+import Player from './player'
 import { utilityHelpers } from './utility_helpers'
 
 /** Class representing the avalon IIIF player */
 export default class Avalon {
-  constructor () {
+  initialize () {
+    // Configuration object to hold element values, ids and such in one place
+    this.configObj = {
+      mountElId: 'iiif-standalone-player-mount',
+      playerElId: 'iiif-player-wrapper',
+      structureElId: 'iiif-structure-wrapper',
+      urlTextInputId: 'manifest-url'
+    }
+
     // Set a default local manifest to kick off application
     this.defaultManifest = 'lunchroom_manners_v2.json'
 
     // Save reference to manifest URL text input element
-    this.manifestUrlEl = document.getElementById('manifest-url')
+    this.manifestUrlEl = document.getElementById(this.configObj.urlTextInputId)
 
     // Map of current manifest properties we need for parsing decisions
     this.manifestMap = {}
 
+    // Root element necessary in HTML for our application to mount to
+    this.mountEl = document.getElementById(this.configObj.mountElId)
+
     // Set up a manifest URL form listener
     this.prepareForm()
+
+    this.structureMarkup = ''
   }
 
   /**
    * Handle AJAX success response of supplied manifest URL
-   * @param {object} manifest - AJAX data response
+   * @param {object} data - AJAX data response
    * @param {string} textStatus - AJAX text response
    * @param {object} jqXHR - AJAX request response
    * @returns {*}
    */
-  ajaxSuccessHandler (manifest, textStatus, jqXHR) {
-    let json = ''
+  ajaxSuccessHandler (data, textStatus, jqXHR) {
+    let manifest = ''
     let options = {}
     let contentItem = {}
     let playerType = ''
 
     try {
-      json = JSON.parse(manifest)
+      manifest = JSON.parse(data)
     } catch (e) {
-      json = manifest
+      manifest = data
     }
-    options.manifest = json
+    options.manifest = manifest
 
     // Clear previous manifest's url hash
     utilityHelpers.clearHash()
@@ -45,26 +59,88 @@ export default class Avalon {
     // Update current manifest message
     document.getElementById('manifest-current').innerText = (this.manifestUrlEl.value !== '') ? this.manifestUrlEl.value : this.defaultManifest
 
-    // Get initial manifest structural info
-    this.manifestMap = this.buildManifestMap(json)
+    // Build helper map for parsing
+    this.manifestMap = this.buildManifestMap(manifest)
 
     // Get first content item to feed player
-    contentItem = this.getFirstContentItem(json)
+    contentItem = this.getFirstContentItem(manifest)
 
     // Determine whether first canvas in manifest is audio or video file
     playerType = utilityHelpers.determinePlayerType(contentItem)
 
+    // Build UI tree structure markup and mount it in UI
+    this.structureMarkup = this.createStructure(manifest.structures)
+    this.mountStructure()
+
+    // Create player instance
     if (playerType === 'Audio') {
       return new AudioPlayer(options)
     } else if (playerType === 'Video') {
-      return new VideoPlayer(options)
+      return new Player(options)
     }
   }
 
   /**
+   * Build a manifest map helper object for parsing
+   * @param {Object} manifest - Manifest object
+   * @returns {Object} A generated helper map object with information about current manifest
+   */
+  buildManifestMap (manifest) {
+    let obj = {
+      hasCanvases: false,
+      hasMultipleCanvases: false,
+      hasSequences: false,
+      isAudio: false,
+      isVideo: false
+    }
+
+    obj.hasSequences = !!manifest.sequences
+    if (obj.hasSequences === true) {
+      obj.hasCanvases = !!obj.sequences.canvases
+      if (obj.hasCanvases === true) {
+        obj.hasMultipleCanvases = obj.sequences.canvases.length > 1
+      }
+    }
+    return obj
+  }
+
+  /**
+   * Recurse the manifest 'structures' array and creates an html tree of section links
+   * @param {Object} structures - Manifest object
+   * @param {string[]} list - Array of <ul> markup elements
+   * @param {string} canvasId - Id ie. 'http://dlib.indiana.edu/iiif_av/lunchroom_manners/canvas/1#t=0,157'
+   * @return {string} list - a string version of the html tree
+   */
+  createStructure (structures, list = [], canvasId) {
+    structures.map((data, index) => {
+      if (data.type === 'Range') {
+        if (structures[index].members[0].id !== undefined) {
+          canvasId = structures[index].members[0].id
+        }
+      }
+      if (data.hasOwnProperty('members')) {
+        // Parent elements
+        if (this.getMediaFragment(canvasId) !== undefined) {
+          let mediaFragment = this.getMediaFragment(canvasId)
+          let canvasIndex = utilityHelpers.getCanvasIndex(canvasId)
+          let canvasHash = (canvasIndex !== '') ? `/canvas/${canvasIndex}` : ''
+
+          list.push(`<ul class='explicit av-structure'><li class='av-structure-label'><a data-turbolinks='false' data-target="#" href="#avalon/time/${mediaFragment.start},${mediaFragment.stop}/quality/Medium${canvasHash}" class="media-structure-uri" >${data.label}</a></li>`)
+          this.createStructure(data.members, list, canvasId)
+        } else {
+          list.push(`<ul class='implicit av-structure'><li class='av-structure-label'>${data.label}</li>`)
+          this.createStructure(data.members, list, canvasId)
+        }
+      }
+    })
+    list.push('</ul>')
+    return list.join('')
+  }
+
+  /**
    * Get a manifest's content array
-   * @param {object} manifest - A json manifest
-   * @returns {object} The first element in content array
+   * @param {Object} manifest - A json manifest
+   * @returns {Object} The first element in content array
    */
   getFirstContentItem (manifest) {
     let firstContent = {}
@@ -99,6 +175,42 @@ export default class Avalon {
   }
 
   /**
+   * Takes a uri with a media fragment that looks like #=120,134 and returns an object
+   * with start/stop in seconds and the duration in milliseconds
+   * @param {string} uri - Uri value
+   * @return {Object}
+   */
+  getMediaFragment (uri) {
+    if (uri !== undefined) {
+      const fragment = uri.split('#t=')[1]
+      if (fragment !== undefined) {
+        const splitFragment = fragment.split(',')
+        return { 'start': splitFragment[0],
+          'stop': splitFragment[1] }
+      } else {
+        return undefined
+      }
+    } else {
+      return undefined
+    }
+  }
+
+  /**
+   * Mount the structure tree markup to UI
+   */
+  mountStructure () {
+    let structureEl = document.createElement('div')
+    let playerEl = document.createElement('div')
+
+    structureEl.innerHTML = this.structureMarkup
+    structureEl.setAttribute('id', this.configObj.structureElId)
+    playerEl.setAttribute('id', this.configObj.playerElId)
+
+    this.mountEl.appendChild(structureEl)
+    this.mountEl.appendChild(playerEl)
+  }
+
+  /**
    * Set up listener for the Manifest Url form
    * @method Avalon#prepareForm
    * @return {void}
@@ -119,7 +231,7 @@ export default class Avalon {
 
   /**
    * Form submit event handler
-   * @param {object} e - the event object
+   * @param {Object} e - the event object
    * @returns {boolean}
    */
   submitURLHandler (e) {
@@ -129,29 +241,5 @@ export default class Avalon {
     utilityHelpers.removeErrorMessage()
     this.mediaPlayerAudio(document.getElementById('manifest-url').value)
     return false
-  }
-
-  /**
-   * Build a manifest map helper object for parsing
-   * @param {object} manifest - Manifest object
-   * @returns {object} A generated map object
-   */
-  buildManifestMap (manifest) {
-    let obj = {
-      hasCanvases: false,
-      hasMultipleCanvases: false,
-      hasSequences: false,
-      isAudio: false,
-      isVideo: false
-    }
-
-    obj.hasSequences = !!manifest.sequences
-    if (obj.hasSequences === true) {
-      obj.hasCanvases = !!obj.sequences.canvases
-      if (obj.hasCanvases === true) {
-        obj.hasMultipleCanvases = obj.sequences.canvases.length > 1
-      }
-    }
-    return obj
   }
 }
