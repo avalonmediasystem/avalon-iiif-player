@@ -73,7 +73,7 @@ export default class Avalon {
     playerType = utilityHelpers.determinePlayerType(contentItem)
 
     // Create structure markup, or display message if no structures exist in manifest
-    this.structureMarkup = (manifest.hasOwnProperty('structures')) ? this.createStructure2(manifest.structures, [], true) : '<p>No structures in manifest</p>'
+    this.structureMarkup = (manifest.hasOwnProperty('structures')) ? this.createStructure(manifest.structures, [], true) : '<p>No structures in manifest</p>'
 
     // Put structure markup in DOM
     this.mountStructure()
@@ -111,54 +111,51 @@ export default class Avalon {
   }
 
   /**
-   * Recurse the manifest 'structures' array and creates an html tree of section links
-   * @param {Object} structures - Manifest object
-   * @param {string[]} list - Array of <ul> markup elements
-   * @param {string} canvasId - Id ie. 'http://dlib.indiana.edu/iiif_av/lunchroom_manners/canvas/1#t=0,157'
-   * @return {string} list - a string version of the html tree
+   * Generate a structure nested list link
+   * @param {Object} member - A member object
+   * @returns {string} - HTML string for the anchor link
    */
-  createStructure (structures, list = [], canvasId) {
-    structures.map((data, index) => {
-      if (data.type === 'Range') {
-        if (structures[index].members[0].id !== undefined) {
-          canvasId = structures[index].members[0].id
-        }
-      }
-      if (data.hasOwnProperty('members')) {
-        // Parent elements
-        if (this.getMediaFragment(canvasId) !== undefined) {
-          let mediaFragment = this.getMediaFragment(canvasId)
-          let canvasIndex = utilityHelpers.getCanvasIndex(canvasId)
-          let canvasHash = (canvasIndex !== '') ? `/canvas/${canvasIndex}` : ''
+  buildStructureLink (member) {
+    let members = member.members
+    let id = members[0].id
+    let structureLink = '#'
 
-          list.push(`<ul class='explicit av-structure'><li class='av-structure-label'><a data-turbolinks='false' data-target="#" href="#avalon/time/${mediaFragment.start},${mediaFragment.stop}/quality/Medium${canvasHash}" class="media-structure-uri" >${data.label}</a></li>`)
-          this.createStructure(data.members, list, canvasId)
-        } else {
-          list.push(`<ul class='implicit av-structure'><li class='av-structure-label'>${data.label}</li>`)
-          this.createStructure(data.members, list, canvasId)
-        }
-      }
-    })
-    list.push('</ul>')
-    return list.join('')
+    if (this.getMediaFragment(id) !== undefined) {
+      let mediaFragment = this.getMediaFragment(id)
+      let canvasIndex = utilityHelpers.getCanvasIndex(id)
+      let canvasHash = (canvasIndex !== '') ? `/canvas/${canvasIndex}` : ''
+
+      structureLink = `<a data-turbolinks='false' data-target="#" href="#avalon/time/${mediaFragment.start},${mediaFragment.stop}/quality/Medium${canvasHash}" class="media-structure-uri" >${member.label}</a>`
+    }
+    return structureLink
   }
 
-  createStructure2 (members, list = [], newUl = false) {
+  /**
+   * Recurse the manifest 'structures' array and creates an html tree of section links
+   * @param {object} members - A 'members' array in the manifest, under 'structures' array
+   * @param {string[]} list - Markup temporary storage array while building the nested unordered lists
+   * @param {boolean} newUl - Flag whether to write a nested unordered list
+   * @return {string} - HTML string containing a nested unordered list and links to section content
+   */
+  createStructure (members, list = [], newUl = false) {
     if (newUl) {
       list.push('<ul>')
     }
     members.map((member, index) => {
       if (member.type === 'Range' && member.hasOwnProperty('members')) {
+        let members = member.members
+
         // Multiple members, create a new <ul>
-        if (member.members.length > 1 || member.members[0].type === 'Range') {
+        if (members.length > 1 || members[0].type === 'Range') {
           newUl = true
           list.push(`<li>${member.label}`)
-          this.createStructure2(member.members, list, newUl)
+          this.createStructure(members, list, newUl)
           list.push(`</li>`)
         }
-        // Make a link, don't send members again
-        if (member.members.length === 1 && member.members[0].type === 'Canvas') {
-          list.push(`<li><a href="${member.members[0].id}">${member.label}</a></li>`)
+        // Create a link; don't send child members object back in
+        if (members.length === 1 && members[0].type === 'Canvas') {
+          let structureLink = this.buildStructureLink(member)
+          list.push(`<li>${structureLink}</li>`)
         }
       }
     })
