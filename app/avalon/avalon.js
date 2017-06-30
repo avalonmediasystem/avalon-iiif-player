@@ -3,10 +3,13 @@ import AudioPlayer from './audio_player'
 // import VideoPlayer from './video_player'
 import Player from './player'
 import { utilityHelpers } from './utility_helpers'
+import IIIFParser from './iiif_parser'
 
 /** Class representing the avalon IIIF player */
 export default class Avalon {
   initialize () {
+    this.iiifParser = new IIIFParser()
+
     // Configuration object to hold element values, ids and such in one place
     this.configObj = {
       defaultManifest: 'lunchroom_manners_v2.json',
@@ -16,6 +19,9 @@ export default class Avalon {
       urlTextInputId: 'manifest-url'
     }
 
+    // Map of current manifest properties we need for parsing decisions
+    this.manifestMap = {}
+
     // Save reference to manifest URL text input element
     this.manifestUrlEl = document.getElementById(this.configObj.urlTextInputId)
 
@@ -24,9 +30,6 @@ export default class Avalon {
 
     // Set up initial markup for elements to mount to
     this.setupMarkup()
-
-    // Map of current manifest properties we need for parsing decisions
-    this.manifestMap = {}
 
     // Set up a manifest URL form listener
     this.prepareForm()
@@ -63,14 +66,14 @@ export default class Avalon {
     // Update current manifest message
     document.getElementById('manifest-current').innerText = (this.manifestUrlEl.value !== '') ? this.manifestUrlEl.value : this.configObj.defaultManifest
 
-    // Build helper map for parsing
-    this.manifestMap = this.buildManifestMap(manifest)
+    // Build helper map for current manifest
+    this.manifestMap = this.iiifParser.buildManifestMap(manifest)
 
     // Get first content item to feed player
-    contentItem = this.getFirstContentItem(manifest)
+    contentItem = this.iiifParser.getFirstContentItem(manifest, this.manifestMap)
 
     // Determine whether first canvas in manifest is audio or video file
-    playerType = utilityHelpers.determinePlayerType(contentItem)
+    playerType = this.iiifParser.determinePlayerType(contentItem)
 
     // Create structure markup, or display message if no structures exist in manifest
     this.structureMarkup = (manifest.hasOwnProperty('structures')) ? this.createStructure(manifest.structures, [], true) : '<p>No structures in manifest</p>'
@@ -84,50 +87,6 @@ export default class Avalon {
     } else if (playerType === 'Video') {
       return new Player(options)
     }
-  }
-
-  /**
-   * Build a manifest map helper object for parsing
-   * @param {Object} manifest - Manifest object
-   * @returns {Object} A generated helper map object with information about current manifest
-   */
-  buildManifestMap (manifest) {
-    let obj = {
-      hasCanvases: false,
-      hasMultipleCanvases: false,
-      hasSequences: false,
-      isAudio: false,
-      isVideo: false
-    }
-
-    obj.hasSequences = !!manifest.sequences
-    if (obj.hasSequences === true) {
-      obj.hasCanvases = !!manifest.sequences[0].canvases
-      if (obj.hasCanvases === true) {
-        obj.hasMultipleCanvases = manifest.sequences[0].canvases.length > 1
-      }
-    }
-    return obj
-  }
-
-  /**
-   * Generate a structure nested list link
-   * @param {Object} member - A member object
-   * @returns {string} - HTML string for the anchor link
-   */
-  buildStructureLink (member) {
-    let members = member.members
-    let id = members[0].id
-    let structureLink = '#'
-
-    if (this.getMediaFragment(id) !== undefined) {
-      let mediaFragment = this.getMediaFragment(id)
-      let canvasIndex = utilityHelpers.getCanvasIndex(id)
-      let canvasHash = (canvasIndex !== '') ? `/canvas/${canvasIndex}` : ''
-
-      structureLink = `<a data-turbolinks='false' data-target="#" href="#avalon/time/${mediaFragment.start},${mediaFragment.stop}/quality/Medium${canvasHash}" class="media-structure-uri" >${member.label}</a>`
-    }
-    return structureLink
   }
 
   /**
@@ -154,7 +113,7 @@ export default class Avalon {
         }
         // Create a link; don't send child members object back in
         if (members.length === 1 && members[0].type === 'Canvas') {
-          let structureLink = this.buildStructureLink(member)
+          let structureLink = this.iiifParser.buildStructureLink(member)
           list.push(`<li>${structureLink}</li>`)
         }
       }
@@ -163,25 +122,6 @@ export default class Avalon {
       list.push('</ul>')
     }
     return list.join('')
-  }
-
-  /**
-   * Get a manifest's content array
-   * @param {Object} manifest - A json manifest
-   * @returns {Object} The first element in content array
-   */
-  getFirstContentItem (manifest) {
-    let firstContent = {}
-
-    // No sequences, go right to content key
-    if (!this.manifestMap.hasSequences) {
-      firstContent = manifest.content
-
-    // Has sequences and canvases
-    } else if (this.manifestMap.hasSequences && this.manifestMap.hasCanvases) {
-      firstContent = manifest.sequences[0].canvases[0].content
-    }
-    return firstContent[0]
   }
 
   /**
@@ -200,27 +140,6 @@ export default class Avalon {
       })
       .always(function () {
       })
-  }
-
-  /**
-   * Takes a uri with a media fragment that looks like #=120,134 and returns an object
-   * with start/stop in seconds and the duration in milliseconds
-   * @param {string} uri - Uri value
-   * @return {Object}
-   */
-  getMediaFragment (uri) {
-    if (uri !== undefined) {
-      const fragment = uri.split('#t=')[1]
-      if (fragment !== undefined) {
-        const splitFragment = fragment.split(',')
-        return { 'start': splitFragment[0],
-          'stop': splitFragment[1] }
-      } else {
-        return undefined
-      }
-    } else {
-      return undefined
-    }
   }
 
   /**

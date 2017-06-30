@@ -12,29 +12,6 @@ export default class UtilityHelpers {
   }
 
   /**
-   * Parse what type of content the file is
-   * @param {object} contentItem - The content item for which to find type
-   * @returns {string} 'Audio' or 'Video' text (for now)
-   */
-  determinePlayerType (contentItem) {
-    let playerType = ''
-    let body = lookForBody(contentItem)
-
-    if (body[0].type === 'Choice') {
-      playerType = body[0].items[0].type
-    }
-    return playerType
-
-    function lookForBody (obj) {
-      if (obj.body) {
-        return obj.body
-      } else if (obj.items) {
-        return lookForBody(obj.items[0])
-      }
-    }
-  }
-
-  /**
    * Create and display default error message
    * @param {string} msg - Message to display
    * @return void
@@ -53,21 +30,6 @@ export default class UtilityHelpers {
     newNode.classList.add('message')
     newNode.innerHTML = markup
     el.parentNode.insertBefore(newNode, el.nextSibling)
-  }
-
-  /**
-   * Parse canvasId URI for the canvas index
-   * @param {string} canvasId - key in manifest
-   * @returns {string} canvasIndex - URI canvas index
-   */
-  getCanvasIndex (canvasId = '') {
-    let canvasPos = canvasId.indexOf('canvas')
-    let canvasIndex = ''
-
-    if (canvasPos > -1) {
-      canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1, canvasId.indexOf('#', canvasPos))
-    }
-    return canvasIndex
   }
 
   /**
