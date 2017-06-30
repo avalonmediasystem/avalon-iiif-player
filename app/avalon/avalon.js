@@ -57,6 +57,9 @@ export default class Avalon {
     // Clear previous manifest's url hash
     utilityHelpers.clearHash()
 
+    // Clear current structures markup
+    this.structureMarkup = ''
+
     // Update current manifest message
     document.getElementById('manifest-current').innerText = (this.manifestUrlEl.value !== '') ? this.manifestUrlEl.value : this.configObj.defaultManifest
 
@@ -69,8 +72,10 @@ export default class Avalon {
     // Determine whether first canvas in manifest is audio or video file
     playerType = utilityHelpers.determinePlayerType(contentItem)
 
-    // Build UI tree structure markup and mount it in UI
-    this.structureMarkup = this.createStructure(manifest.structures)
+    // Create structure markup, or display message if no structures exist in manifest
+    this.structureMarkup = (manifest.hasOwnProperty('structures')) ? this.createStructure2(manifest.structures, [], true) : '<p>No structures in manifest</p>'
+
+    // Put structure markup in DOM
     this.mountStructure()
 
     // Create player instance
@@ -138,6 +143,31 @@ export default class Avalon {
     return list.join('')
   }
 
+  createStructure2 (members, list = [], newUl = false) {
+    if (newUl) {
+      list.push('<ul>')
+    }
+    members.map((member, index) => {
+      if (member.type === 'Range' && member.hasOwnProperty('members')) {
+        // Multiple members, create a new <ul>
+        if (member.members.length > 1 || member.members[0].type === 'Range') {
+          newUl = true
+          list.push(`<li>${member.label}`)
+          this.createStructure2(member.members, list, newUl)
+          list.push(`</li>`)
+        }
+        // Make a link, don't send members again
+        if (member.members.length === 1 && member.members[0].type === 'Canvas') {
+          list.push(`<li><a href="${member.members[0].id}">${member.label}</a></li>`)
+        }
+      }
+    })
+    if (newUl) {
+      list.push('</ul>')
+    }
+    return list.join('')
+  }
+
   /**
    * Get a manifest's content array
    * @param {Object} manifest - A json manifest
@@ -197,7 +227,7 @@ export default class Avalon {
   }
 
   /**
-   * Mount the structure tree markup to UI
+   * Add structures tree markup to DOM mount element
    */
   mountStructure () {
     document.getElementById(this.configObj.structureElId).innerHTML = this.structureMarkup
