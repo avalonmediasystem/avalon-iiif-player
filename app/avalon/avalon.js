@@ -1,6 +1,4 @@
 import $ from 'jquery'
-import AudioPlayer from './audio_player'
-// import VideoPlayer from './video_player'
 import Player from './player'
 import { utilityHelpers } from './utility_helpers'
 import IIIFParser from './iiif_parser'
@@ -14,13 +12,16 @@ export default class Avalon {
     this.configObj = {
       defaultManifest: 'lunchroom_manners_v2.json',
       mountElId: 'iiif-standalone-player-mount',
-      playerElId: 'iiif-player-wrapper',
+      playerWrapperId: 'iiif-player-wrapper',
       structureElId: 'iiif-structure-wrapper',
       urlTextInputId: 'manifest-url'
     }
 
     // Map of current manifest properties we need for parsing decisions
     this.manifestMap = {}
+
+    // Variable to hold structures HTML markup as a string
+    this.structureMarkup = ''
 
     // Save reference to manifest URL text input element
     this.manifestUrlEl = document.getElementById(this.configObj.urlTextInputId)
@@ -34,7 +35,8 @@ export default class Avalon {
     // Set up a manifest URL form listener
     this.prepareForm()
 
-    this.structureMarkup = ''
+    // Initialize app with default local manifest
+    this.getManifestAJAX(this.configObj.defaultManifest)
   }
 
   /**
@@ -47,8 +49,6 @@ export default class Avalon {
   ajaxSuccessHandler (data, textStatus, jqXHR) {
     let manifest = ''
     let options = {}
-    let contentItem = {}
-    let playerType = ''
 
     try {
       manifest = JSON.parse(data)
@@ -56,6 +56,7 @@ export default class Avalon {
       manifest = data
     }
     options.manifest = manifest
+    options.configObj = this.configObj
 
     // Clear previous manifest's url hash
     utilityHelpers.clearHash()
@@ -69,24 +70,17 @@ export default class Avalon {
     // Build helper map for current manifest
     this.manifestMap = this.iiifParser.buildManifestMap(manifest)
 
-    // Get first content item to feed player
-    contentItem = this.iiifParser.getFirstContentItem(manifest, this.manifestMap)
-
-    // Determine whether first canvas in manifest is audio or video file
-    playerType = this.iiifParser.determinePlayerType(contentItem)
-
     // Create structure markup, or display message if no structures exist in manifest
     this.structureMarkup = (manifest.hasOwnProperty('structures')) ? this.createStructure(manifest.structures, [], true) : '<p>No structures in manifest</p>'
 
     // Put structure markup in DOM
     this.mountStructure()
 
+    // Get first content item to feed player
+    options.contentObj = this.iiifParser.getFirstContentObj(manifest, this.manifestMap)
+
     // Create player instance
-    if (playerType === 'Audio') {
-      return new AudioPlayer(options)
-    } else if (playerType === 'Video') {
-      return new Player(options)
-    }
+    return new Player(options)
   }
 
   /**
@@ -161,11 +155,6 @@ export default class Avalon {
 
     // Add form submit event listener
     form.addEventListener('submit', this.submitURLHandler.bind(this))
-
-    // Initialize app with default local manifest
-    if (this.manifestUrlEl.value.trim() === '') {
-      this.getManifestAJAX(this.configObj.defaultManifest)
-    }
   }
 
   /**
@@ -178,7 +167,7 @@ export default class Avalon {
     let playerEl = document.createElement('div')
 
     structureEl.setAttribute('id', this.configObj.structureElId)
-    playerEl.setAttribute('id', this.configObj.playerElId)
+    playerEl.setAttribute('id', this.configObj.playerWrapperId)
 
     this.mountEl.appendChild(structureEl)
     this.mountEl.appendChild(playerEl)

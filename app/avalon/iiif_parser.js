@@ -46,12 +46,12 @@ export default class IIIFParser {
 
   /**
    * Parse what type of content the file is
-   * @param {object} contentItem - The content item for which to find type
+   * @param {object} contentObj - The content item for which to find type
    * @returns {string} 'Audio' or 'Video' text (for now)
    */
-  determinePlayerType (contentItem) {
+  determinePlayerType (contentObj) {
     let playerType = ''
-    let body = lookForBody(contentItem)
+    let body = lookForBody(contentObj)
 
     if (body[0].type === 'Choice') {
       playerType = body[0].items[0].type
@@ -85,9 +85,10 @@ export default class IIIFParser {
   /**
    * Get a manifest's content array
    * @param {Object} manifest - A json manifest
+   * @param {Object} manifestMap - Helper object of manifest details
    * @returns {Object} The first element in content array
    */
-  getFirstContentItem (manifest, manifestMap) {
+  getFirstContentObj (manifest, manifestMap) {
     let firstContent = {}
 
     // No sequences, go right to content key

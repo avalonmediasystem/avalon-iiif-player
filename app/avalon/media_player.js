@@ -9,7 +9,7 @@ export default class MediaPlayer {
    */
   constructor (options) {
     this.manifest = options.manifest
-    this.target = document.getElementById('iiif-standalone-player-mount')
+    this.configObj = options.configObj
   }
 
   /**
@@ -31,14 +31,13 @@ export default class MediaPlayer {
 
   /**
    * Determine quality choices present in the manifest
-   * @param {Object} canvas - A canvas object in the manifest
-   * @return {array} An array of quality choices
+   * @param {Object} contentObj - A contentObj object in the manifest
+   * @return {Object[]} An array of quality choices
    */
-  getQualityChoices (canvas) {
+  getQualityChoices (contentObj) {
     let choices = []
-    let content = (canvas) ? canvas.content : this.manifest.content
 
-    content[0].items.forEach((item) => {
+    contentObj.items.forEach((item) => {
       item.body.forEach((body) => {
         if (body.type === 'Choice') {
           body.items.forEach((item) => {
@@ -55,20 +54,20 @@ export default class MediaPlayer {
    * @method MediaPlayer#getVideoUri
    * @return {Object} uri - a item object for the medium quality file
    */
-  getVideoUri () {
-    let uri = ''
-    this.manifest.content[0].items.forEach((item) => {
+  getMediaURI (contentObj, qualityLevel) {
+    let targetItem = {}
+    contentObj.items.forEach((item) => {
       item.body.forEach((body) => {
         if (body.type === 'Choice') {
           body.items.forEach((item) => {
-            if (item.label === 'Medium') {
-              uri = item
+            if (item.label === qualityLevel) {
+              targetItem = item
             }
           })
         }
       })
     })
-    return uri
+    return targetItem
   }
 
   getTimeFromUrl (url) {
@@ -160,30 +159,6 @@ export default class MediaPlayer {
     let choices = qs.qualityChoices(this.manifest, '', [])
 
     return qs.renderChoices(choices)
-  }
-
-  renderStructure (manifest, list, canvasId) {
-    /**
-     * Recurses the manifest structure and creates an html tree
-     * @method MediaPlayer#renderStructure
-     *
-     */
-    manifest.map((data, index) => {
-      if (data.type === 'Range') {
-        canvasId = manifest[index].members[0].id
-      }
-      if (data.hasOwnProperty('members')) {
-        if (this.getMediaFragment(canvasId) !== undefined) {
-          list.push(`<ul><li><a class="media-structure-uri" data-media-fragment="${canvasId}">${data.label}</a></li>`)
-          this.renderStructure(data.members, list, canvasId)
-        } else {
-          list.push(`<ul><li>${data.label}</li>`)
-          this.renderStructure(data.members, list, canvasId)
-        }
-      }
-    })
-    list.push('</ul>')
-    return list.join('')
   }
 
   getCanvases (options) {
