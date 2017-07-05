@@ -8,9 +8,10 @@ export default class Player extends MediaPlayer {
   constructor (options) {
     super(options)
     this.iiifParser = new IIIFParser()
+
     this.contentObj = options.contentObj
     this.hashHandler = new HashHandler({
-      'qualityChoices': this.getQualityChoices(this.contentObj),
+      'qualityChoices': this.iiifParser.getQualityChoices(this.contentObj),
       'instance': this
     })
     // id attribute of player
@@ -28,7 +29,7 @@ export default class Player extends MediaPlayer {
 
     // Audio File
     if (item.type === 'Audio') {
-      markup = `<audio controls id="iiif-av-player" width="100%">
+      markup = `<audio controls id="${this.playerElId}" width="100%">
           <source src="${item.id}" type="audio/mp3" data-quality="${item.label}">
         </audio>`
     }

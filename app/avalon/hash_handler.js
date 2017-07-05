@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import IIIFParser from './iiif_parser'
 
 /** Class representing a HashHandler
  * this class is used for functionality based on the hash in the url
@@ -6,8 +7,11 @@ import $ from 'jquery'
  */
 export default class HashHandler {
   constructor (options) {
+    this.iiifParser = new IIIFParser()
+
     this.currentCanvasIndex = undefined
     this.instance = options.instance
+    this.manifest = options.instance.manifest
     this.qualityChoices = options.qualityChoices
     this.player = undefined
     this.updating = false
@@ -30,11 +34,12 @@ export default class HashHandler {
   //   })
   // }
 
+  /**
+   * Binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
+   * @method HashHandler#bindHashChange
+   * @return {void}
+   */
   bindHashChange () {
-    /**
-     * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
-     * @method HashHandler#bindHashChange
-     **/
     // Get the player instance
     this.player = document.getElementById('iiif-av-player')
 
@@ -46,49 +51,45 @@ export default class HashHandler {
     }
   }
 
-  canvasesInManifest () {
-     /**
-     * @method HashHandler#canvasesInManifest
-     **/
-    return this.instance.manifest.sequences && this.instance.manifest.sequences[0].canvases
-  }
-
+  /**
+   * Read a media fragment from a hash in the URL and then play the starting location from the hash
+   * @param {string} hash - Url hash value
+   * @return {void}
+   */
   playFromHash (hash) {
-    /**
-     * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
-     * @method HashHandler#playFromHash
-     **/
     if (this.updating) {
       return
     }
     this.updating = true
-    let options = this.processHash(hash)
-    let canvasesExist = this.canvasesInManifest()
+    let hashOptions = this.processHash(hash)
+    let canvasesExist = this.iiifParser.canvasesInManifest(this.manifest)
     let src = ''
 
     // Safari will only setCurrentTime() after 'canplay' event is fired
     // Using jQuery's 'one' method ensures event only fires once, but there may be a better solution to limit
     //   event listeners being unnecessarily added
     $(this.player).one('canplay', () => {
-      this.player.setCurrentTime(parseInt(options.start))
+      this.player.setCurrentTime(parseInt(hashOptions.start))
       this.player.play()
       this.updating = false
     })
 
     // Is canvas in the hash different from canvas currently in the player?
-    if (canvasesExist && (options.canvas !== this.currentCanvasIndex)) {
+    if (canvasesExist && (hashOptions.canvas !== this.currentCanvasIndex)) {
       // Get current canvas object from canvas index
-      let canvasObj = this.instance.getCanvasByIndex(options.canvas)
-      this.qualityChoices = this.instance.getQualityChoices(canvasObj)
-      this.currentCanvasIndex = options.canvas
+      let canvasObj = this.iiifParser.getCanvasByIndex(hashOptions.canvas, this.manifest)
+      this.qualityChoices = this.iiifParser.getQualityChoices(canvasObj.content[0])
+      this.currentCanvasIndex = hashOptions.canvas
     }
 
     // Find the new source media file
     this.qualityChoices.forEach((choice) => {
-      if (choice.label === options.quality) {
+      if (choice.label === hashOptions.quality) {
         src = choice.id
       }
     })
+
+    // Is a different player required?
 
     // Load the new source file
     this.player.pause()
@@ -96,18 +97,15 @@ export default class HashHandler {
     this.player.load()
   }
 
+  /**
+   * Processes a window.location.hash and creates an object.
+   * It can take any number of parameters. Strings at even locations are keys
+   * and odd locations are values.
+   * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
+   * @param {string} hash - a window.location.hash
+   * @return {Object} - Representation of hash values in key/value pair
+   **/
   processHash (hash) {
-    /**
-     *
-     * This method processes a window.location.hash and creates an object.
-     * It can take any number of parameters. Strings at even locations are keys
-     * and odd locations are values.
-     * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
-     * @method HashHandler#processHash
-     * @param {string} hash - a window.location.hash
-     * @return {object}
-     **/
-
     return hash.split('/').splice(1).reduce((result, item, index, array) => {
       if (index % 2 === 0) {
         if (item === 'time') {

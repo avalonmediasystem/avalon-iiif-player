@@ -45,6 +45,14 @@ export default class IIIFParser {
   }
 
   /**
+   * Does the manifest have a canvases array?
+   * @return {boolean}
+   **/
+  canvasesInManifest (manifest) {
+    return manifest.sequences && manifest.sequences[0].canvases
+  }
+
+  /**
    * Parse what type of content the file is
    * @param {object} contentObj - The content item for which to find type
    * @returns {string} 'Audio' or 'Video' text (for now)
@@ -80,6 +88,27 @@ export default class IIIFParser {
       canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1, canvasId.indexOf('#', canvasPos))
     }
     return canvasIndex
+  }
+
+  /**
+   * Get a canvas object from manifest 'canvases' array
+   * @param {string} index - target canvas index
+   * @param {Object} manifest - Manifest object
+   * @returns {Object} canvasObject or empty object
+   */
+  getCanvasByIndex (index, manifest) {
+    if (!index) { return {} }
+
+    const canvases = manifest.sequences[0].canvases
+    let canvasObject = {}
+
+    canvases.forEach((canvas) => {
+      const canvasIndex = canvas.id.slice(canvas.id.lastIndexOf('/') + 1)
+      if (canvasIndex === index) {
+        canvasObject = canvas
+      }
+    })
+    return canvasObject
   }
 
   /**
@@ -121,5 +150,24 @@ export default class IIIFParser {
     } else {
       return undefined
     }
+  }
+  /**
+   * Determine quality choices present in the manifest
+   * @param {Object} contentObj - A contentObj object in the manifest
+   * @return {Object[]} An array of quality choices
+   */
+  getQualityChoices (contentObj) {
+    let choices = []
+
+    contentObj.items.forEach((item) => {
+      item.body.forEach((body) => {
+        if (body.type === 'Choice') {
+          body.items.forEach((item) => {
+            choices.push(item)
+          })
+        }
+      })
+    })
+    return choices
   }
 }

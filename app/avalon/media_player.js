@@ -30,26 +30,6 @@ export default class MediaPlayer {
   }
 
   /**
-   * Determine quality choices present in the manifest
-   * @param {Object} contentObj - A contentObj object in the manifest
-   * @return {Object[]} An array of quality choices
-   */
-  getQualityChoices (contentObj) {
-    let choices = []
-
-    contentObj.items.forEach((item) => {
-      item.body.forEach((body) => {
-        if (body.type === 'Choice') {
-          body.items.forEach((item) => {
-            choices.push(item)
-          })
-        }
-      })
-    })
-    return choices
-  }
-
-  /**
    *  Get 'Medium' quality item from the manifest
    * @method MediaPlayer#getVideoUri
    * @return {Object} uri - a item object for the medium quality file
@@ -129,29 +109,6 @@ export default class MediaPlayer {
     } catch (e) {
       console.log(e)
     }
-  }
-
-  getCanvasByIndex (index) {
-    /**
-     * Get a canvas object from manifest 'canvases' array
-     *
-     * @method MediaPlayer#getCanvasIndex
-     * @param {string} index - target canvas index
-     * @returns {Object} canvasObject or empty object
-     */
-    if (!index) { return {} }
-
-    // TODO: Eventually we'll want to track current sequence index as well.  For now assume first sequence
-    const canvases = this.manifest.sequences[0].canvases
-    let canvasObject = {}
-
-    canvases.forEach((canvas) => {
-      const canvasIndex = canvas.id.slice(canvas.id.lastIndexOf('/') + 1)
-      if (canvasIndex === index) {
-        canvasObject = canvas
-      }
-    })
-    return canvasObject
   }
 
   qualitySelectorMarkup () {
