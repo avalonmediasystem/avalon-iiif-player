@@ -13,38 +13,18 @@ export default class MediaPlayer {
   }
 
   /**
-   * Gets the first subtitle track from the manifest.
-   * It will probably need to more robust in the future
-   * @return {string} subtitle - a URI that points to subtitles
-   */
-  getSubtitles () {
-    let subtitlesUri = ''
-    this.manifest.content[0].items.forEach((item) => {
-      item.body.forEach((body) => {
-        if (body.type === 'Text') {
-          subtitlesUri = body
-        }
-      })
-    })
-    return subtitlesUri
-  }
-
-  /**
-   *  Get 'Medium' quality item from the manifest
-   * @method MediaPlayer#getVideoUri
+   *  Get src uri of item from a content object in the manifest
    * @return {Object} uri - a item object for the medium quality file
    */
-  getMediaURI (contentObj, qualityLevel) {
+  getContentItem (contentObj, qualityLevel) {
     let targetItem = {}
     contentObj.items.forEach((item) => {
       item.body.forEach((body) => {
-        if (body.type === 'Choice') {
-          body.items.forEach((item) => {
-            if (item.label === qualityLevel) {
-              targetItem = item
-            }
-          })
-        }
+        body.items.forEach((item) => {
+          if (item.label === qualityLevel) {
+            targetItem = item
+          }
+        })
       })
     })
     return targetItem

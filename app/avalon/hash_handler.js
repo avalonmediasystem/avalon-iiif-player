@@ -10,12 +10,17 @@ export default class HashHandler {
     this.iiifParser = new IIIFParser()
 
     this.currentCanvasIndex = undefined
-    this.instance = options.instance
-    this.manifest = options.instance.manifest
-    this.qualityChoices = options.qualityChoices
-    this.player = undefined
+    this.playerClass = options.playerClass
+    this.manifest = this.playerClass.manifest
+
+    // Initialize based on first contentObject
+    this.qualityChoices = this.iiifParser.getQualityChoices(this.playerClass.contentObj)
+
     this.updating = false
     // this.bindHashLinkClick()
+
+    // Start listening for changes in the hash
+    this.bindHashChange()
   }
 
   /**
@@ -76,8 +81,18 @@ export default class HashHandler {
 
     // Is canvas in the hash different from canvas currently in the player?
     if (canvasesExist && (hashOptions.canvas !== this.currentCanvasIndex)) {
-      // Get current canvas object from canvas index
+      // Get the new canvas object from canvas index
       let canvasObj = this.iiifParser.getCanvasByIndex(hashOptions.canvas, this.manifest)
+
+      let playerType = this.iiifParser.determinePlayerType(canvasObj.content[0])
+
+      // Different type of player required.
+      // Destroy current instance and create a new instance of different player
+      if (playerType !== this.playerClass.currentPlayerType) {
+        this.playerClass.destroyPlayerInstance(canvasObj.content[0])
+        return
+      }
+
       this.qualityChoices = this.iiifParser.getQualityChoices(canvasObj.content[0])
       this.currentCanvasIndex = hashOptions.canvas
     }
@@ -88,8 +103,6 @@ export default class HashHandler {
         src = choice.id
       }
     })
-
-    // Is a different player required?
 
     // Load the new source file
     this.player.pause()

@@ -58,13 +58,7 @@ export default class IIIFParser {
    * @returns {string} 'Audio' or 'Video' text (for now)
    */
   determinePlayerType (contentObj) {
-    let playerType = ''
     let body = lookForBody(contentObj)
-
-    if (body[0].type === 'Choice') {
-      playerType = body[0].items[0].type
-    }
-    return playerType
 
     function lookForBody (obj) {
       if (obj.body) {
@@ -73,6 +67,7 @@ export default class IIIFParser {
         return lookForBody(obj.items[0])
       }
     }
+    return body[0].items[0].type
   }
 
   /**
@@ -82,10 +77,13 @@ export default class IIIFParser {
    */
   getCanvasIndex (canvasId = '') {
     let canvasPos = canvasId.indexOf('canvas')
+    let hashPos = canvasId.indexOf('#')
     let canvasIndex = ''
 
-    if (canvasPos > -1) {
+    if (canvasPos > -1 && hashPos > -1) {
       canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1, canvasId.indexOf('#', canvasPos))
+    } else if (canvasPos > -1 && hashPos === -1) {
+      canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1)
     }
     return canvasIndex
   }
@@ -99,15 +97,23 @@ export default class IIIFParser {
   getCanvasByIndex (index, manifest) {
     if (!index) { return {} }
 
-    const canvases = manifest.sequences[0].canvases
+    const manifestMap = this.buildManifestMap(manifest)
+    let sequences = []
+    let canvases = []
     let canvasObject = {}
 
-    canvases.forEach((canvas) => {
-      const canvasIndex = canvas.id.slice(canvas.id.lastIndexOf('/') + 1)
-      if (canvasIndex === index) {
-        canvasObject = canvas
-      }
-    })
+    if (manifestMap.hasSequences) {
+      sequences = manifest.sequences
+      sequences.forEach((sequence) => {
+        canvases = sequence.canvases
+        canvases.forEach((canvas) => {
+          const canvasIndex = canvas.id.slice(canvas.id.lastIndexOf('/') + 1)
+          if (canvasIndex === index) {
+            canvasObject = canvas
+          }
+        })
+      })
+    }
     return canvasObject
   }
 
@@ -161,7 +167,7 @@ export default class IIIFParser {
 
     contentObj.items.forEach((item) => {
       item.body.forEach((body) => {
-        if (body.type === 'Choice') {
+        if (body.hasOwnProperty('items')) {
           body.items.forEach((item) => {
             choices.push(item)
           })
@@ -169,5 +175,60 @@ export default class IIIFParser {
       })
     })
     return choices
+  }
+
+  /**
+   * Determine a video's (no audio dimensions?) presentation dimensions
+   * @param {Object} manifest - Current manifest
+   * @param {Object} contentObj - Element in content array
+   * @param {Object} item - Element of manifest's body.items array
+   * @returns {Object} - Dimensions key/value pair
+   */
+  getPlayerDimensions (manifest, contentObj, item) {
+    let dimensions = {}
+    const canvasIndex = this.getCanvasIndex(contentObj.id)
+    const canvas = this.getCanvasByIndex(canvasIndex, manifest)
+
+    // Dimensions are at manifest root level
+    if (manifest && manifest.hasOwnProperty('width')) {
+      dimensions.height = manifest.height
+      dimensions.width = manifest.width
+    }
+
+    // Dimensions are at canvas level
+    if (canvas && canvas.hasOwnProperty('width')) {
+      dimensions.height = canvas.height
+      dimensions.width = canvas.width
+    }
+
+    // Dimensions are at item level
+    if (item && item.hasOwnProperty('width')) {
+      dimensions.height = item.height
+      dimensions.width = item.width
+    }
+    return dimensions
+  }
+
+  /**
+   * Determines whether manifest content object has subtitles included
+   * @param {Object} contentObj - Manifest canvas content object
+   * @return {Object} subtitlesObj - Object of subtitles in body array
+   */
+  getSubtitles (contentObj) {
+    let subtitlesObj = {}
+
+    contentObj.items.forEach((item) => {
+      item.body.forEach((body) => {
+        if (body.type === 'Text') {
+          subtitlesObj = body
+        }
+      })
+    })
+
+    // Create any properties not present which the renderer depends upon
+    subtitlesObj.id = subtitlesObj.id || ''
+    subtitlesObj.language = subtitlesObj.language || ''
+
+    return subtitlesObj
   }
 }

@@ -1,7 +1,7 @@
 import $ from 'jquery'
+import IIIFParser from './iiif_parser'
 import Player from './player'
 import { utilityHelpers } from './utility_helpers'
-import IIIFParser from './iiif_parser'
 
 /** Class representing the avalon IIIF player */
 export default class Avalon {
@@ -10,7 +10,7 @@ export default class Avalon {
 
     // Configuration object to hold element values, ids and such in one place
     this.configObj = {
-      defaultManifest: 'lunchroom_manners_v2.json',
+      defaultManifest: 'mahler-symphony-3.json',
       mountElId: 'iiif-standalone-player-mount',
       playerWrapperId: 'iiif-player-wrapper',
       structureElId: 'iiif-structure-wrapper',
@@ -22,6 +22,9 @@ export default class Avalon {
 
     // Variable to hold structures HTML markup as a string
     this.structureMarkup = ''
+
+    // Current player instance
+    this.player = null
 
     // Save reference to manifest URL text input element
     this.manifestUrlEl = document.getElementById(this.configObj.urlTextInputId)
@@ -80,7 +83,7 @@ export default class Avalon {
     options.contentObj = this.iiifParser.getFirstContentObj(manifest, this.manifestMap)
 
     // Create player instance
-    return new Player(options)
+    this.player = new Player(options)
   }
 
   /**
