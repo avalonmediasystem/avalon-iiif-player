@@ -8,12 +8,12 @@ export default class Player extends MediaPlayer {
   constructor (options) {
     super(options)
     this.iiifParser = new IIIFParser()
+    // Initial contentObject to build player from
     this.contentObj = options.contentObj
+    // Track current player by item.type ie. 'Audio' or 'Video'
     this.currentPlayerType = ''
-
     // Instance of player
     this.player = undefined
-
     this.playerElId = 'iiif-av-player'
 
     // Render initial player
@@ -32,7 +32,7 @@ export default class Player extends MediaPlayer {
 
     // Audio File
     if (item.type === 'Audio') {
-      markup = `<audio controls id="${this.playerElId}" width="100%">
+      markup = `<audio controls id="${this.playerElId}" width="600">
           <source src="${item.id}" type="audio/mp3" data-quality="${item.label}">
         </audio>`
     }
@@ -54,7 +54,7 @@ export default class Player extends MediaPlayer {
    **/
   render (contentObj, qualityLevel = 'Medium') {
     // Get current item in manifest to render
-    let item = this.getContentItem(contentObj, qualityLevel)
+    let item = this.iiifParser.getContentItem(contentObj, qualityLevel)
 
     // Generate HTML5 markup which Mediaelement will hook into
     let playerMarkup = this.generatePlayerMarkup(contentObj, item)
@@ -75,17 +75,18 @@ export default class Player extends MediaPlayer {
   }
 
   destroyPlayerInstance (newContentObj) {
-    // Remove old instance
+    // Remove Mediaelement instance
     if (!this.player.paused) {
       this.player.pause()
     }
     this.player.remove()
 
+    // Clear media tag (<audio> or <video>) from DOM
     let tagName = (this.currentPlayerType === 'Audio') ? 'audio' : 'video'
     let tagNameEl = document.getElementsByTagName(tagName)[0]
     tagNameEl.parentNode.removeChild(tagNameEl)
 
-    // Create new
+    // Create a new player
     this.render(newContentObj)
   }
 }

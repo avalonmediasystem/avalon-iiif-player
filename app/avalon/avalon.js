@@ -23,8 +23,8 @@ export default class Avalon {
     // Variable to hold structures HTML markup as a string
     this.structureMarkup = ''
 
-    // Current player instance
-    this.player = null
+    // Current player wrapper instance
+    this.playerWrapper = null
 
     // Save reference to manifest URL text input element
     this.manifestUrlEl = document.getElementById(this.configObj.urlTextInputId)
@@ -83,7 +83,7 @@ export default class Avalon {
     options.contentObj = this.iiifParser.getFirstContentObj(manifest, this.manifestMap)
 
     // Create player instance
-    this.player = new Player(options)
+    this.playerWrapper = new Player(options)
   }
 
   /**

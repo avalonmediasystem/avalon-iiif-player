@@ -71,6 +71,21 @@ export default class IIIFParser {
   }
 
   /**
+   * Retrieve all canvases from a manifest
+   * @param options
+   * @returns {Array}
+   */
+  getCanvases (options) {
+    let canvases = []
+    let sequences = options.manifest.sequences
+    if (sequences && sequences.length > 0) {
+      // Default use the first sequence to grab canvases
+      canvases = sequences[0].canvases || []
+    }
+    return canvases
+  }
+
+  /**
    * Parse canvasId URI for the canvas index
    * @param {string} canvasId - key in manifest
    * @returns {string} canvasIndex - URI canvas index
@@ -118,6 +133,26 @@ export default class IIIFParser {
   }
 
   /**
+   *  Get a target item at desired quality level
+   *  @param {Object} contentObj - Canvas content object in manifest
+   *  @param {string} qualityLevel - Quality level from manifest: ie. 'Medium', 'High'
+   *  @return {Object} An item object at desired quality level
+   */
+  getContentItem (contentObj, qualityLevel) {
+    let targetItem = {}
+    contentObj.items.forEach((item) => {
+      item.body.forEach((body) => {
+        body.items.forEach((item) => {
+          if (item.label === qualityLevel) {
+            targetItem = item
+          }
+        })
+      })
+    })
+    return targetItem
+  }
+
+  /**
    * Get a manifest's content array
    * @param {Object} manifest - A json manifest
    * @param {Object} manifestMap - Helper object of manifest details
@@ -157,6 +192,7 @@ export default class IIIFParser {
       return undefined
     }
   }
+
   /**
    * Determine quality choices present in the manifest
    * @param {Object} contentObj - A contentObj object in the manifest
