@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9982,7 +9982,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)(module)))
 
 /***/ }),
 /* 2 */
@@ -9991,10 +9991,348 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 "use strict";
 
 
-module.exports = "\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='120' viewBox='0 0 400 120'%3E%3Cstyle%3E.st0%7Bfill:%23FFFFFF;width:16px;height:16px%7D .st1%7Bfill:none;stroke:%23FFFFFF;stroke-width:1.5;stroke-linecap:round;%7D .st2%7Bfill:none;stroke:%23FFFFFF;stroke-width:2;stroke-linecap:round;%7D .st3%7Bfill:none;stroke:%23FFFFFF;%7D .st4%7Bfill:%23231F20;%7D .st5%7Bopacity:0.75;fill:none;stroke:%23FFFFFF;stroke-width:5;enable-background:new;%7D .st6%7Bfill:none;stroke:%23FFFFFF;stroke-width:5;%7D .st7%7Bopacity:0.4;fill:%23FFFFFF;enable-background:new;%7D .st8%7Bopacity:0.6;fill:%23FFFFFF;enable-background:new;%7D .st9%7Bopacity:0.8;fill:%23FFFFFF;enable-background:new;%7D .st10%7Bopacity:0.9;fill:%23FFFFFF;enable-background:new;%7D .st11%7Bopacity:0.3;fill:%23FFFFFF;enable-background:new;%7D .st12%7Bopacity:0.5;fill:%23FFFFFF;enable-background:new;%7D .st13%7Bopacity:0.7;fill:%23FFFFFF;enable-background:new;%7D%3C/style%3E%3Cpath class='st0' d='M16.5 8.5c.3.1.4.5.2.8-.1.1-.1.2-.2.2l-11.4 7c-.5.3-.8.1-.8-.5V2c0-.5.4-.8.8-.5l11.4 7z'/%3E%3Cpath class='st0' d='M24 1h2.2c.6 0 1 .4 1 1v14c0 .6-.4 1-1 1H24c-.6 0-1-.4-1-1V2c0-.5.4-1 1-1zm9.8 0H36c.6 0 1 .4 1 1v14c0 .6-.4 1-1 1h-2.2c-.6 0-1-.4-1-1V2c0-.5.4-1 1-1z'/%3E%3Cpath class='st0' d='M81 1.4c0-.6.4-1 1-1h5.4c.6 0 .7.3.3.7l-6 6c-.4.4-.7.3-.7-.3V1.4zm0 15.8c0 .6.4 1 1 1h5.4c.6 0 .7-.3.3-.7l-6-6c-.4-.4-.7-.3-.7.3v5.4zM98.8 1.4c0-.6-.4-1-1-1h-5.4c-.6 0-.7.3-.3.7l6 6c.4.4.7.3.7-.3V1.4zm0 15.8c0 .6-.4 1-1 1h-5.4c-.6 0-.7-.3-.3-.7l6-6c.4-.4.7-.3.7.3v5.4z'/%3E%3Cpath class='st0' d='M112.7 5c0 .6.4 1 1 1h4.1c.6 0 .7-.3.3-.7L113.4.6c-.4-.4-.7-.3-.7.3V5zm-7.1 1c.6 0 1-.4 1-1V.9c0-.6-.3-.7-.7-.3l-4.7 4.7c-.4.4-.3.7.3.7h4.1zm1 7.1c0-.6-.4-1-1-1h-4.1c-.6 0-.7.3-.3.7l4.7 4.7c.4.4.7.3.7-.3v-4.1zm7.1-1c-.6 0-1 .4-1 1v4.1c0 .5.3.7.7.3l4.7-4.7c.4-.4.3-.7-.3-.7h-4.1z'/%3E%3Cpath class='st0' d='M67 5.8c-.5.4-1.2.6-1.8.6H62c-.6 0-1 .4-1 1v5.7c0 .6.4 1 1 1h4.2c.3.2.5.4.8.6l3.5 2.6c.4.3.8.1.8-.4V3.5c0-.5-.4-.7-.8-.4L67 5.8z'/%3E%3Cpath class='st1' d='M73.9 2.5s3.9-.8 3.9 7.7-3.9 7.8-3.9 7.8'/%3E%3Cpath class='st1' d='M72.6 6.4s2.6-.4 2.6 3.8-2.6 3.9-2.6 3.9'/%3E%3Cpath class='st0' d='M47 5.8c-.5.4-1.2.6-1.8.6H42c-.6 0-1 .4-1 1v5.7c0 .6.4 1 1 1h4.2c.3.2.5.4.8.6l3.5 2.6c.4.3.8.1.8-.4V3.5c0-.5-.4-.7-.8-.4L47 5.8z'/%3E%3Cpath class='st2' d='M52.8 7l5.4 5.4m-5.4 0L58.2 7'/%3E%3Cpath class='st3' d='M128.7 8.6c-6.2-4.2-6.5 7.8 0 3.9m6.5-3.9c-6.2-4.2-6.5 7.8 0 3.9'/%3E%3Cpath class='st0' d='M122.2 3.4h15.7v13.1h-15.7V3.4zM120.8 2v15.7h18.3V2h-18.3z'/%3E%3Cpath class='st0' d='M143.2 3h14c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2h-14c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2z'/%3E%3Cpath class='st4' d='M146.4 13.8c-.8 0-1.6-.4-2.1-1-1.1-1.4-1-3.4.1-4.8.5-.6 2-1.7 4.6.2l-.6.8c-1.4-1-2.6-1.1-3.3-.3-.8 1-.8 2.4-.1 3.5.7.9 1.9.8 3.4-.1l.5.9c-.7.5-1.6.7-2.5.8zm7.5 0c-.8 0-1.6-.4-2.1-1-1.1-1.4-1-3.4.1-4.8.5-.6 2-1.7 4.6.2l-.5.8c-1.4-1-2.6-1.1-3.3-.3-.8 1-.8 2.4-.1 3.5.7.9 1.9.8 3.4-.1l.5.9c-.8.5-1.7.7-2.6.8z'/%3E%3Cpath class='st0' d='M60.3 77c.6.2.8.8.6 1.4-.1.3-.3.5-.6.6L30 96.5c-1 .6-1.7.1-1.7-1v-35c0-1.1.8-1.5 1.7-1L60.3 77z'/%3E%3Cpath class='st5' d='M2.5 79c0-20.7 16.8-37.5 37.5-37.5S77.5 58.3 77.5 79 60.7 116.5 40 116.5 2.5 99.7 2.5 79z'/%3E%3Cpath class='st0' d='M140.3 77c.6.2.8.8.6 1.4-.1.3-.3.5-.6.6L110 96.5c-1 .6-1.7.1-1.7-1v-35c0-1.1.8-1.5 1.7-1L140.3 77z'/%3E%3Cpath class='st6' d='M82.5 79c0-20.7 16.8-37.5 37.5-37.5s37.5 16.8 37.5 37.5-16.8 37.5-37.5 37.5S82.5 99.7 82.5 79z'/%3E%3Ccircle class='st0' cx='201.9' cy='47.1' r='8.1'/%3E%3Ccircle class='st7' cx='233.9' cy='79' r='5'/%3E%3Ccircle class='st8' cx='201.9' cy='110.9' r='6'/%3E%3Ccircle class='st9' cx='170.1' cy='79' r='7'/%3E%3Ccircle class='st10' cx='178.2' cy='56.3' r='7.5'/%3E%3Ccircle class='st11' cx='226.3' cy='56.1' r='4.5'/%3E%3Ccircle class='st12' cx='225.8' cy='102.8' r='5.5'/%3E%3Ccircle class='st13' cx='178.2' cy='102.8' r='6.5'/%3E%3Cpath class='st0' d='M178 9.4c0 .4-.4.7-.9.7-.1 0-.2 0-.2-.1L172 8.2c-.5-.2-.6-.6-.1-.8l6.2-3.6c.5-.3.8-.1.7.5l-.8 5.1z'/%3E%3Cpath class='st0' d='M169.4 15.9c-1 0-2-.2-2.9-.7-2-1-3.2-3-3.2-5.2.1-3.4 2.9-6 6.3-6 2.5.1 4.8 1.7 5.6 4.1l.1-.1 2.1 1.1c-.6-4.4-4.7-7.5-9.1-6.9-3.9.6-6.9 3.9-7 7.9 0 2.9 1.7 5.6 4.3 7 1.2.6 2.5.9 3.8 1 2.6 0 5-1.2 6.6-3.3l-1.8-.9c-1.2 1.2-3 2-4.8 2z'/%3E%3Cpath class='st0' d='M183.4 3.2c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5c0-.9.7-1.5 1.5-1.5zm5.1 0h8.5c.9 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5h-8.5c-.9 0-1.5-.7-1.5-1.5-.1-.9.6-1.5 1.5-1.5zm-5.1 5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5c0-.9.7-1.5 1.5-1.5zm5.1 0h8.5c.9 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5h-8.5c-.9 0-1.5-.7-1.5-1.5-.1-.9.6-1.5 1.5-1.5zm-5.1 5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5c0-.9.7-1.5 1.5-1.5zm5.1 0h8.5c.9 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5h-8.5c-.9 0-1.5-.7-1.5-1.5-.1-.9.6-1.5 1.5-1.5z'/%3E%3C/svg%3E\"";
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/** Class representing parsing functionality of an IIIF Manifest */
+var IIIFParser = function () {
+  function IIIFParser() {
+    _classCallCheck(this, IIIFParser);
+  }
+
+  _createClass(IIIFParser, [{
+    key: 'buildManifestMap',
+
+    /**
+     * Build a manifest map helper object for parsing
+     * @param {Object} manifest - Manifest object
+     * @returns {Object} A generated helper map object with information about current manifest
+     */
+    value: function buildManifestMap(manifest) {
+      var obj = {
+        hasCanvases: false,
+        hasMultipleCanvases: false,
+        hasSequences: false,
+        isAudio: false,
+        isVideo: false
+      };
+
+      obj.hasSequences = !!manifest.sequences;
+      if (obj.hasSequences === true) {
+        obj.hasCanvases = !!manifest.sequences[0].canvases;
+        if (obj.hasCanvases === true) {
+          obj.hasMultipleCanvases = manifest.sequences[0].canvases.length > 1;
+        }
+      }
+      return obj;
+    }
+
+    /**
+     * Generate a structure nested list link
+     * @param {Object} member - A member object
+     * @returns {string} - HTML string for the anchor link
+     */
+
+  }, {
+    key: 'buildStructureLink',
+    value: function buildStructureLink(member) {
+      var members = member.members;
+      var id = members[0].id;
+      var structureLink = '#';
+
+      if (this.getMediaFragment(id) !== undefined) {
+        var mediaFragment = this.getMediaFragment(id);
+        var canvasIndex = this.getCanvasIndex(id);
+        var canvasHash = canvasIndex !== '' ? '/canvas/' + canvasIndex : '';
+
+        structureLink = '<a data-turbolinks=\'false\' data-target="#" href="#avalon/time/' + mediaFragment.start + ',' + mediaFragment.stop + '/quality/Medium' + canvasHash + '" class="media-structure-uri" >' + member.label + '</a>';
+      }
+      return structureLink;
+    }
+
+    /**
+     * Does the manifest have a canvases array?
+     * @return {boolean}
+     **/
+
+  }, {
+    key: 'canvasesInManifest',
+    value: function canvasesInManifest(manifest) {
+      return manifest.sequences && manifest.sequences[0].canvases;
+    }
+
+    /**
+     * Parse what type of content the file is
+     * @param {object} contentObj - The content item for which to find type
+     * @returns {string} 'Audio' or 'Video' text (for now)
+     */
+
+  }, {
+    key: 'determinePlayerType',
+    value: function determinePlayerType(contentObj) {
+      var body = lookForBody(contentObj);
+
+      function lookForBody(obj) {
+        if (obj.body) {
+          return obj.body;
+        } else if (obj.items) {
+          return lookForBody(obj.items[0]);
+        }
+      }
+      return body[0].items[0].type;
+    }
+
+    /**
+     * Retrieve all canvases from a manifest
+     * @param options
+     * @returns {Array}
+     */
+
+  }, {
+    key: 'getCanvases',
+    value: function getCanvases(options) {
+      var canvases = [];
+      var sequences = options.manifest.sequences;
+      if (sequences && sequences.length > 0) {
+        // Default use the first sequence to grab canvases
+        canvases = sequences[0].canvases || [];
+      }
+      return canvases;
+    }
+
+    /**
+     * Parse canvasId URI for the canvas index
+     * @param {string} canvasId - key in manifest
+     * @returns {string} canvasIndex - URI canvas index
+     */
+
+  }, {
+    key: 'getCanvasIndex',
+    value: function getCanvasIndex() {
+      var canvasId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+      var canvasPos = canvasId.indexOf('canvas');
+      var hashPos = canvasId.indexOf('#');
+      var canvasIndex = '';
+
+      if (canvasPos > -1 && hashPos > -1) {
+        canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1, canvasId.indexOf('#', canvasPos));
+      } else if (canvasPos > -1 && hashPos === -1) {
+        canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1);
+      }
+      return canvasIndex;
+    }
+
+    /**
+     * Get a canvas object from manifest 'canvases' array
+     * @param {string} index - target canvas index
+     * @param {Object} manifest - Manifest object
+     * @returns {Object} canvasObject or empty object
+     */
+
+  }, {
+    key: 'getCanvasByIndex',
+    value: function getCanvasByIndex(index, manifest) {
+      if (!index) {
+        return {};
+      }
+
+      var manifestMap = this.buildManifestMap(manifest);
+      var sequences = [];
+      var canvases = [];
+      var canvasObject = {};
+
+      if (manifestMap.hasSequences) {
+        sequences = manifest.sequences;
+        sequences.forEach(function (sequence) {
+          canvases = sequence.canvases;
+          canvases.forEach(function (canvas) {
+            var canvasIndex = canvas.id.slice(canvas.id.lastIndexOf('/') + 1);
+            if (canvasIndex === index) {
+              canvasObject = canvas;
+            }
+          });
+        });
+      }
+      return canvasObject;
+    }
+
+    /**
+     *  Get a target item at desired quality level
+     *  @param {Object} contentObj - Canvas content object in manifest
+     *  @param {string} qualityLevel - Quality level from manifest: ie. 'Medium', 'High'
+     *  @return {Object} An item object at desired quality level
+     */
+
+  }, {
+    key: 'getContentItem',
+    value: function getContentItem(contentObj, qualityLevel) {
+      var targetItem = {};
+      contentObj.items.forEach(function (item) {
+        item.body.forEach(function (body) {
+          body.items.forEach(function (item) {
+            if (item.label === qualityLevel) {
+              targetItem = item;
+            }
+          });
+        });
+      });
+      return targetItem;
+    }
+
+    /**
+     * Get a manifest's content array
+     * @param {Object} manifest - A json manifest
+     * @param {Object} manifestMap - Helper object of manifest details
+     * @returns {Object} The first element in content array
+     */
+
+  }, {
+    key: 'getFirstContentObj',
+    value: function getFirstContentObj(manifest, manifestMap) {
+      var firstContent = {};
+
+      // No sequences, go right to content key
+      if (!manifestMap.hasSequences) {
+        firstContent = manifest.content;
+
+        // Has sequences and canvases
+      } else if (manifestMap.hasSequences && manifestMap.hasCanvases) {
+        firstContent = manifest.sequences[0].canvases[0].content;
+      }
+      return firstContent[0];
+    }
+
+    /**
+     * Takes a uri with a media fragment that looks like #=120,134 and returns an object
+     * with start/stop in seconds and the duration in milliseconds
+     * @param {string} uri - Uri value
+     * @return {Object}
+     */
+
+  }, {
+    key: 'getMediaFragment',
+    value: function getMediaFragment(uri) {
+      if (uri !== undefined) {
+        var fragment = uri.split('#t=')[1];
+        if (fragment !== undefined) {
+          var splitFragment = fragment.split(',');
+          return { 'start': splitFragment[0],
+            'stop': splitFragment[1] };
+        } else {
+          return undefined;
+        }
+      } else {
+        return undefined;
+      }
+    }
+
+    /**
+     * Determine quality choices present in the manifest
+     * @param {Object} contentObj - A contentObj object in the manifest
+     * @return {Object[]} An array of quality choices
+     */
+
+  }, {
+    key: 'getQualityChoices',
+    value: function getQualityChoices(contentObj) {
+      var choices = [];
+
+      contentObj.items.forEach(function (item) {
+        item.body.forEach(function (body) {
+          if (body.hasOwnProperty('items')) {
+            body.items.forEach(function (item) {
+              choices.push(item);
+            });
+          }
+        });
+      });
+      return choices;
+    }
+
+    /**
+     * Determine a video's (no audio dimensions?) presentation dimensions
+     * @param {Object} manifest - Current manifest
+     * @param {Object} contentObj - Element in content array
+     * @param {Object} item - Element of manifest's body.items array
+     * @returns {Object} - Dimensions key/value pair
+     */
+
+  }, {
+    key: 'getPlayerDimensions',
+    value: function getPlayerDimensions(manifest, contentObj, item) {
+      var dimensions = {};
+      var canvasIndex = this.getCanvasIndex(contentObj.id);
+      var canvas = this.getCanvasByIndex(canvasIndex, manifest);
+
+      // Dimensions are at manifest root level
+      if (manifest && manifest.hasOwnProperty('width')) {
+        dimensions.height = manifest.height;
+        dimensions.width = manifest.width;
+      }
+
+      // Dimensions are at canvas level
+      if (canvas && canvas.hasOwnProperty('width')) {
+        dimensions.height = canvas.height;
+        dimensions.width = canvas.width;
+      }
+
+      // Dimensions are at item level
+      if (item && item.hasOwnProperty('width')) {
+        dimensions.height = item.height;
+        dimensions.width = item.width;
+      }
+      return dimensions;
+    }
+
+    /**
+     * Determines whether manifest content object has subtitles included
+     * @param {Object} contentObj - Manifest canvas content object
+     * @return {Object} subtitlesObj - Object of subtitles in body array
+     */
+
+  }, {
+    key: 'getSubtitles',
+    value: function getSubtitles(contentObj) {
+      var subtitlesObj = {};
+
+      contentObj.items.forEach(function (item) {
+        item.body.forEach(function (body) {
+          if (body.type === 'Text') {
+            subtitlesObj = body;
+          }
+        });
+      });
+
+      // Create any properties not present which the renderer depends upon
+      subtitlesObj.id = subtitlesObj.id || '';
+      subtitlesObj.language = subtitlesObj.language || '';
+
+      return subtitlesObj;
+    }
+  }]);
+
+  return IIIFParser;
+}();
+
+exports.default = IIIFParser;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = "\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='120' viewBox='0 0 400 120'%3E%3Cstyle%3E.st0%7Bfill:%23FFFFFF;width:16px;height:16px%7D .st1%7Bfill:none;stroke:%23FFFFFF;stroke-width:1.5;stroke-linecap:round;%7D .st2%7Bfill:none;stroke:%23FFFFFF;stroke-width:2;stroke-linecap:round;%7D .st3%7Bfill:none;stroke:%23FFFFFF;%7D .st4%7Bfill:%23231F20;%7D .st5%7Bopacity:0.75;fill:none;stroke:%23FFFFFF;stroke-width:5;enable-background:new;%7D .st6%7Bfill:none;stroke:%23FFFFFF;stroke-width:5;%7D .st7%7Bopacity:0.4;fill:%23FFFFFF;enable-background:new;%7D .st8%7Bopacity:0.6;fill:%23FFFFFF;enable-background:new;%7D .st9%7Bopacity:0.8;fill:%23FFFFFF;enable-background:new;%7D .st10%7Bopacity:0.9;fill:%23FFFFFF;enable-background:new;%7D .st11%7Bopacity:0.3;fill:%23FFFFFF;enable-background:new;%7D .st12%7Bopacity:0.5;fill:%23FFFFFF;enable-background:new;%7D .st13%7Bopacity:0.7;fill:%23FFFFFF;enable-background:new;%7D%3C/style%3E%3Cpath class='st0' d='M16.5 8.5c.3.1.4.5.2.8-.1.1-.1.2-.2.2l-11.4 7c-.5.3-.8.1-.8-.5V2c0-.5.4-.8.8-.5l11.4 7z'/%3E%3Cpath class='st0' d='M24 1h2.2c.6 0 1 .4 1 1v14c0 .6-.4 1-1 1H24c-.6 0-1-.4-1-1V2c0-.5.4-1 1-1zm9.8 0H36c.6 0 1 .4 1 1v14c0 .6-.4 1-1 1h-2.2c-.6 0-1-.4-1-1V2c0-.5.4-1 1-1z'/%3E%3Cpath class='st0' d='M81 1.4c0-.6.4-1 1-1h5.4c.6 0 .7.3.3.7l-6 6c-.4.4-.7.3-.7-.3V1.4zm0 15.8c0 .6.4 1 1 1h5.4c.6 0 .7-.3.3-.7l-6-6c-.4-.4-.7-.3-.7.3v5.4zM98.8 1.4c0-.6-.4-1-1-1h-5.4c-.6 0-.7.3-.3.7l6 6c.4.4.7.3.7-.3V1.4zm0 15.8c0 .6-.4 1-1 1h-5.4c-.6 0-.7-.3-.3-.7l6-6c.4-.4.7-.3.7.3v5.4z'/%3E%3Cpath class='st0' d='M112.7 5c0 .6.4 1 1 1h4.1c.6 0 .7-.3.3-.7L113.4.6c-.4-.4-.7-.3-.7.3V5zm-7.1 1c.6 0 1-.4 1-1V.9c0-.6-.3-.7-.7-.3l-4.7 4.7c-.4.4-.3.7.3.7h4.1zm1 7.1c0-.6-.4-1-1-1h-4.1c-.6 0-.7.3-.3.7l4.7 4.7c.4.4.7.3.7-.3v-4.1zm7.1-1c-.6 0-1 .4-1 1v4.1c0 .5.3.7.7.3l4.7-4.7c.4-.4.3-.7-.3-.7h-4.1z'/%3E%3Cpath class='st0' d='M67 5.8c-.5.4-1.2.6-1.8.6H62c-.6 0-1 .4-1 1v5.7c0 .6.4 1 1 1h4.2c.3.2.5.4.8.6l3.5 2.6c.4.3.8.1.8-.4V3.5c0-.5-.4-.7-.8-.4L67 5.8z'/%3E%3Cpath class='st1' d='M73.9 2.5s3.9-.8 3.9 7.7-3.9 7.8-3.9 7.8'/%3E%3Cpath class='st1' d='M72.6 6.4s2.6-.4 2.6 3.8-2.6 3.9-2.6 3.9'/%3E%3Cpath class='st0' d='M47 5.8c-.5.4-1.2.6-1.8.6H42c-.6 0-1 .4-1 1v5.7c0 .6.4 1 1 1h4.2c.3.2.5.4.8.6l3.5 2.6c.4.3.8.1.8-.4V3.5c0-.5-.4-.7-.8-.4L47 5.8z'/%3E%3Cpath class='st2' d='M52.8 7l5.4 5.4m-5.4 0L58.2 7'/%3E%3Cpath class='st3' d='M128.7 8.6c-6.2-4.2-6.5 7.8 0 3.9m6.5-3.9c-6.2-4.2-6.5 7.8 0 3.9'/%3E%3Cpath class='st0' d='M122.2 3.4h15.7v13.1h-15.7V3.4zM120.8 2v15.7h18.3V2h-18.3z'/%3E%3Cpath class='st0' d='M143.2 3h14c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2h-14c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2z'/%3E%3Cpath class='st4' d='M146.4 13.8c-.8 0-1.6-.4-2.1-1-1.1-1.4-1-3.4.1-4.8.5-.6 2-1.7 4.6.2l-.6.8c-1.4-1-2.6-1.1-3.3-.3-.8 1-.8 2.4-.1 3.5.7.9 1.9.8 3.4-.1l.5.9c-.7.5-1.6.7-2.5.8zm7.5 0c-.8 0-1.6-.4-2.1-1-1.1-1.4-1-3.4.1-4.8.5-.6 2-1.7 4.6.2l-.5.8c-1.4-1-2.6-1.1-3.3-.3-.8 1-.8 2.4-.1 3.5.7.9 1.9.8 3.4-.1l.5.9c-.8.5-1.7.7-2.6.8z'/%3E%3Cpath class='st0' d='M60.3 77c.6.2.8.8.6 1.4-.1.3-.3.5-.6.6L30 96.5c-1 .6-1.7.1-1.7-1v-35c0-1.1.8-1.5 1.7-1L60.3 77z'/%3E%3Cpath class='st5' d='M2.5 79c0-20.7 16.8-37.5 37.5-37.5S77.5 58.3 77.5 79 60.7 116.5 40 116.5 2.5 99.7 2.5 79z'/%3E%3Cpath class='st0' d='M140.3 77c.6.2.8.8.6 1.4-.1.3-.3.5-.6.6L110 96.5c-1 .6-1.7.1-1.7-1v-35c0-1.1.8-1.5 1.7-1L140.3 77z'/%3E%3Cpath class='st6' d='M82.5 79c0-20.7 16.8-37.5 37.5-37.5s37.5 16.8 37.5 37.5-16.8 37.5-37.5 37.5S82.5 99.7 82.5 79z'/%3E%3Ccircle class='st0' cx='201.9' cy='47.1' r='8.1'/%3E%3Ccircle class='st7' cx='233.9' cy='79' r='5'/%3E%3Ccircle class='st8' cx='201.9' cy='110.9' r='6'/%3E%3Ccircle class='st9' cx='170.1' cy='79' r='7'/%3E%3Ccircle class='st10' cx='178.2' cy='56.3' r='7.5'/%3E%3Ccircle class='st11' cx='226.3' cy='56.1' r='4.5'/%3E%3Ccircle class='st12' cx='225.8' cy='102.8' r='5.5'/%3E%3Ccircle class='st13' cx='178.2' cy='102.8' r='6.5'/%3E%3Cpath class='st0' d='M178 9.4c0 .4-.4.7-.9.7-.1 0-.2 0-.2-.1L172 8.2c-.5-.2-.6-.6-.1-.8l6.2-3.6c.5-.3.8-.1.7.5l-.8 5.1z'/%3E%3Cpath class='st0' d='M169.4 15.9c-1 0-2-.2-2.9-.7-2-1-3.2-3-3.2-5.2.1-3.4 2.9-6 6.3-6 2.5.1 4.8 1.7 5.6 4.1l.1-.1 2.1 1.1c-.6-4.4-4.7-7.5-9.1-6.9-3.9.6-6.9 3.9-7 7.9 0 2.9 1.7 5.6 4.3 7 1.2.6 2.5.9 3.8 1 2.6 0 5-1.2 6.6-3.3l-1.8-.9c-1.2 1.2-3 2-4.8 2z'/%3E%3Cpath class='st0' d='M183.4 3.2c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5c0-.9.7-1.5 1.5-1.5zm5.1 0h8.5c.9 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5h-8.5c-.9 0-1.5-.7-1.5-1.5-.1-.9.6-1.5 1.5-1.5zm-5.1 5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5c0-.9.7-1.5 1.5-1.5zm5.1 0h8.5c.9 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5h-8.5c-.9 0-1.5-.7-1.5-1.5-.1-.9.6-1.5 1.5-1.5zm-5.1 5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5c0-.9.7-1.5 1.5-1.5zm5.1 0h8.5c.9 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5h-8.5c-.9 0-1.5-.7-1.5-1.5-.1-.9.6-1.5 1.5-1.5z'/%3E%3C/svg%3E\"";
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -10031,7 +10369,7 @@ var stylesInDom = {},
 	singletonElement = null,
 	singletonCounter = 0,
 	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(19);
+	fixUrls = __webpack_require__(17);
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -10307,735 +10645,7 @@ function updateLink(linkElement, options, obj) {
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(1);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _audio_player = __webpack_require__(15);
-
-var _audio_player2 = _interopRequireDefault(_audio_player);
-
-var _video_player = __webpack_require__(17);
-
-var _video_player2 = _interopRequireDefault(_video_player);
-
-var _utility_helpers = __webpack_require__(7);
-
-var _utility_helpers2 = _interopRequireDefault(_utility_helpers);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/** This class will look for certain data attributes in page markup
- * and then initiqlize a player. It uses an XHR request to get the
- * III-AV JSON.
- * @class Avalon
- */
-var Avalon = function () {
-  function Avalon() {
-    _classCallCheck(this, Avalon);
-  }
-
-  _createClass(Avalon, [{
-    key: 'initialize',
-    value: function initialize() {
-      /**
-       * this method checks the page markup for a iiif-av data attribute
-       * @method Avalon#initialize
-       */
-      if ((0, _jquery2.default)('[data-iiifav-source]').length > 0) {
-        this.mediaPlayerVideo();
-      }
-      if ((0, _jquery2.default)('[data-iiifav-audio-source]').length > 0) {
-        this.mediaPlayerAudio();
-      }
-      this.prepareForm();
-    }
-  }, {
-    key: 'createAudioPlayer',
-    value: function createAudioPlayer(options) {
-      /**
-       * this method will initlize create an AudioPlayer instance
-       * @method Avalon#createAudioPlayer
-       */
-      return new _audio_player2.default(options);
-    }
-  }, {
-    key: 'createVideoPlayer',
-    value: function createVideoPlayer(options) {
-      /**
-       * this method will initlize create an VideoPlayer instance
-       * @method Avalon#createVideoPlayer
-       */
-      return new _video_player2.default(options);
-    }
-  }, {
-    key: 'mediaPlayerAudio',
-    value: function mediaPlayerAudio(manifestUrl) {
-      var _this = this;
-
-      /**
-       * this method reads the manifest via XHR and then adds the player to the page
-       * @method Avalon#mediaPlayerAudio
-       */
-      var utilityHelpers = new _utility_helpers2.default();
-      var options = {};
-      var $audioSource = (0, _jquery2.default)('[data-iiifav-audio-source]');
-      var manifestSource = manifestUrl || $audioSource.data().iiifavAudioSource;
-      options.audio = {};
-      options.target = $audioSource.attr('id');
-
-      _jquery2.default.get(manifestSource).done(function (manifest, textStatus, jqXHR) {
-        var json = '';
-        try {
-          json = JSON.parse(manifest);
-        } catch (e) {
-          json = manifest;
-        }
-        options.manifest = json;
-
-        // New manifest URL, clear previous manifest's url hash
-        if (manifestUrl) {
-          utilityHelpers.clearHash();
-        }
-
-        // Create audio player
-        _this.createAudioPlayer(options);
-
-        // Update current manifest message
-        document.getElementById('manifest-current').innerText = manifestSource;
-      }).fail(function (error) {
-        utilityHelpers.displayErrorMessage('Manifest URL Error - ' + error.statusText);
-      }).always(function () {});
-    }
-  }, {
-    key: 'mediaPlayerVideo',
-    value: function mediaPlayerVideo() {
-      var _this2 = this;
-
-      /**
-       * this method reads the manifest via XHR and then adds the player to the page
-       * @method Avalon#mediaPlayerVideo
-       */
-      var options = {};
-      var manifestSource = (0, _jquery2.default)('[data-iiifav-source]').data().iiifavSource;
-      options.target = (0, _jquery2.default)('[data-iiifav-source]').attr('id');
-
-      _jquery2.default.get(manifestSource, function (manifest) {
-        options.manifest = manifest;
-        _this2.createVideoPlayer(options);
-      });
-    }
-
-    /**
-     * Set up listener for the Manifest Url form
-     * @method Avalon#prepareForm
-     * @return {void}
-     */
-
-  }, {
-    key: 'prepareForm',
-    value: function prepareForm() {
-      var _this3 = this;
-
-      var form = document.getElementById('manifest-url-form');
-      if (!form) {
-        return;
-      }
-      var utilityHelpers = new _utility_helpers2.default();
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        utilityHelpers.removeErrorMessage();
-        _this3.mediaPlayerAudio(document.getElementById('manifest-url').value);
-        return false;
-      });
-    }
-  }]);
-
-  return Avalon;
-}();
-
-exports.default = Avalon;
-
-/***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(1);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/** Class representing a HashHandler
- * this class is used for functionality based on the hash in the url
- * @class HashHandler
- */
-var HashHandler = function () {
-  function HashHandler(options) {
-    _classCallCheck(this, HashHandler);
-
-    this.currentCanvasIndex = undefined;
-    this.instance = options.instance;
-    this.qualityChoices = options.qualityChoices;
-    this.player = undefined;
-    this.updating = false;
-    // this.bindHashLinkClick()
-  }
-
-  /**
-   * The function adds and handles a click listener for structure links
-   * TODO: Fix this implementation, as it adds extra event listeners when a new manifest URL is loaded
-   *
-   * @method HashHandler#bindHashLinkClick
-   * @returns {void}
-   */
-  // bindHashLinkClick () {
-  //   let el = document.getElementById('data-iiifav-source').firstChild
-  //   el.addEventListener('click', (event) => {
-  //     if (event.target.className.indexOf('media-structure-uri') > -1 && window.location.hash.search('/time/') > -1) {
-  //       this.playFromHash(event.target.hash)
-  //     }
-  //   })
-  // }
-
-  _createClass(HashHandler, [{
-    key: 'bindHashChange',
-    value: function bindHashChange() {
-      var _this = this;
-
-      /**
-       * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
-       * @method HashHandler#bindHashChange
-       **/
-      // Get the player instance
-      this.player = document.getElementById('iiif-av-player');
-
-      if (window.location.hash.indexOf('#avalon') >= 0) {
-        this.playFromHash(window.location.hash);
-      }
-      window.onhashchange = function () {
-        _this.playFromHash(window.location.hash);
-      };
-    }
-  }, {
-    key: 'canvasesInManifest',
-    value: function canvasesInManifest() {
-      /**
-      * @method HashHandler#canvasesInManifest
-      **/
-      return this.instance.manifest.sequences && this.instance.manifest.sequences[0].canvases;
-    }
-  }, {
-    key: 'playFromHash',
-    value: function playFromHash(hash) {
-      var _this2 = this;
-
-      /**
-       * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
-       * @method HashHandler#playFromHash
-       **/
-      if (this.updating) {
-        return;
-      }
-      this.updating = true;
-      var options = this.processHash(hash);
-      var canvasesExist = this.canvasesInManifest();
-      var src = '';
-
-      // Safari will only setCurrentTime() after 'canplay' event is fired
-      // Using jQuery's 'one' method ensures event only fires once, but there may be a better solution to limit
-      //   event listeners being unnecessarily added
-      (0, _jquery2.default)(this.player).one('canplay', function () {
-        _this2.player.setCurrentTime(parseInt(options.start));
-        _this2.player.play();
-        _this2.updating = false;
-      });
-
-      // Is canvas in the hash different from canvas currently in the player?
-      if (canvasesExist && options.canvas !== this.currentCanvasIndex) {
-        // Get current canvas object from canvas index
-        var canvasObj = this.instance.getCanvasByIndex(options.canvas);
-        this.qualityChoices = this.instance.getQualityChoices(canvasObj);
-        this.currentCanvasIndex = options.canvas;
-      }
-
-      // Find the new source media file
-      this.qualityChoices.forEach(function (choice) {
-        if (choice.label === options.quality) {
-          src = choice.id;
-        }
-      });
-
-      // Load the new source file
-      this.player.pause();
-      this.player.setSrc(src);
-      this.player.load();
-    }
-  }, {
-    key: 'processHash',
-    value: function processHash(hash) {
-      /**
-       *
-       * This method processes a window.location.hash and creates an object.
-       * It can take any number of parameters. Strings at even locations are keys
-       * and odd locations are values.
-       * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
-       * @method HashHandler#processHash
-       * @param {string} hash - a window.location.hash
-       * @return {object}
-       **/
-
-      return hash.split('/').splice(1).reduce(function (result, item, index, array) {
-        if (index % 2 === 0) {
-          if (item === 'time') {
-            var time = array[index + 1].split(',');
-            console.log('time', time);
-            result['start'] = time[0];
-            result['stop'] = time[1];
-          }
-          result[item] = array[index + 1];
-        }
-        return result;
-      }, {});
-    }
-  }]);
-
-  return HashHandler;
-}();
-
-exports.default = HashHandler;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // import '../../node_modules/mediaelement/src/css/mediaelementplayer.css'
-
-
-var _quality_selector = __webpack_require__(16);
-
-var _quality_selector2 = _interopRequireDefault(_quality_selector);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/** Class representing a MediaPlayer
- * @class MediaPlayer
- */
-var MediaPlayer = function () {
-  function MediaPlayer(options) {
-    _classCallCheck(this, MediaPlayer);
-
-    /**
-     * Create a MediaPlayer
-     * @param {object} options - an object with the manifest and target
-     */
-    this.manifest = options.manifest;
-    this.target = document.getElementById(options.target);
-  }
-
-  _createClass(MediaPlayer, [{
-    key: 'getSubtitles',
-    value: function getSubtitles() {
-      /**
-       * this method gets the first subtitle track from the manifest. It will probaly need to more robust in the future
-       *
-       * @method MediaPlayer#getSubtitles
-       * @return {string} subtitle - a URI that points to subtitles
-       */
-      var subtitle;
-      this.manifest.content[0].items.forEach(function (item) {
-        item.body.forEach(function (body) {
-          if (body.type === 'Text') {
-            subtitle = body;
-          }
-        });
-      });
-      return subtitle;
-    }
-  }, {
-    key: 'getQualityChoices',
-    value: function getQualityChoices(canvas) {
-      /**
-       * this method retunrs an array containing the quality choices that are present in the manifest
-       *
-       * @method MediaPlayer#getQualityChoices
-       * @return {array} choices
-       */
-      var choices = [];
-      var content = canvas ? canvas.content : this.manifest.content;
-
-      content[0].items.forEach(function (item) {
-        item.body.forEach(function (body) {
-          if (body.type === 'Choice') {
-            body.items.forEach(function (item) {
-              choices.push(item);
-            });
-          }
-        });
-      });
-
-      return choices;
-    }
-  }, {
-    key: 'getVideoUri',
-    value: function getVideoUri() {
-      /**
-       *  this method returns the URI with Medium quality from the manfest
-       * @method MediaPlayer#getVideoUri
-       * @return {string} uri - a URI for the medium quality video
-       */
-      var uri;
-      this.manifest.content[0].items.forEach(function (item) {
-        item.body.forEach(function (body) {
-          if (body.type === 'Choice') {
-            body.items.forEach(function (item) {
-              if (item.label === 'Medium') {
-                uri = item;
-              }
-            });
-          }
-        });
-      });
-      return uri;
-    }
-  }, {
-    key: 'getTimeFromUrl',
-    value: function getTimeFromUrl(url) {
-      /**
-      *
-      *  this takes a url generated by this software (not a URI from the manifest) and returns an object with start/stop in seconds and the duration in milliseconds
-      * @method MediaPlayer#getTimeFromUrl
-      *
-      * @return {object}
-      */
-      var re = new RegExp(/\d*,\d*/);
-      var time = url.match(re)[0];
-      var splitTime = time.split(',');
-      return {
-        start: splitTime[0],
-        stop: splitTime[1]
-      };
-    }
-  }, {
-    key: 'replaceTimeInUrl',
-    value: function replaceTimeInUrl(url, childStartStopTime) {
-      /**
-        *
-        *  this will replace the /time/345,536/ with a new time when given object like this: { start: 230 , stop : 340 }
-        * @method MediaPlayer#replaceTimeInUrl
-        *
-        * @return {string}
-        */
-      var startTime = this.getTimeFromUrl(url);
-      var ourStart = startTime.start;
-      var theirStop = childStartStopTime.stop;
-      var newTimeString = '/time/' + ourStart + ',' + theirStop + '/';
-      var oldTime = '/time/' + startTime.start + ',' + startTime.stop + '/';
-
-      return url.replace(oldTime, newTimeString);
-    }
-  }, {
-    key: 'addUrlsForParents',
-    value: function addUrlsForParents() {
-      var _this = this;
-
-      /**
-      *
-      *  this will add urls to labels in the structure navigation if they have the class .implicit
-      * @method MediaPlayer#addUrlsForParents
-      */
-      try {
-        var parentStopTimes = document.querySelectorAll('.implicit');
-        parentStopTimes.forEach(function (el) {
-          var lastTimeIndex = el.querySelectorAll('.explicit').length - 1;
-          var childStartStopTime = _this.getTimeFromUrl(el.querySelectorAll('.explicit')[lastTimeIndex].querySelector('a').href);
-          var newTime = _this.replaceTimeInUrl(el.querySelector('.media-structure-uri').href, childStartStopTime);
-
-          var label = el.querySelector('li').textContent;
-          el.querySelector('li').textContent = '';
-
-          var link = document.createElement('a');
-          link.setAttribute('class', 'media-structure-uri');
-          link.setAttribute('href', newTime);
-          link.text = label;
-          el.querySelector('li').appendChild(link);
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }, {
-    key: 'getMediaFragment',
-    value: function getMediaFragment(uri) {
-      /**
-       *
-       *  this takes a uri with a media fragment that looks like #=120,134 and returns an object with start/stop in seconds and the duration in milliseconds
-       * @method MediaPlayer#getMediaFragment
-       *
-       * @return {object}
-       */
-
-      if (uri !== undefined) {
-        var fragment = uri.split('#t=')[1];
-        if (fragment !== undefined) {
-          var splitFragment = fragment.split(',');
-          return { 'start': splitFragment[0],
-            'stop': splitFragment[1] };
-        } else {
-          return undefined;
-        }
-      } else {
-        return undefined;
-      }
-    }
-  }, {
-    key: 'createStructure',
-    value: function createStructure(manifest, list, canvasId) {
-      var _this2 = this;
-
-      /**
-       * Recurses the manifest structure and creates an html tree
-       *  @method MediaPlayer#createStructure
-       *
-       *  @return {string} list - a string version of the html tree
-       */
-      manifest.map(function (data, index) {
-        if (data.type === 'Range') {
-          if (manifest[index].members[0].id !== undefined) {
-            canvasId = manifest[index].members[0].id;
-          }
-        }
-        if (data.hasOwnProperty('members')) {
-          // Parent elements
-          if (_this2.getMediaFragment(canvasId) !== undefined) {
-            var mediaFragment = _this2.getMediaFragment(canvasId);
-
-            var canvasIndex = _this2.getCanvasIndex(canvasId);
-            var canvasHash = canvasIndex !== '' ? '/canvas/' + canvasIndex : '';
-
-            list.push('<ul class=\'explicit av-structure\'><li class=\'av-structure-label\'><a data-turbolinks=\'false\' data-target="#" href="#avalon/time/' + mediaFragment.start + ',' + mediaFragment.stop + '/quality/Medium' + canvasHash + '" class="media-structure-uri" >' + data.label + '</a></li>');
-            _this2.createStructure(data.members, list, canvasId);
-          } else {
-            list.push('<ul class=\'implicit av-structure\'><li class=\'av-structure-label\'>' + data.label + '</li>');
-            _this2.createStructure(data.members, list, canvasId);
-          }
-        }
-      });
-      list.push('</ul>');
-      return list.join('');
-    }
-  }, {
-    key: 'getCanvasIndex',
-    value: function getCanvasIndex() {
-      var canvasId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-      /**
-       * Parse canvasId URI for the canvas index
-       *
-       * @method MediaPlayer#getCanvasIndex
-       * @param {string} canvasId - key in manifest
-       * @returns {string} canvasIndex - URI canvas index
-       */
-      var canvasPos = canvasId.indexOf('canvas');
-      var canvasIndex = '';
-
-      if (canvasPos > -1) {
-        canvasIndex = canvasId.slice(canvasId.indexOf('/', canvasPos) + 1, canvasId.indexOf('#', canvasPos));
-      }
-      return canvasIndex;
-    }
-  }, {
-    key: 'getCanvasByIndex',
-    value: function getCanvasByIndex(index) {
-      /**
-       * Get a canvas object from manifest 'canvases' array
-       *
-       * @method MediaPlayer#getCanvasIndex
-       * @param {string} index - target canvas index
-       * @returns {object} canvasObject or empty object
-       */
-      if (!index) {
-        return {};
-      }
-
-      // TODO: Eventually we'll want to track current sequence index as well.  For now assume first sequence
-      var canvases = this.manifest.sequences[0].canvases;
-      var canvasObject = {};
-
-      canvases.forEach(function (canvas) {
-        var canvasIndex = canvas.id.slice(canvas.id.lastIndexOf('/') + 1);
-        if (canvasIndex === index) {
-          canvasObject = canvas;
-        }
-      });
-      return canvasObject;
-    }
-  }, {
-    key: 'qualitySelectorMarkup',
-    value: function qualitySelectorMarkup() {
-      var qs = new _quality_selector2.default();
-      var choices = qs.qualityChoices(this.manifest, '', []);
-
-      return qs.renderChoices(choices);
-    }
-  }, {
-    key: 'renderStructure',
-    value: function renderStructure(manifest, list, canvasId) {
-      var _this3 = this;
-
-      /**
-       * Recurses the manifest structure and creates an html tree
-       * @method MediaPlayer#renderStructure
-       *
-       */
-      manifest.map(function (data, index) {
-        if (data.type === 'Range') {
-          canvasId = manifest[index].members[0].id;
-        }
-        if (data.hasOwnProperty('members')) {
-          if (_this3.getMediaFragment(canvasId) !== undefined) {
-            list.push('<ul><li><a class="media-structure-uri" data-media-fragment="' + canvasId + '">' + data.label + '</a></li>');
-            _this3.renderStructure(data.members, list, canvasId);
-          } else {
-            list.push('<ul><li>' + data.label + '</li>');
-            _this3.renderStructure(data.members, list, canvasId);
-          }
-        }
-      });
-      list.push('</ul>');
-      return list.join('');
-    }
-  }, {
-    key: 'getCanvases',
-    value: function getCanvases(options) {
-      var canvases = [];
-      var sequences = options.manifest.sequences;
-      if (sequences && sequences.length > 0) {
-        // Default use the first sequence to grab canvases
-        canvases = sequences[0].canvases || [];
-      }
-      return canvases;
-    }
-  }]);
-
-  return MediaPlayer;
-}();
-
-exports.default = MediaPlayer;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/** Class representing a MediaPlayer
- * @class MediaPlayer
- */
-var UtilityHelpers = function () {
-  /**
-   * Create a UtilityHelper
-   * @constructor
-   */
-  function UtilityHelpers() {
-    _classCallCheck(this, UtilityHelpers);
-
-    this.errorClass = 'error-message';
-  }
-
-  /**
-   * Clear the hash params from URL
-   * @method UtilityHelpers#clearHash
-   * @return {void}
-   */
-
-
-  _createClass(UtilityHelpers, [{
-    key: 'clearHash',
-    value: function clearHash() {
-      window.history.pushState('', document.title, window.location.pathname);
-    }
-
-    /**
-     * Display default error message
-     * @param msg
-     * @return void
-     */
-
-  }, {
-    key: 'displayErrorMessage',
-    value: function displayErrorMessage(msg) {
-      var el = document.getElementById('manifest-current-wrapper');
-      var newNode = document.createElement('div');
-      var markup = '<i class="icon warning circle"></i>\n                  <div class="content">\n                     <p>' + msg + '</p> \n                  </div>';
-      newNode.classList.add(this.errorClass);
-      newNode.classList.add('ui');
-      newNode.classList.add('negative');
-      newNode.classList.add('icon');
-      newNode.classList.add('message');
-      newNode.innerHTML = markup;
-      el.parentNode.insertBefore(newNode, el.nextSibling);
-    }
-  }, {
-    key: 'removeErrorMessage',
-    value: function removeErrorMessage() {
-      var el = document.getElementsByClassName(this.errorClass)[0];
-      if (el) {
-        el.parentNode.removeChild(el);
-      }
-    }
-  }]);
-
-  return UtilityHelpers;
-}();
-
-exports.default = UtilityHelpers;
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11065,7 +10675,260 @@ try {
 module.exports = g;
 
 /***/ }),
-/* 9 */
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(1);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _iiif_parser = __webpack_require__(2);
+
+var _iiif_parser2 = _interopRequireDefault(_iiif_parser);
+
+var _player = __webpack_require__(13);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _utility_helpers = __webpack_require__(15);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/** Class representing the avalon IIIF player */
+var Avalon = function () {
+  function Avalon() {
+    _classCallCheck(this, Avalon);
+  }
+
+  _createClass(Avalon, [{
+    key: 'initialize',
+    value: function initialize() {
+      this.iiifParser = new _iiif_parser2.default();
+
+      // Configuration object to hold element values, ids and such in one place
+      this.configObj = {
+        defaultManifest: 'mahler-symphony-3.json',
+        mountElId: 'iiif-standalone-player-mount',
+        playerWrapperId: 'iiif-player-wrapper',
+        structureElId: 'iiif-structure-wrapper',
+        urlTextInputId: 'manifest-url'
+
+        // Map of current manifest properties we need for parsing decisions
+      };this.manifestMap = {};
+
+      // Variable to hold structures HTML markup as a string
+      this.structureMarkup = '';
+
+      // Current player wrapper instance
+      this.playerWrapper = null;
+
+      // Save reference to manifest URL text input element
+      this.manifestUrlEl = document.getElementById(this.configObj.urlTextInputId);
+
+      // Root element necessary in HTML for our application to mount to
+      this.mountEl = document.getElementById(this.configObj.mountElId);
+
+      // Set up initial markup for elements to mount to
+      this.setupMarkup();
+
+      // Set up a manifest URL form listener
+      this.prepareForm();
+
+      // Initialize app with default local manifest
+      this.getManifestAJAX(this.configObj.defaultManifest);
+    }
+
+    /**
+     * Handle AJAX success response of supplied manifest URL
+     * @param {object} data - AJAX data response
+     * @param {string} textStatus - AJAX text response
+     * @param {object} jqXHR - AJAX request response
+     * @returns {*}
+     */
+
+  }, {
+    key: 'ajaxSuccessHandler',
+    value: function ajaxSuccessHandler(data, textStatus, jqXHR) {
+      var manifest = '';
+      var options = {};
+
+      try {
+        manifest = JSON.parse(data);
+      } catch (e) {
+        manifest = data;
+      }
+      options.manifest = manifest;
+      options.configObj = this.configObj;
+
+      // Clear previous manifest's url hash
+      _utility_helpers.utilityHelpers.clearHash();
+
+      // Clear current structures markup
+      this.structureMarkup = '';
+
+      // Update current manifest message
+      document.getElementById('manifest-current').innerText = this.manifestUrlEl.value !== '' ? this.manifestUrlEl.value : this.configObj.defaultManifest;
+
+      // Build helper map for current manifest
+      this.manifestMap = this.iiifParser.buildManifestMap(manifest);
+
+      // Create structure markup, or display message if no structures exist in manifest
+      this.structureMarkup = manifest.hasOwnProperty('structures') ? this.createStructure(manifest.structures, [], true) : '<p>No structures in manifest</p>';
+
+      // Put structure markup in DOM
+      this.mountStructure();
+
+      // Get first content item to feed player
+      options.contentObj = this.iiifParser.getFirstContentObj(manifest, this.manifestMap);
+
+      // Create player instance
+      this.playerWrapper = new _player2.default(options);
+    }
+
+    /**
+     * Recurse the manifest 'structures' array and creates an html tree of section links
+     * @param {object} members - A 'members' array in the manifest, under 'structures' array
+     * @param {string[]} list - Markup temporary storage array while building the nested unordered lists
+     * @param {boolean} newUl - Flag whether to write a nested unordered list
+     * @return {string} - HTML string containing a nested unordered list and links to section content
+     */
+
+  }, {
+    key: 'createStructure',
+    value: function createStructure(members) {
+      var _this = this;
+
+      var list = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+      var newUl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+      if (newUl) {
+        list.push('<ul>');
+      }
+      members.map(function (member, index) {
+        if (member.type === 'Range' && member.hasOwnProperty('members')) {
+          var _members = member.members;
+
+          // Multiple members, create a new <ul>
+          if (_members.length > 1 || _members[0].type === 'Range') {
+            newUl = true;
+            list.push('<li>' + member.label);
+            _this.createStructure(_members, list, newUl);
+            list.push('</li>');
+          }
+          // Create a link; don't send child members object back in
+          if (_members.length === 1 && _members[0].type === 'Canvas') {
+            var structureLink = _this.iiifParser.buildStructureLink(member);
+            list.push('<li>' + structureLink + '</li>');
+          }
+        }
+      });
+      if (newUl) {
+        list.push('</ul>');
+      }
+      return list.join('');
+    }
+
+    /**
+     * Retrieve a manifest via Ajax
+     * @param {string} url - Url of manifest, either 'http...' or a local file
+     * @return {void}
+     */
+
+  }, {
+    key: 'getManifestAJAX',
+    value: function getManifestAJAX(url) {
+      _jquery2.default.ajax({
+        dataType: 'json',
+        url: url
+      }).done(this.ajaxSuccessHandler.bind(this)).fail(function (error) {
+        _utility_helpers.utilityHelpers.displayErrorMessage('Manifest URL Error - ' + error.statusText);
+      }).always(function () {});
+    }
+
+    /**
+     * Add structures tree markup to DOM mount element
+     */
+
+  }, {
+    key: 'mountStructure',
+    value: function mountStructure() {
+      document.getElementById(this.configObj.structureElId).innerHTML = this.structureMarkup;
+    }
+
+    /**
+     * Set up listener for the Manifest Url form
+     * @method Avalon#prepareForm
+     * @return {void}
+     */
+
+  }, {
+    key: 'prepareForm',
+    value: function prepareForm() {
+      var form = document.getElementById('manifest-url-form');
+
+      if (!form) {
+        return;
+      }
+
+      // Add form submit event listener
+      form.addEventListener('submit', this.submitURLHandler.bind(this));
+    }
+
+    /**
+     * Set up the initial markup wrappers for structures links and the player,
+     * then add markup to the DOM
+     * @return {void}
+     */
+
+  }, {
+    key: 'setupMarkup',
+    value: function setupMarkup() {
+      var structureEl = document.createElement('div');
+      var playerEl = document.createElement('div');
+
+      structureEl.setAttribute('id', this.configObj.structureElId);
+      playerEl.setAttribute('id', this.configObj.playerWrapperId);
+
+      this.mountEl.appendChild(structureEl);
+      this.mountEl.appendChild(playerEl);
+    }
+
+    /**
+     * Form submit event handler
+     * @param {Object} e - the event object
+     * @returns {boolean}
+     */
+
+  }, {
+    key: 'submitURLHandler',
+    value: function submitURLHandler(e) {
+      e.preventDefault();
+
+      // Remove any existing error messages
+      _utility_helpers.utilityHelpers.removeErrorMessage();
+      this.getManifestAJAX(this.manifestUrlEl.value);
+      return false;
+    }
+  }]);
+
+  return Avalon;
+}();
+
+exports.default = Avalon;
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11074,7 +10937,7 @@ module.exports = g;
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(23);
+var content = __webpack_require__(22);
 if (typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11082,7 +10945,7 @@ var transform;
 var options = {};
 options.transform = transform;
 // add the styles to the DOM
-var update = __webpack_require__(3)(content, options);
+var update = __webpack_require__(4)(content, options);
 if (content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if (false) {
@@ -11101,39 +10964,7 @@ if (false) {
 }
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var content = __webpack_require__(25);
-if (typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-
-var options = {};
-options.transform = transform;
-
-var update = __webpack_require__(3)(content, options);
-if (content.locals) module.exports = content.locals;
-
-if (false) {
-	if (!content.locals) {
-		module.hot.accept("!!../../../css-loader/index.js!./mediaelementplayer.css", function () {
-			var newContent = require("!!../../../css-loader/index.js!./mediaelementplayer.css");
-			if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-
-	module.hot.dispose(function () {
-		update();
-	});
-}
-
-/***/ }),
-/* 11 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19079,19 +18910,19 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
 		_mejs2.default.Utils.calculateTimeFormat = calculateTimeFormat;
 		_mejs2.default.Utils.convertSMPTEtoSeconds = convertSMPTEtoSeconds;
 	}, { "7": 7 }] }, {}, [28, 6, 5, 15, 22, 19, 18, 20, 21, 23, 16, 17, 9, 10, 11, 12, 13, 14]);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(21).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(20).setImmediate))
 
 /***/ }),
-/* 12 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(8);
 
 /***/ }),
-/* 13 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19284,7 +19115,7 @@ process.umask = function () {
 };
 
 /***/ }),
-/* 14 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19472,10 +19303,10 @@ process.umask = function () {
     attachTo.setImmediate = setImmediate;
     attachTo.clearImmediate = clearImmediate;
 })(typeof self === "undefined" ? typeof global === "undefined" ? undefined : global : self);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(13)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(10)))
 
 /***/ }),
-/* 15 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19487,132 +19318,393 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _avalon = __webpack_require__(4);
+var _jquery = __webpack_require__(1);
 
-var _avalon2 = _interopRequireDefault(_avalon);
+var _jquery2 = _interopRequireDefault(_jquery);
 
-var _media_player = __webpack_require__(6);
+var _iiif_parser = __webpack_require__(2);
 
-var _media_player2 = _interopRequireDefault(_media_player);
-
-var _hash_handler = __webpack_require__(5);
-
-var _hash_handler2 = _interopRequireDefault(_hash_handler);
-
-var _utility_helpers = __webpack_require__(7);
-
-var _utility_helpers2 = _interopRequireDefault(_utility_helpers);
+var _iiif_parser2 = _interopRequireDefault(_iiif_parser);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+/** Class representing a HashHandler
+ * this class is used for functionality based on the hash in the url
+ * @class HashHandler
+ */
+var HashHandler = function () {
+  function HashHandler(options) {
+    _classCallCheck(this, HashHandler);
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+    this.iiifParser = new _iiif_parser2.default();
 
-var AudioPlayer = function (_MediaPlayer) {
-  _inherits(AudioPlayer, _MediaPlayer);
+    this.currentCanvasIndex = undefined;
+    this.playerClass = options.playerClass;
+    this.manifest = this.playerClass.manifest;
 
-  function AudioPlayer(options) {
-    _classCallCheck(this, AudioPlayer);
+    // Initialize based on first contentObject
+    this.qualityChoices = this.iiifParser.getQualityChoices(this.playerClass.contentObj);
 
-    var _this = _possibleConstructorReturn(this, (AudioPlayer.__proto__ || Object.getPrototypeOf(AudioPlayer)).call(this, options));
+    this.updating = false;
+    // this.bindHashLinkClick()
 
-    var utilityHelpers = new _utility_helpers2.default();
-    _this.avalon = new _avalon2.default();
-    _this.canvases = _this.getCanvases(options);
-
-    // Display error message and remove player UI if no canvases exist in manifest
-    if (_this.canvases.length === 0) {
-      utilityHelpers.displayErrorMessage('Problem with manifest structure');
-      document.getElementById('data-iiifav-source').innerHTML = '';
-      return _possibleConstructorReturn(_this);
-    }
-    _this.currentCanvas = _this.getCanvas(_this.canvases[0].id);
-    _this.hashHandler = new _hash_handler2.default({
-      'qualityChoices': _this.getQualityChoices(_this.currentCanvas),
-      'instance': _this
-    });
-    _this.render(options);
-    return _this;
+    // Start listening for changes in the hash
+    this.bindHashChange();
   }
 
-  // Audio player configurations
+  /**
+   * The function adds and handles a click listener for structure links
+   * TODO: Fix this implementation, as it adds extra event listeners when a new manifest URL is loaded
+   *
+   * @method HashHandler#bindHashLinkClick
+   * @returns {void}
+   */
+  // bindHashLinkClick () {
+  //   let el = document.getElementById('data-iiifav-source').firstChild
+  //   el.addEventListener('click', (event) => {
+  //     if (event.target.className.indexOf('media-structure-uri') > -1 && window.location.hash.search('/time/') > -1) {
+  //       this.playFromHash(event.target.hash)
+  //     }
+  //   })
+  // }
+
+  /**
+   * Binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
+   * @method HashHandler#bindHashChange
+   * @return {void}
+   */
 
 
-  _createClass(AudioPlayer, [{
-    key: 'getAudioConfig',
-    value: function getAudioConfig() {
-      return {
-        audioHeight: this.manifest.height || 50,
-        audioWidth: '100%'
+  _createClass(HashHandler, [{
+    key: 'bindHashChange',
+    value: function bindHashChange() {
+      var _this = this;
+
+      // Get the player instance
+      this.player = document.getElementById('iiif-av-player');
+
+      if (window.location.hash.indexOf('#avalon') >= 0) {
+        this.playFromHash(window.location.hash);
+      }
+      window.onhashchange = function () {
+        _this.playFromHash(window.location.hash);
       };
     }
+
+    /**
+     * Read a media fragment from a hash in the URL and then play the starting location from the hash
+     * @param {string} hash - Url hash value
+     * @return {void}
+     */
+
   }, {
-    key: 'getAudioItems',
-    value: function getAudioItems(canvas) {
-      var audioItems = [];
-      canvas.content[0].items[0].body[0].items.forEach(function (item) {
-        if (item.type === 'Audio') {
-          audioItems.push(item);
-        }
-      });
-      return audioItems;
-    }
-  }, {
-    key: 'getCanvas',
-    value: function getCanvas(id) {
-      var targetCanvas = {};
-      this.canvases.forEach(function (canvas) {
-        if (id.slice(id.indexOf('://')) === canvas.id.slice(canvas.id.indexOf('://'))) {
-          targetCanvas = canvas;
-        }
-      });
-      return targetCanvas;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
+    key: 'playFromHash',
+    value: function playFromHash(hash) {
       var _this2 = this;
 
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { audio: {} };
-
-      // Assume for now only one audio item, with different quality files
-      var audioItems = this.getAudioItems(this.currentCanvas);
-
-      options.audio = options.audio || {};
-      options.audio.quality = options.audio.quality || 'Medium';
-
-      if (audioItems.length < 1) {
+      if (this.updating) {
         return;
       }
+      this.updating = true;
+      var hashOptions = this.processHash(hash);
+      var canvasesExist = this.iiifParser.canvasesInManifest(this.manifest);
+      var src = '';
 
-      audioItems.forEach(function (item) {
-        if (item.label === options.audio.quality) {
-          var audioElement = '<audio controls id="iiif-av-player" width="100%">\n              <source src="' + item.id + '" type="audio/mp3" data-quality="' + item.label + '">\n            </audio>';
-          var audioStructure = _this2.createStructure(_this2.manifest['structures'], []);
+      // Safari will only setCurrentTime() after 'canplay' event is fired
+      // Using jQuery's 'one' method ensures event only fires once, but there may be a better solution to limit
+      //   event listeners being unnecessarily added
+      (0, _jquery2.default)(this.player).one('canplay', function () {
+        _this2.player.setCurrentTime(parseInt(hashOptions.start));
+        _this2.player.play();
+        _this2.updating = false;
+      });
 
-          _this2.target.innerHTML = '\n            <section class="ui stackable two column grid">\n              <article id="structure" class="six wide column">' + audioStructure + '</article>\n              <article class="ten wide column player-wrapper">' + audioElement + '</article>\n            </section>\n          ';
-          var audioPlayer = new MediaElementPlayer('iiif-av-player', _this2.getAudioConfig()); // eslint-disable-line
+      // Is canvas in the hash different from canvas currently in the player?
+      if (canvasesExist && hashOptions.canvas !== this.currentCanvasIndex) {
+        // Get the new canvas object from canvas index
+        var canvasObj = this.iiifParser.getCanvasByIndex(hashOptions.canvas, this.manifest);
 
-          // Start listening for changes in the hash
-          _this2.hashHandler.bindHashChange();
-          // set the implicit links
+        var playerType = this.iiifParser.determinePlayerType(canvasObj.content[0]);
 
-          _this2.addUrlsForParents();
+        // Different type of player required.
+        // Destroy current instance and create a new instance of different player
+        if (playerType !== this.playerClass.currentPlayerType) {
+          this.playerClass.destroyPlayerInstance(canvasObj.content[0]);
+          return;
+        }
+
+        this.qualityChoices = this.iiifParser.getQualityChoices(canvasObj.content[0]);
+        this.currentCanvasIndex = hashOptions.canvas;
+      }
+
+      // Find the new source media file
+      this.qualityChoices.forEach(function (choice) {
+        if (choice.label === hashOptions.quality) {
+          src = choice.id;
         }
       });
+
+      // Load the new source file
+      this.player.pause();
+      this.player.setSrc(src);
+      this.player.load();
+    }
+
+    /**
+     * Processes a window.location.hash and creates an object.
+     * It can take any number of parameters. Strings at even locations are keys
+     * and odd locations are values.
+     * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
+     * @param {string} hash - a window.location.hash
+     * @return {Object} - Representation of hash values in key/value pair
+     **/
+
+  }, {
+    key: 'processHash',
+    value: function processHash(hash) {
+      return hash.split('/').splice(1).reduce(function (result, item, index, array) {
+        if (index % 2 === 0) {
+          if (item === 'time') {
+            var time = array[index + 1].split(',');
+            console.log('time', time);
+            result['start'] = time[0];
+            result['stop'] = time[1];
+          }
+          result[item] = array[index + 1];
+        }
+        return result;
+      }, {});
     }
   }]);
 
-  return AudioPlayer;
-}(_media_player2.default);
+  return HashHandler;
+}();
 
-exports.default = AudioPlayer;
+exports.default = HashHandler;
 
 /***/ }),
-/* 16 */
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _hash_handler = __webpack_require__(12);
+
+var _hash_handler2 = _interopRequireDefault(_hash_handler);
+
+var _iiif_parser = __webpack_require__(2);
+
+var _iiif_parser2 = _interopRequireDefault(_iiif_parser);
+
+var _quality_selector = __webpack_require__(14);
+
+var _quality_selector2 = _interopRequireDefault(_quality_selector);
+
+__webpack_require__(9);
+
+__webpack_require__(19);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Player = function () {
+  function Player(options) {
+    _classCallCheck(this, Player);
+
+    this.iiifParser = new _iiif_parser2.default();
+    this.manifest = options.manifest;
+    this.configObj = options.configObj;
+
+    // Initial contentObject to build player from
+    this.contentObj = options.contentObj;
+
+    // Track current player by item.type ie. 'Audio' or 'Video'
+    this.currentPlayerType = '';
+
+    // Instance of player
+    this.player = undefined;
+
+    this.playerElId = 'iiif-av-player';
+
+    // Render initial player
+    this.render(this.contentObj);
+  }
+
+  /**
+   * This will add urls to labels in the structure navigation if they have the class .implicit
+   * TODO: Revisit and fix this
+   */
+
+
+  _createClass(Player, [{
+    key: 'addUrlsForParents',
+    value: function addUrlsForParents() {
+      var _this = this;
+
+      try {
+        var parentStopTimes = document.querySelectorAll('.implicit');
+        parentStopTimes.forEach(function (el) {
+          var lastTimeIndex = el.querySelectorAll('.explicit').length - 1;
+          var childStartStopTime = _this.getTimeFromUrl(el.querySelectorAll('.explicit')[lastTimeIndex].querySelector('a').href);
+          var newTime = _this.replaceTimeInUrl(el.querySelector('.media-structure-uri').href, childStartStopTime);
+
+          var label = el.querySelector('li').textContent;
+          el.querySelector('li').textContent = '';
+
+          var link = document.createElement('a');
+          link.setAttribute('class', 'media-structure-uri');
+          link.setAttribute('href', newTime);
+          link.text = label;
+          el.querySelector('li').appendChild(link);
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, {
+    key: 'destroyPlayerInstance',
+    value: function destroyPlayerInstance(newContentObj) {
+      // Remove Mediaelement instance
+      if (!this.player.paused) {
+        this.player.pause();
+      }
+      this.player.remove();
+
+      // Clear media tag (<audio> or <video>) from DOM
+      var tagName = this.currentPlayerType === 'Audio' ? 'audio' : 'video';
+      var tagNameEl = document.getElementsByTagName(tagName)[0];
+      tagNameEl.parentNode.removeChild(tagNameEl);
+
+      // Create a new player
+      this.render(newContentObj);
+    }
+
+    /**
+     * This takes a url generated by this software (not a URI from the manifest) and returns an object with start/stop in seconds and the duration in milliseconds
+     * @param {string} url - URL string value
+     * @return {Object}
+     */
+
+  }, {
+    key: 'getTimeFromUrl',
+    value: function getTimeFromUrl(url) {
+      var re = new RegExp(/\d*,\d*/);
+      var time = url.match(re)[0];
+      var splitTime = time.split(',');
+      return {
+        start: splitTime[0],
+        stop: splitTime[1]
+      };
+    }
+
+    /**
+     * Generate player markup (<audio> or <video>) depending on type of contentObj processed
+     * @param {Object} item - Item object for media file
+     * @returns {string} - <audio> or <video> markup HTML string
+     */
+
+  }, {
+    key: 'generatePlayerMarkup',
+    value: function generatePlayerMarkup(contentObj, item) {
+      var markup = '';
+      var subtitlesObj = this.iiifParser.getSubtitles(contentObj);
+      var dimensions = this.iiifParser.getPlayerDimensions(this.manifest, contentObj, item);
+
+      // Audio File
+      if (item.type === 'Audio') {
+        markup = '<audio controls id="' + this.playerElId + '" width="600">\n          <source src="' + item.id + '" type="audio/mp3" data-quality="' + item.label + '">\n        </audio>';
+      }
+      // Video File
+      if (item.type === 'Video') {
+        markup = '<video class=\'av-player-controls\' id="' + this.playerElId + '" class="mejs__player" height="' + dimensions.height + '" width="' + dimensions.width + '" controls data-mejsoptions=\'{"pluginPath": "", "alwaysShowControls": "true"}\'>\n          <source src="' + item.id + '" type="video/mp4">\n          <track kind="subtitles" src="' + subtitlesObj.id + '" srclang="' + subtitlesObj.language + '">\n        </video>';
+      }
+      return markup;
+    }
+
+    /**
+     * Creates the quality selector markup
+     * @returns {*}
+     */
+
+  }, {
+    key: 'qualitySelectorMarkup',
+    value: function qualitySelectorMarkup() {
+      var qs = new _quality_selector2.default();
+      var choices = qs.qualityChoices(this.manifest, '', []);
+
+      return qs.renderChoices(choices);
+    }
+
+    /**
+     * Create the player html tag (audio or video), and instantiate MediaElementPlayer
+     * @param {Object} contentObj - Object representing the media content item
+     * @param {string} qualityLevel - Quality level desired ie: 'Low', 'High', 'Medium', etc.
+     * @return {void}
+     **/
+
+  }, {
+    key: 'render',
+    value: function render(contentObj) {
+      var qualityLevel = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Medium';
+
+      // Get current item in manifest to render
+      var item = this.iiifParser.getContentItem(contentObj, qualityLevel);
+
+      // Generate HTML5 markup which Mediaelement will hook into
+      var playerMarkup = this.generatePlayerMarkup(contentObj, item);
+
+      // Update environmental vars
+      this.currentPlayerType = item.type;
+      this.contentObj = contentObj;
+
+      // Insert HTML5 tag markup
+      document.getElementById(this.configObj.playerWrapperId).innerHTML = playerMarkup;
+
+      // Instantiate MediaElement player
+      this.player = new MediaElementPlayer(this.playerElId, {}); // eslint-disable-line
+
+      this.hashHandler = new _hash_handler2.default({
+        'playerClass': this
+      });
+    }
+
+    /**
+     * This will replace the /time/345,536/ with a new time when given object like this: { start: 230 , stop : 340 }
+     * @param {string} url - Url string
+     * @param {Object} childStartStopTime
+     * @return {string} - Start stop time key value for url hash
+     */
+
+  }, {
+    key: 'replaceTimeInUrl',
+    value: function replaceTimeInUrl(url, childStartStopTime) {
+      var startTime = this.getTimeFromUrl(url);
+      var ourStart = startTime.start;
+      var theirStop = childStartStopTime.stop;
+      var newTimeString = '/time/' + ourStart + ',' + theirStop + '/';
+      var oldTime = '/time/' + startTime.start + ',' + startTime.stop + '/';
+
+      return url.replace(oldTime, newTimeString);
+    }
+  }]);
+
+  return Player;
+}();
+
+exports.default = Player;
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19630,7 +19722,7 @@ var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-__webpack_require__(20);
+__webpack_require__(18);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19749,7 +19841,7 @@ var QualitySelector = function () {
 exports.default = QualitySelector;
 
 /***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19761,88 +19853,84 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _media_player = __webpack_require__(6);
-
-var _media_player2 = _interopRequireDefault(_media_player);
-
-var _hash_handler = __webpack_require__(5);
-
-var _hash_handler2 = _interopRequireDefault(_hash_handler);
-
-__webpack_require__(12);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+var UtilityHelpers = function () {
+  function UtilityHelpers() {
+    _classCallCheck(this, UtilityHelpers);
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var VideoPlayer = function (_MediaPlayer) {
-  _inherits(VideoPlayer, _MediaPlayer);
-
-  function VideoPlayer(options) {
-    _classCallCheck(this, VideoPlayer);
-
-    var _this = _possibleConstructorReturn(this, (VideoPlayer.__proto__ || Object.getPrototypeOf(VideoPlayer)).call(this, options));
-
-    _this.hashHandler = new _hash_handler2.default({
-      'qualityChoices': _this.getQualityChoices(),
-      'instance': _this
-    });
-    _this.render();
-    return _this;
+    this.errorClass = 'error-message';
   }
 
-  _createClass(VideoPlayer, [{
-    key: 'render',
-    value: function render(mediaFragment) {
-      /**
-       * @param {object} mediaFragment - a mediaFragment
-       * this method creates the video element
-       **/
+  /**
+   * Clear the hash params from URL
+   * @return {void}
+   */
 
-      if (mediaFragment === undefined) {
-        mediaFragment = this.getVideoUri().id;
+
+  _createClass(UtilityHelpers, [{
+    key: 'clearHash',
+    value: function clearHash() {
+      window.history.pushState('', document.title, window.location.pathname);
+    }
+
+    /**
+     * Create and display default error message
+     * @param {string} msg - Message to display
+     * @return void
+     */
+
+  }, {
+    key: 'displayErrorMessage',
+    value: function displayErrorMessage(msg) {
+      var el = document.getElementById('manifest-current-wrapper');
+      var newNode = document.createElement('div');
+      var markup = '<i class="icon warning circle"></i>\n                  <div class="content">\n                     <p>' + msg + '</p> \n                  </div>';
+      newNode.classList.add(this.errorClass);
+      newNode.classList.add('ui');
+      newNode.classList.add('negative');
+      newNode.classList.add('icon');
+      newNode.classList.add('message');
+      newNode.innerHTML = markup;
+      el.parentNode.insertBefore(newNode, el.nextSibling);
+    }
+
+    /**
+     * Removes an error message if one exists
+     * return {void}
+     */
+
+  }, {
+    key: 'removeErrorMessage',
+    value: function removeErrorMessage() {
+      var el = document.getElementsByClassName(this.errorClass)[0];
+      if (el) {
+        el.parentNode.removeChild(el);
       }
-      var videoElement = '<video class=\'av-player-controls\' id="iiif-av-player" class="mejs__player" height="' + this.manifest.height + '" width="' + this.manifest.width + '" controls data-mejsoptions=\'{"pluginPath": "", "alwaysShowControls": "true"}\'>\n  <source src="' + mediaFragment + '" type="video/mp4">\n  <track kind="subtitles" src="' + this.getSubtitles().id + '" srclang="' + this.getSubtitles().language + '" >\n</video>';
-      var videoStructure = this.createStructure(this.manifest['structures'], []);
-      this.target.innerHTML = '<div class=\'av-player\'><div class=\'av-controls\'>' + videoStructure + '</div><div class=\'av-controls\'>' + videoElement + '</div></div>';
-
-      // Activate MediaElement
-      var player = new MediaElementPlayer('iiif-av-player', {}); // eslint-disable-line
-
-      // Start listening for changes in the hash
-      this.hashHandler.bindHashChange();
-      var iiifPlayer = document.getElementById('iiif-av-player');
-      iiifPlayer.insertAdjacentHTML('beforeend', this.qualitySelectorMarkup());
-
-      // set the implicit links
-      // this eventListenerer is only for getting the tests to pass with PhantomJS
-      this.addUrlsForParents();
     }
   }]);
 
-  return VideoPlayer;
-}(_media_player2.default);
+  return UtilityHelpers;
+}();
 
-exports.default = VideoPlayer;
+// This creates a singleton instance of utilityHelpers to pass around the application
+
+
+exports.default = UtilityHelpers;
+var utilityHelpers = exports.utilityHelpers = new UtilityHelpers();
 
 /***/ }),
-/* 18 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _avalon = __webpack_require__(4);
+var _avalon = __webpack_require__(6);
 
 var _avalon2 = _interopRequireDefault(_avalon);
 
-__webpack_require__(9);
-
-__webpack_require__(10);
+__webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19852,7 +19940,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /***/ }),
-/* 19 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19947,7 +20035,7 @@ module.exports = function (css) {
 };
 
 /***/ }),
-/* 20 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19956,7 +20044,7 @@ module.exports = function (css) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(24);
+var content = __webpack_require__(23);
 if (typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -19964,7 +20052,7 @@ var transform;
 var options = {};
 options.transform = transform;
 // add the styles to the DOM
-var update = __webpack_require__(3)(content, options);
+var update = __webpack_require__(4)(content, options);
 if (content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if (false) {
@@ -19983,7 +20071,39 @@ if (false) {
 }
 
 /***/ }),
-/* 21 */
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var content = __webpack_require__(24);
+if (typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+
+var options = {};
+options.transform = transform;
+
+var update = __webpack_require__(4)(content, options);
+if (content.locals) module.exports = content.locals;
+
+if (false) {
+	if (!content.locals) {
+		module.hot.accept("!!../../../css-loader/index.js!./mediaelementplayer.css", function () {
+			var newContent = require("!!../../../css-loader/index.js!./mediaelementplayer.css");
+			if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+
+	module.hot.dispose(function () {
+		update();
+	});
+}
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20037,12 +20157,12 @@ exports._unrefActive = exports.active = function (item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(14);
+__webpack_require__(11);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20072,7 +20192,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -20080,13 +20200,13 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\nnav {\n  margin: 2rem 0;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n\n.error-message {\n  color: #8b0000;\n  padding: 1rem 0;\n}\n.player-wrapper {\n  margin: 2rem 0;\n}\n\n.content-wrapper {\n  margin: 2rem 0;\n}\n\n", ""]);
+exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\nnav {\n  margin: 2rem 0;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n\n.error-message {\n  color: #8b0000;\n  padding: 1rem 0;\n}\n.player-wrapper {\n  margin: 2rem 0;\n}\n\n.content-wrapper {\n  margin: 2rem 0;\n}\n\n/* New Styles */\n#iiif-standalone-player-mount {\n  display: flex;\n  justify-content: space-between;\n}\n\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -20100,7 +20220,7 @@ exports.push([module.i, ".quality-selector {\n    position: absolute;\n    overf
 
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -20108,10 +20228,11 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "/* Accessibility: hide screen reader texts (and prefer \"top\" for RTL languages).\nReference: http://blog.rrwd.nl/2015/04/04/the-screen-reader-text-class-why-and-how/ */\n.mejs__offscreen {\n    clip: rect(1px, 1px, 1px, 1px); /* IE8-IE11 - no support for clip-path */\n    clip-path: polygon(0 0, 0 0, 0 0, 0 0);\n    height: 1px;\n    overflow: hidden;\n    position: absolute !important;\n    width: 1px;\n}\n\n.mejs__container {\n    background: #000;\n    box-sizing: border-box;\n    font-family: 'Helvetica', Arial, serif;\n    position: relative;\n    text-align: left;\n    text-indent: 0;\n    vertical-align: top;\n}\n\n.mejs__container .mejs__video {\n    min-height: 140px;\n}\n\n.mejs__container * {\n    box-sizing: border-box;\n}\n\n/* Hide native play button from iOS to favor plugin button */\n.mejs__container video::-webkit-media-controls-start-playback-button {\n    -webkit-appearance: none;\n    display: none !important;\n}\n\n.mejs__fill-container,\n.mejs__fill-container .mejs__container {\n    height: 100%;\n    width: 100%;\n}\n\n.mejs__fill-container {\n    background: transparent;\n    margin: 0 auto;\n    overflow: hidden;\n    position: relative;\n}\n\n.mejs__container:focus {\n    outline: none;\n}\n\n.mejs__iframe-overlay {\n    height: 100%;\n    position: absolute;\n    width: 100%;\n}\n\n.mejs__embed,\n.mejs__embed body {\n    background: #000;\n    height: 100%;\n    margin: 0;\n    overflow: hidden;\n    padding: 0;\n    width: 100%;\n}\n\n.mejs__fullscreen {\n    overflow: hidden !important;\n}\n\n.mejs__container-fullscreen {\n    bottom: 0;\n    left: 0;\n    overflow: hidden;\n    position: fixed;\n    right: 0;\n    top: 0;\n    z-index: 1000;\n}\n\n.mejs__container-fullscreen .mejs__mediaelement,\n.mejs__container-fullscreen video {\n    height: 100% !important;\n    width: 100% !important;\n}\n\n.mejs__clear {\n    clear: both;\n}\n\n/* Start: LAYERS */\n.mejs__background {\n    left: 0;\n    position: absolute;\n    top: 0;\n}\n\n.mejs__mediaelement {\n    height: 100%;\n    left: 0;\n    position: absolute;\n    top: 0;\n    width: 100%;\n    z-index: 0;\n}\n\n.mejs__poster {\n    background-position: 50% 50%;\n    background-repeat: no-repeat;\n    background-size: contain;\n    left: 0;\n    position: absolute;\n    top: 0;\n    z-index: 1;\n}\n\n:root .mejs__poster-img {\n    display: none;\n}\n\n.mejs__poster-img {\n    border: 0;\n    padding: 0;\n}\n\n.mejs__overlay {\n    left: 0;\n    position: absolute;\n    top: 0;\n    z-index: 1;\n}\n\n.mejs__layer {\n    z-index: 1;\n}\n\n.mejs__overlay-play {\n    cursor: pointer;\n}\n\n.mejs__overlay-button {\n    background: url(" + __webpack_require__(2) + ") no-repeat;\n    background-position: 0 -39px;\n    height: 80px;\n    left: 50%;\n    overflow: hidden;\n    position: absolute;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    width: 80px;\n    z-index: 1;\n}\n\n.mejs__overlay:hover > .mejs__overlay-button {\n    background-position: -80px -39px;\n}\n\n.mejs__overlay-loading {\n    height: 80px;\n    left: 50%;\n    position: absolute;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    width: 80px;\n}\n\n.mejs__overlay-loading-bg-img {\n    animation: mejs__loading-spinner 1s linear infinite;\n    background: transparent url(" + __webpack_require__(2) + ") -160px -40px no-repeat;\n    display: block;\n    height: 80px;\n    width: 80px;\n    z-index: 1;\n}\n\n@keyframes mejs__loading-spinner {\n    100% {\n        transform: rotate(360deg);\n    }\n}\n\n/* End: LAYERS */\n\n/* Start: CONTROL BAR */\n.mejs__controls {\n    bottom: 0;\n    height: 40px;\n    left: 0;\n    list-style-type: none;\n    margin: 0;\n    padding: 0 10px;\n    position: absolute;\n    width: 100%;\n    z-index: 1;\n}\n\n.mejs__controls:not([style*='display: none']) {\n    background: rgba(255, 0, 0, 0.7);\n    background: linear-gradient(transparent, rgba(0, 0, 0, 0.35));\n}\n\n.mejs__button,\n.mejs__time,\n.mejs__time-rail {\n    float: left;\n    font-size: 10px;\n    height: 40px;\n    line-height: 10px;\n    margin: 0;\n    width: 32px;\n}\n\n.mejs__button > button {\n    background: transparent url(" + __webpack_require__(2) + ");\n    border: 0;\n    cursor: pointer;\n    display: block;\n    font-size: 0;\n    height: 20px;\n    line-height: 0;\n    margin: 10px 6px;\n    overflow: hidden;\n    padding: 0;\n    position: absolute;\n    text-decoration: none;\n    width: 20px;\n}\n\n/* :focus for accessibility */\n.mejs__button > button:focus {\n    outline: dotted 1px #999;\n}\n\n.mejs__container-keyboard-inactive a,\n.mejs__container-keyboard-inactive a:focus,\n.mejs__container-keyboard-inactive button,\n.mejs__container-keyboard-inactive button:focus,\n.mejs__container-keyboard-inactive [role=slider],\n.mejs__container-keyboard-inactive [role=slider]:focus {\n    outline: 0;\n}\n\n/* End: CONTROL BAR */\n\n/* Start: Time (Current / Duration) */\n.mejs__time {\n    box-sizing: content-box;\n    color: #fff;\n    font-size: 11px;\n    font-weight: bold;\n    height: 24px;\n    overflow: hidden;\n    padding: 16px 6px 0;\n    text-align: center;\n    width: auto;\n}\n\n/* End: Time (Current / Duration) */\n\n/* Start: Play/Pause/Stop */\n.mejs__play > button {\n    background-position: 0 0;\n}\n\n.mejs__pause > button {\n    background-position: -20px 0;\n}\n\n.mejs__replay > button {\n    background-position: -160px 0;\n}\n\n/* End: Play/Pause/Stop */\n\n/* Start: Progress Bar */\n.mejs__time-rail {\n    direction: ltr;\n    height: 40px;\n    margin: 0 10px;\n    padding-top: 10px;\n    position: relative;\n    width: 200px;\n}\n\n.mejs__time-total,\n.mejs__time-buffering,\n.mejs__time-loaded,\n.mejs__time-current,\n.mejs__time-float,\n.mejs__time-hovered,\n.mejs__time-float-current,\n.mejs__time-float-corner,\n.mejs__time-marker {\n    border-radius: 2px;\n    cursor: pointer;\n    display: block;\n    height: 10px;\n    position: absolute;\n}\n\n.mejs__time-total {\n    background: rgba(255, 255, 255, 0.3);\n    margin: 5px 0 0;\n    width: 100%;\n}\n\n.mejs__time-buffering {\n    animation: buffering-stripes 2s linear infinite;\n    background: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);\n    background-size: 15px 15px;\n    width: 100%;\n}\n\n@keyframes buffering-stripes {\n    from {\n        background-position: 0 0;\n    }\n    to {\n        background-position: 30px 0;\n    }\n}\n\n.mejs__time-loaded {\n    background: rgba(255, 255, 255, 0.3);\n}\n\n.mejs__time-current,\n.mejs__time-handle-content {\n    background: rgba(255, 255, 255, 0.9);\n}\n\n.mejs__time-hovered {\n    background: rgba(255, 255, 255, 0.5);\n    z-index: 10;\n}\n\n.mejs__time-hovered.negative {\n    background: rgba(0, 0, 0, 0.2);\n}\n\n.mejs__time-current,\n.mejs__time-buffering,\n.mejs__time-loaded,\n.mejs__time-hovered {\n    left: 0;\n    transform: scaleX(0);\n    transform-origin: 0 0;\n    transition: 0.15s ease-in all;\n    width: 100%;\n}\n\n.mejs__time-hovered {\n    transition: height 0.1s cubic-bezier(0.44, 0, 1, 1);\n}\n\n.mejs__time-hovered.no-hover {\n    transform: scaleX(0) !important;\n}\n\n.mejs__time-handle,\n.mejs__time-handle-content {\n    border: 4px solid transparent;\n    cursor: pointer;\n    left: 0;\n    position: absolute;\n    transform: translateX(0);\n    z-index: 11;\n}\n\n.mejs__time-handle-content {\n    border: 4px solid rgba(255, 255, 255, 0.9);\n    border-radius: 50%;\n    height: 10px;\n    left: -7px;\n    top: -4px;\n    transform: scale(0);\n    width: 10px;\n}\n\n.mejs__time-rail:hover .mejs__time-handle-content,\n.mejs__time-rail .mejs__time-handle-content:focus,\n.mejs__time-rail .mejs__time-handle-content:active {\n    transform: scale(1);\n}\n\n.mejs__time-float {\n    background: #eee;\n    border: solid 1px #333;\n    bottom: 100%;\n    color: #111;\n    display: none;\n    height: 17px;\n    margin-bottom: 9px;\n    position: absolute;\n    text-align: center;\n    transform: translateX(-50%);\n    width: 36px;\n}\n\n.mejs__time-float-current {\n    display: block;\n    left: 0;\n    margin: 2px;\n    text-align: center;\n    width: 30px;\n}\n\n.mejs__time-float-corner {\n    border: solid 5px #eee;\n    border-color: #eee transparent transparent;\n    border-radius: 0;\n    display: block;\n    height: 0;\n    left: 50%;\n    line-height: 0;\n    position: absolute;\n    top: 100%;\n    transform: translateX(-50%);\n    width: 0;\n}\n\n.mejs__long-video .mejs__time-float {\n    margin-left: -23px;\n    width: 64px;\n}\n\n.mejs__long-video .mejs__time-float-current {\n    width: 60px;\n}\n\n.mejs__broadcast {\n    color: #fff;\n    height: 10px;\n    position: absolute;\n    top: 15px;\n    width: 100%;\n}\n\n/* End: Progress Bar */\n\n/* Start: Fullscreen */\n.mejs__fullscreen-button > button {\n    background-position: -80px 0;\n}\n\n.mejs__unfullscreen > button {\n    background-position: -100px 0;\n}\n\n/* End: Fullscreen */\n\n/* Start: Mute/Volume */\n.mejs__mute > button {\n    background-position: -60px 0;\n}\n\n.mejs__unmute > button {\n    background-position: -40px 0;\n}\n\n.mejs__volume-button {\n    position: relative;\n}\n\n.mejs__volume-button > .mejs__volume-slider {\n    background: rgba(50, 50, 50, 0.7);\n    border-radius: 0;\n    bottom: 100%;\n    display: none;\n    height: 115px;\n    left: 50%;\n    margin: 0;\n    position: absolute;\n    transform: translateX(-50%);\n    width: 25px;\n    z-index: 1;\n}\n\n.mejs__volume-button:hover {\n    border-radius: 0 0 4px 4px;\n}\n\n.mejs__volume-total {\n    background: rgba(255, 255, 255, 0.5);\n    height: 100px;\n    left: 50%;\n    margin: 0;\n    position: absolute;\n    top: 8px;\n    transform: translateX(-50%);\n    width: 2px;\n}\n\n.mejs__volume-current {\n    background: rgba(255, 255, 255, 0.9);\n    left: 0;\n    margin: 0;\n    position: absolute;\n    width: 100%;\n}\n\n.mejs__volume-handle {\n    background: rgba(255, 255, 255, 0.9);\n    border-radius: 1px;\n    cursor: ns-resize;\n    height: 6px;\n    left: 50%;\n    position: absolute;\n    transform: translateX(-50%);\n    width: 16px;\n}\n\n.mejs__horizontal-volume-slider {\n    display: block;\n    float: left;\n    height: 36px;\n    position: relative;\n    vertical-align: middle;\n    width: 56px;\n}\n\n.mejs__horizontal-volume-total {\n    background: rgba(50, 50, 50, 0.8);\n    border-radius: 2px;\n    font-size: 1px;\n    height: 8px;\n    left: 0;\n    margin: 0;\n    padding: 0;\n    position: absolute;\n    top: 16px;\n    width: 50px;\n}\n\n.mejs__horizontal-volume-current {\n    background: rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n    font-size: 1px;\n    height: 100%;\n    left: 0;\n    margin: 0;\n    padding: 0;\n    position: absolute;\n    top: 0;\n    width: 100%;\n}\n\n.mejs__horizontal-volume-handle {\n    display: none;\n}\n\n/* End: Mute/Volume */\n\n/* Start: Track (Captions and Chapters) */\n.mejs__captions-button,\n.mejs__chapters-button {\n    position: relative;\n}\n\n.mejs__captions-button > button {\n    background-position: -140px 0;\n}\n\n.mejs__chapters-button > button {\n    background-position: -180px 0;\n}\n\n.mejs__captions-button > .mejs__captions-selector,\n.mejs__chapters-button > .mejs__chapters-selector {\n    background: rgba(50, 50, 50, 0.7);\n    border: solid 1px transparent;\n    border-radius: 0;\n    bottom: 100%;\n    overflow: hidden;\n    padding: 0;\n    position: absolute;\n    right: -51px;\n    visibility: hidden;\n    width: 85px;\n}\n\n.mejs__chapters-button > .mejs__chapters-selector {\n    width: 110px;\n}\n\n.mejs__captions-button > .mejs__captions-selector,\n.mejs__chapters-button > .mejs__chapters-selector {\n    visibility: visible;\n}\n\n.mejs__captions-selector-list,\n.mejs__chapters-selector-list {\n    list-style-type: none !important;\n    margin: 0;\n    overflow: hidden;\n    padding: 0;\n}\n\n.mejs__captions-selector-list-item,\n.mejs__chapters-selector-list-item {\n    color: #fff;\n    cursor: pointer;\n    display: block;\n    list-style-type: none !important;\n    margin: 0 0 6px;\n    overflow: hidden;\n    padding: 0 10px;\n}\n\n.mejs__captions-selector-list-item:hover,\n.mejs__chapters-selector-list-item:hover {\n    background-color: rgb(200, 200, 200) !important;\n    background-color: rgba(255, 255, 255, 0.4) !important;\n}\n\n.mejs__captions-selector-input,\n.mejs__chapters-selector-input {\n    clear: both;\n    float: left;\n    left: -1000px;\n    margin: 3px 3px 0 5px;\n    position: absolute;\n}\n\n.mejs__captions-selector-label,\n.mejs__chapters-selector-label {\n    cursor: pointer;\n    float: left;\n    font-size: 10px;\n    line-height: 15px;\n    padding: 4px 0 0;\n}\n\n.mejs__captions-selected,\n.mejs__chapters-selected {\n    color: rgba(33, 248, 248, 1);\n}\n\n.mejs__captions-translations {\n    font-size: 10px;\n    margin: 0 0 5px;\n}\n\n.mejs__captions-layer {\n    bottom: 0;\n    color: #fff;\n    font-size: 16px;\n    left: 0;\n    line-height: 20px;\n    position: absolute;\n    text-align: center;\n}\n\n.mejs__captions-layer a {\n    color: #fff;\n    text-decoration: underline;\n}\n\n.mejs__captions-layer[lang=ar] {\n    font-size: 20px;\n    font-weight: normal;\n}\n\n.mejs__captions-position {\n    bottom: 15px;\n    left: 0;\n    position: absolute;\n    width: 100%;\n}\n\n.mejs__captions-position-hover {\n    bottom: 35px;\n}\n\n.mejs__captions-text,\n.mejs__captions-text * {\n    background: rgba(20, 20, 20, 0.5);\n    box-shadow: 5px 0 0 rgba(20, 20, 20, 0.5), -5px 0 0 rgba(20, 20, 20, 0.5);\n    padding: 0;\n    white-space: pre-wrap;\n}\n\n.mejs__container.mejs__hide-cues video::-webkit-media-text-track-container {\n    display: none;\n}\n\n/* End: Track (Captions and Chapters) */\n\n/* Start: Error */\n.me_cannotplay a {\n    font-weight: bold;\n}\n\n.mejs__container .me_cannotplay a {\n    color: #fff;\n}\n\n.me_cannotplay span {\n    display: block;\n    padding: 15px;\n}\n\n/* End: Error */\n", ""]);
+exports.push([module.i, "/* Accessibility: hide screen reader texts (and prefer \"top\" for RTL languages).\nReference: http://blog.rrwd.nl/2015/04/04/the-screen-reader-text-class-why-and-how/ */\n.mejs__offscreen {\n    clip: rect(1px, 1px, 1px, 1px); /* IE8-IE11 - no support for clip-path */\n    clip-path: polygon(0 0, 0 0, 0 0, 0 0);\n    height: 1px;\n    overflow: hidden;\n    position: absolute !important;\n    width: 1px;\n}\n\n.mejs__container {\n    background: #000;\n    box-sizing: border-box;\n    font-family: 'Helvetica', Arial, serif;\n    position: relative;\n    text-align: left;\n    text-indent: 0;\n    vertical-align: top;\n}\n\n.mejs__container .mejs__video {\n    min-height: 140px;\n}\n\n.mejs__container * {\n    box-sizing: border-box;\n}\n\n/* Hide native play button from iOS to favor plugin button */\n.mejs__container video::-webkit-media-controls-start-playback-button {\n    -webkit-appearance: none;\n    display: none !important;\n}\n\n.mejs__fill-container,\n.mejs__fill-container .mejs__container {\n    height: 100%;\n    width: 100%;\n}\n\n.mejs__fill-container {\n    background: transparent;\n    margin: 0 auto;\n    overflow: hidden;\n    position: relative;\n}\n\n.mejs__container:focus {\n    outline: none;\n}\n\n.mejs__iframe-overlay {\n    height: 100%;\n    position: absolute;\n    width: 100%;\n}\n\n.mejs__embed,\n.mejs__embed body {\n    background: #000;\n    height: 100%;\n    margin: 0;\n    overflow: hidden;\n    padding: 0;\n    width: 100%;\n}\n\n.mejs__fullscreen {\n    overflow: hidden !important;\n}\n\n.mejs__container-fullscreen {\n    bottom: 0;\n    left: 0;\n    overflow: hidden;\n    position: fixed;\n    right: 0;\n    top: 0;\n    z-index: 1000;\n}\n\n.mejs__container-fullscreen .mejs__mediaelement,\n.mejs__container-fullscreen video {\n    height: 100% !important;\n    width: 100% !important;\n}\n\n.mejs__clear {\n    clear: both;\n}\n\n/* Start: LAYERS */\n.mejs__background {\n    left: 0;\n    position: absolute;\n    top: 0;\n}\n\n.mejs__mediaelement {\n    height: 100%;\n    left: 0;\n    position: absolute;\n    top: 0;\n    width: 100%;\n    z-index: 0;\n}\n\n.mejs__poster {\n    background-position: 50% 50%;\n    background-repeat: no-repeat;\n    background-size: contain;\n    left: 0;\n    position: absolute;\n    top: 0;\n    z-index: 1;\n}\n\n:root .mejs__poster-img {\n    display: none;\n}\n\n.mejs__poster-img {\n    border: 0;\n    padding: 0;\n}\n\n.mejs__overlay {\n    left: 0;\n    position: absolute;\n    top: 0;\n    z-index: 1;\n}\n\n.mejs__layer {\n    z-index: 1;\n}\n\n.mejs__overlay-play {\n    cursor: pointer;\n}\n\n.mejs__overlay-button {\n    background: url(" + __webpack_require__(3) + ") no-repeat;\n    background-position: 0 -39px;\n    height: 80px;\n    left: 50%;\n    overflow: hidden;\n    position: absolute;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    width: 80px;\n    z-index: 1;\n}\n\n.mejs__overlay:hover > .mejs__overlay-button {\n    background-position: -80px -39px;\n}\n\n.mejs__overlay-loading {\n    height: 80px;\n    left: 50%;\n    position: absolute;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    width: 80px;\n}\n\n.mejs__overlay-loading-bg-img {\n    animation: mejs__loading-spinner 1s linear infinite;\n    background: transparent url(" + __webpack_require__(3) + ") -160px -40px no-repeat;\n    display: block;\n    height: 80px;\n    width: 80px;\n    z-index: 1;\n}\n\n@keyframes mejs__loading-spinner {\n    100% {\n        transform: rotate(360deg);\n    }\n}\n\n/* End: LAYERS */\n\n/* Start: CONTROL BAR */\n.mejs__controls {\n    bottom: 0;\n    height: 40px;\n    left: 0;\n    list-style-type: none;\n    margin: 0;\n    padding: 0 10px;\n    position: absolute;\n    width: 100%;\n    z-index: 1;\n}\n\n.mejs__controls:not([style*='display: none']) {\n    background: rgba(255, 0, 0, 0.7);\n    background: linear-gradient(transparent, rgba(0, 0, 0, 0.35));\n}\n\n.mejs__button,\n.mejs__time,\n.mejs__time-rail {\n    float: left;\n    font-size: 10px;\n    height: 40px;\n    line-height: 10px;\n    margin: 0;\n    width: 32px;\n}\n\n.mejs__button > button {\n    background: transparent url(" + __webpack_require__(3) + ");\n    border: 0;\n    cursor: pointer;\n    display: block;\n    font-size: 0;\n    height: 20px;\n    line-height: 0;\n    margin: 10px 6px;\n    overflow: hidden;\n    padding: 0;\n    position: absolute;\n    text-decoration: none;\n    width: 20px;\n}\n\n/* :focus for accessibility */\n.mejs__button > button:focus {\n    outline: dotted 1px #999;\n}\n\n.mejs__container-keyboard-inactive a,\n.mejs__container-keyboard-inactive a:focus,\n.mejs__container-keyboard-inactive button,\n.mejs__container-keyboard-inactive button:focus,\n.mejs__container-keyboard-inactive [role=slider],\n.mejs__container-keyboard-inactive [role=slider]:focus {\n    outline: 0;\n}\n\n/* End: CONTROL BAR */\n\n/* Start: Time (Current / Duration) */\n.mejs__time {\n    box-sizing: content-box;\n    color: #fff;\n    font-size: 11px;\n    font-weight: bold;\n    height: 24px;\n    overflow: hidden;\n    padding: 16px 6px 0;\n    text-align: center;\n    width: auto;\n}\n\n/* End: Time (Current / Duration) */\n\n/* Start: Play/Pause/Stop */\n.mejs__play > button {\n    background-position: 0 0;\n}\n\n.mejs__pause > button {\n    background-position: -20px 0;\n}\n\n.mejs__replay > button {\n    background-position: -160px 0;\n}\n\n/* End: Play/Pause/Stop */\n\n/* Start: Progress Bar */\n.mejs__time-rail {\n    direction: ltr;\n    height: 40px;\n    margin: 0 10px;\n    padding-top: 10px;\n    position: relative;\n    width: 200px;\n}\n\n.mejs__time-total,\n.mejs__time-buffering,\n.mejs__time-loaded,\n.mejs__time-current,\n.mejs__time-float,\n.mejs__time-hovered,\n.mejs__time-float-current,\n.mejs__time-float-corner,\n.mejs__time-marker {\n    border-radius: 2px;\n    cursor: pointer;\n    display: block;\n    height: 10px;\n    position: absolute;\n}\n\n.mejs__time-total {\n    background: rgba(255, 255, 255, 0.3);\n    margin: 5px 0 0;\n    width: 100%;\n}\n\n.mejs__time-buffering {\n    animation: buffering-stripes 2s linear infinite;\n    background: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);\n    background-size: 15px 15px;\n    width: 100%;\n}\n\n@keyframes buffering-stripes {\n    from {\n        background-position: 0 0;\n    }\n    to {\n        background-position: 30px 0;\n    }\n}\n\n.mejs__time-loaded {\n    background: rgba(255, 255, 255, 0.3);\n}\n\n.mejs__time-current,\n.mejs__time-handle-content {\n    background: rgba(255, 255, 255, 0.9);\n}\n\n.mejs__time-hovered {\n    background: rgba(255, 255, 255, 0.5);\n    z-index: 10;\n}\n\n.mejs__time-hovered.negative {\n    background: rgba(0, 0, 0, 0.2);\n}\n\n.mejs__time-current,\n.mejs__time-buffering,\n.mejs__time-loaded,\n.mejs__time-hovered {\n    left: 0;\n    transform: scaleX(0);\n    transform-origin: 0 0;\n    transition: 0.15s ease-in all;\n    width: 100%;\n}\n\n.mejs__time-hovered {\n    transition: height 0.1s cubic-bezier(0.44, 0, 1, 1);\n}\n\n.mejs__time-hovered.no-hover {\n    transform: scaleX(0) !important;\n}\n\n.mejs__time-handle,\n.mejs__time-handle-content {\n    border: 4px solid transparent;\n    cursor: pointer;\n    left: 0;\n    position: absolute;\n    transform: translateX(0);\n    z-index: 11;\n}\n\n.mejs__time-handle-content {\n    border: 4px solid rgba(255, 255, 255, 0.9);\n    border-radius: 50%;\n    height: 10px;\n    left: -7px;\n    top: -4px;\n    transform: scale(0);\n    width: 10px;\n}\n\n.mejs__time-rail:hover .mejs__time-handle-content,\n.mejs__time-rail .mejs__time-handle-content:focus,\n.mejs__time-rail .mejs__time-handle-content:active {\n    transform: scale(1);\n}\n\n.mejs__time-float {\n    background: #eee;\n    border: solid 1px #333;\n    bottom: 100%;\n    color: #111;\n    display: none;\n    height: 17px;\n    margin-bottom: 9px;\n    position: absolute;\n    text-align: center;\n    transform: translateX(-50%);\n    width: 36px;\n}\n\n.mejs__time-float-current {\n    display: block;\n    left: 0;\n    margin: 2px;\n    text-align: center;\n    width: 30px;\n}\n\n.mejs__time-float-corner {\n    border: solid 5px #eee;\n    border-color: #eee transparent transparent;\n    border-radius: 0;\n    display: block;\n    height: 0;\n    left: 50%;\n    line-height: 0;\n    position: absolute;\n    top: 100%;\n    transform: translateX(-50%);\n    width: 0;\n}\n\n.mejs__long-video .mejs__time-float {\n    margin-left: -23px;\n    width: 64px;\n}\n\n.mejs__long-video .mejs__time-float-current {\n    width: 60px;\n}\n\n.mejs__broadcast {\n    color: #fff;\n    height: 10px;\n    position: absolute;\n    top: 15px;\n    width: 100%;\n}\n\n/* End: Progress Bar */\n\n/* Start: Fullscreen */\n.mejs__fullscreen-button > button {\n    background-position: -80px 0;\n}\n\n.mejs__unfullscreen > button {\n    background-position: -100px 0;\n}\n\n/* End: Fullscreen */\n\n/* Start: Mute/Volume */\n.mejs__mute > button {\n    background-position: -60px 0;\n}\n\n.mejs__unmute > button {\n    background-position: -40px 0;\n}\n\n.mejs__volume-button {\n    position: relative;\n}\n\n.mejs__volume-button > .mejs__volume-slider {\n    background: rgba(50, 50, 50, 0.7);\n    border-radius: 0;\n    bottom: 100%;\n    display: none;\n    height: 115px;\n    left: 50%;\n    margin: 0;\n    position: absolute;\n    transform: translateX(-50%);\n    width: 25px;\n    z-index: 1;\n}\n\n.mejs__volume-button:hover {\n    border-radius: 0 0 4px 4px;\n}\n\n.mejs__volume-total {\n    background: rgba(255, 255, 255, 0.5);\n    height: 100px;\n    left: 50%;\n    margin: 0;\n    position: absolute;\n    top: 8px;\n    transform: translateX(-50%);\n    width: 2px;\n}\n\n.mejs__volume-current {\n    background: rgba(255, 255, 255, 0.9);\n    left: 0;\n    margin: 0;\n    position: absolute;\n    width: 100%;\n}\n\n.mejs__volume-handle {\n    background: rgba(255, 255, 255, 0.9);\n    border-radius: 1px;\n    cursor: ns-resize;\n    height: 6px;\n    left: 50%;\n    position: absolute;\n    transform: translateX(-50%);\n    width: 16px;\n}\n\n.mejs__horizontal-volume-slider {\n    display: block;\n    float: left;\n    height: 36px;\n    position: relative;\n    vertical-align: middle;\n    width: 56px;\n}\n\n.mejs__horizontal-volume-total {\n    background: rgba(50, 50, 50, 0.8);\n    border-radius: 2px;\n    font-size: 1px;\n    height: 8px;\n    left: 0;\n    margin: 0;\n    padding: 0;\n    position: absolute;\n    top: 16px;\n    width: 50px;\n}\n\n.mejs__horizontal-volume-current {\n    background: rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n    font-size: 1px;\n    height: 100%;\n    left: 0;\n    margin: 0;\n    padding: 0;\n    position: absolute;\n    top: 0;\n    width: 100%;\n}\n\n.mejs__horizontal-volume-handle {\n    display: none;\n}\n\n/* End: Mute/Volume */\n\n/* Start: Track (Captions and Chapters) */\n.mejs__captions-button,\n.mejs__chapters-button {\n    position: relative;\n}\n\n.mejs__captions-button > button {\n    background-position: -140px 0;\n}\n\n.mejs__chapters-button > button {\n    background-position: -180px 0;\n}\n\n.mejs__captions-button > .mejs__captions-selector,\n.mejs__chapters-button > .mejs__chapters-selector {\n    background: rgba(50, 50, 50, 0.7);\n    border: solid 1px transparent;\n    border-radius: 0;\n    bottom: 100%;\n    overflow: hidden;\n    padding: 0;\n    position: absolute;\n    right: -51px;\n    visibility: hidden;\n    width: 85px;\n}\n\n.mejs__chapters-button > .mejs__chapters-selector {\n    width: 110px;\n}\n\n.mejs__captions-button > .mejs__captions-selector,\n.mejs__chapters-button > .mejs__chapters-selector {\n    visibility: visible;\n}\n\n.mejs__captions-selector-list,\n.mejs__chapters-selector-list {\n    list-style-type: none !important;\n    margin: 0;\n    overflow: hidden;\n    padding: 0;\n}\n\n.mejs__captions-selector-list-item,\n.mejs__chapters-selector-list-item {\n    color: #fff;\n    cursor: pointer;\n    display: block;\n    list-style-type: none !important;\n    margin: 0 0 6px;\n    overflow: hidden;\n    padding: 0 10px;\n}\n\n.mejs__captions-selector-list-item:hover,\n.mejs__chapters-selector-list-item:hover {\n    background-color: rgb(200, 200, 200) !important;\n    background-color: rgba(255, 255, 255, 0.4) !important;\n}\n\n.mejs__captions-selector-input,\n.mejs__chapters-selector-input {\n    clear: both;\n    float: left;\n    left: -1000px;\n    margin: 3px 3px 0 5px;\n    position: absolute;\n}\n\n.mejs__captions-selector-label,\n.mejs__chapters-selector-label {\n    cursor: pointer;\n    float: left;\n    font-size: 10px;\n    line-height: 15px;\n    padding: 4px 0 0;\n}\n\n.mejs__captions-selected,\n.mejs__chapters-selected {\n    color: rgba(33, 248, 248, 1);\n}\n\n.mejs__captions-translations {\n    font-size: 10px;\n    margin: 0 0 5px;\n}\n\n.mejs__captions-layer {\n    bottom: 0;\n    color: #fff;\n    font-size: 16px;\n    left: 0;\n    line-height: 20px;\n    position: absolute;\n    text-align: center;\n}\n\n.mejs__captions-layer a {\n    color: #fff;\n    text-decoration: underline;\n}\n\n.mejs__captions-layer[lang=ar] {\n    font-size: 20px;\n    font-weight: normal;\n}\n\n.mejs__captions-position {\n    bottom: 15px;\n    left: 0;\n    position: absolute;\n    width: 100%;\n}\n\n.mejs__captions-position-hover {\n    bottom: 35px;\n}\n\n.mejs__captions-text,\n.mejs__captions-text * {\n    background: rgba(20, 20, 20, 0.5);\n    box-shadow: 5px 0 0 rgba(20, 20, 20, 0.5), -5px 0 0 rgba(20, 20, 20, 0.5);\n    padding: 0;\n    white-space: pre-wrap;\n}\n\n.mejs__container.mejs__hide-cues video::-webkit-media-text-track-container {\n    display: none;\n}\n\n/* End: Track (Captions and Chapters) */\n\n/* Start: Error */\n.me_cannotplay a {\n    font-weight: bold;\n}\n\n.mejs__container .me_cannotplay a {\n    color: #fff;\n}\n\n.me_cannotplay span {\n    display: block;\n    padding: 15px;\n}\n\n/* End: Error */\n", ""]);
 
 // exports
 
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=app.js.map

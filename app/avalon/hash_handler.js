@@ -87,9 +87,11 @@ export default class HashHandler {
       let playerType = this.iiifParser.determinePlayerType(canvasObj.content[0])
 
       // Different type of player required.
-      // Destroy current instance and create a new instance of different player
       if (playerType !== this.playerClass.currentPlayerType) {
-        this.playerClass.destroyPlayerInstance(canvasObj.content[0])
+        // Destroy current player and it's Mediaelement instance
+        this.playerClass.destroyPlayerInstance()
+        // Render and create a new player instance
+        this.playerClass.render(canvasObj.content[0])
         return
       }
 
