@@ -10175,11 +10175,13 @@ var IIIFParser = function () {
       var targetItem = {};
       contentObj.items.forEach(function (item) {
         item.body.forEach(function (body) {
-          body.items.forEach(function (item) {
-            if (item.label === qualityLevel) {
-              targetItem = item;
-            }
-          });
+          if (body.hasOwnProperty('items')) {
+            body.items.forEach(function (item) {
+              if (item.label === qualityLevel) {
+                targetItem = item;
+              }
+            });
+          }
         });
       });
       return targetItem;
@@ -10718,9 +10720,11 @@ var Avalon = function () {
 
       // Configuration object to hold element values, ids and such in one place
       this.configObj = {
-        defaultManifest: 'mahler-symphony-3.json',
+        currentManifestId: 'manifest-current',
+        defaultManifest: 'lunchroom_manners_v2.json',
         mountElId: 'iiif-standalone-player-mount',
         playerWrapperId: 'iiif-player-wrapper',
+        sourceElId: 'data-iiifav-source',
         structureElId: 'iiif-structure-wrapper',
         urlTextInputId: 'manifest-url'
 
@@ -10745,8 +10749,11 @@ var Avalon = function () {
       // Set up a manifest URL form listener
       this.prepareForm();
 
-      // Initialize app with default local manifest
-      this.getManifestAJAX(this.configObj.defaultManifest);
+      // Get initial default manifest file
+      var sourceEl = document.getElementById(this.configObj.sourceElId);
+      if (sourceEl) {
+        this.getManifestAJAX(sourceEl.dataset.iiifavSource);
+      }
     }
 
     /**
@@ -10778,7 +10785,9 @@ var Avalon = function () {
       this.structureMarkup = '';
 
       // Update current manifest message
-      document.getElementById('manifest-current').innerText = this.manifestUrlEl.value !== '' ? this.manifestUrlEl.value : this.configObj.defaultManifest;
+      if (document.getElementById(this.configObj.currentManifestId)) {
+        document.getElementById(this.configObj.currentManifestId).innerText = this.manifestUrlEl.value !== '' ? this.manifestUrlEl.value : this.configObj.defaultManifest;
+      }
 
       // Build helper map for current manifest
       this.manifestMap = this.iiifParser.buildManifestMap(manifest);
@@ -19429,9 +19438,11 @@ var HashHandler = function () {
         var playerType = this.iiifParser.determinePlayerType(canvasObj.content[0]);
 
         // Different type of player required.
-        // Destroy current instance and create a new instance of different player
         if (playerType !== this.playerClass.currentPlayerType) {
-          this.playerClass.destroyPlayerInstance(canvasObj.content[0]);
+          // Destroy current player and it's Mediaelement instance
+          this.playerClass.destroyPlayerInstance();
+          // Render and create a new player instance
+          this.playerClass.render(canvasObj.content[0]);
           return;
         }
 
@@ -19571,9 +19582,15 @@ var Player = function () {
         console.log(e);
       }
     }
+
+    /**
+     * Completely remove the current player and it's Mediaelement instance
+     * @return {void}
+     */
+
   }, {
     key: 'destroyPlayerInstance',
-    value: function destroyPlayerInstance(newContentObj) {
+    value: function destroyPlayerInstance() {
       // Remove Mediaelement instance
       if (!this.player.paused) {
         this.player.pause();
@@ -19584,9 +19601,6 @@ var Player = function () {
       var tagName = this.currentPlayerType === 'Audio' ? 'audio' : 'video';
       var tagNameEl = document.getElementsByTagName(tagName)[0];
       tagNameEl.parentNode.removeChild(tagNameEl);
-
-      // Create a new player
-      this.render(newContentObj);
     }
 
     /**
@@ -19672,6 +19686,10 @@ var Player = function () {
 
       // Instantiate MediaElement player
       this.player = new MediaElementPlayer(this.playerElId, {}); // eslint-disable-line
+
+      // This enables the custom quality selector
+      // TODO: Fix this if we want it working
+      // document.getElementById(this.playerElId).insertAdjacentHTML('beforeend', this.qualitySelectorMarkup())
 
       this.hashHandler = new _hash_handler2.default({
         'playerClass': this
@@ -20200,7 +20218,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\nnav {\n  margin: 2rem 0;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n\n.error-message {\n  color: #8b0000;\n  padding: 1rem 0;\n}\n.player-wrapper {\n  margin: 2rem 0;\n}\n\n.content-wrapper {\n  margin: 2rem 0;\n}\n\n/* New Styles */\n#iiif-standalone-player-mount {\n  display: flex;\n  justify-content: space-between;\n}\n\n", ""]);
+exports.push([module.i, "body {\n  font-family: -apple-system,\n  BlinkMacSystemFont,\n  \"Segoe UI\",\n  Roboto,\n  Oxygen-Sans,\n  Ubuntu,\n  Cantarell,\n  \"Helvetica Neue\",\n  sans-serif;\n}\n\nnav {\n  margin: 2rem 0;\n}\n\n.av-player {\n  display: inline-flex;\n}\n\n.av-controls {\n  padding: 1em;\n  margin-right: 2em;\n}\n\n.error-message {\n  color: #8b0000;\n  padding: 1rem 0;\n}\n.player-wrapper {\n  margin: 2rem 0;\n}\n\n.content-wrapper {\n  margin: 2rem 0;\n}\n\n/* New Styles */\n#iiif-standalone-player-mount {\n  display: flex;\n  justify-content: space-between;\n}\n.manifest-url-wrapper {\n  margin-bottom: 20px;\n}\n\n", ""]);
 
 // exports
 
@@ -20235,4 +20253,4 @@ exports.push([module.i, "/* Accessibility: hide screen reader texts (and prefer 
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=app.js.map
+//# sourceMappingURL=iiif-player-bundle.js.map

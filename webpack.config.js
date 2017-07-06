@@ -14,7 +14,8 @@ const commonConfig = merge([
     },
     output: {
       path: PATHS.build,
-      filename: '[name].js'
+      // filename: '[name].js'
+      filename: 'iiif-player-bundle.js'
     },
     plugins: [
     ]

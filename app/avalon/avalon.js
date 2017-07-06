@@ -10,9 +10,11 @@ export default class Avalon {
 
     // Configuration object to hold element values, ids and such in one place
     this.configObj = {
-      defaultManifest: 'mahler-symphony-3.json',
+      currentManifestId: 'manifest-current',
+      defaultManifest: 'lunchroom_manners_v2.json',
       mountElId: 'iiif-standalone-player-mount',
       playerWrapperId: 'iiif-player-wrapper',
+      sourceElId: 'data-iiifav-source',
       structureElId: 'iiif-structure-wrapper',
       urlTextInputId: 'manifest-url'
     }
@@ -38,8 +40,11 @@ export default class Avalon {
     // Set up a manifest URL form listener
     this.prepareForm()
 
-    // Initialize app with default local manifest
-    this.getManifestAJAX(this.configObj.defaultManifest)
+    // Get initial default manifest file
+    let sourceEl = document.getElementById(this.configObj.sourceElId)
+    if (sourceEl) {
+      this.getManifestAJAX(sourceEl.dataset.iiifavSource)
+    }
   }
 
   /**
@@ -68,7 +73,9 @@ export default class Avalon {
     this.structureMarkup = ''
 
     // Update current manifest message
-    document.getElementById('manifest-current').innerText = (this.manifestUrlEl.value !== '') ? this.manifestUrlEl.value : this.configObj.defaultManifest
+    if (document.getElementById(this.configObj.currentManifestId)) {
+      document.getElementById(this.configObj.currentManifestId).innerText = (this.manifestUrlEl.value !== '') ? this.manifestUrlEl.value : this.configObj.defaultManifest
+    }
 
     // Build helper map for current manifest
     this.manifestMap = this.iiifParser.buildManifestMap(manifest)

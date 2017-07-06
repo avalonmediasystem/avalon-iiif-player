@@ -6,11 +6,10 @@
 This is a JavaScript player that displays a player and navagation when given IIIF-AV 
 JSON. 
 
-## Demo Pages:
-- [Video](https://avalonmediasystem.github.io/avalon-poc-standalone/dist/index.html)
-  - [IIIF-AV Manifest](https://github.com/avalonmediasystem/avalon-poc-standalone/blob/master/dist/lunchroom_manners_v2.json)
-- [Audio](https://avalonmediasystem.github.io/avalon-poc-standalone/dist/audio.html)
-  - [IIIF-AV Manifest](https://github.com/avalonmediasystem/avalon-poc-standalone/blob/master/dist/mahler-symphony-3.json)
+## Demo Page:
+- [Submit a valid manifest URL and render structure links and a player](https://github.com/avalonmediasystem/avalon-poc-standalone/blob/dev/build/index.html)
+
+  
 ## Running tests:
 
 To run the project's tests:
@@ -26,12 +25,19 @@ standard
 karma start --single-run --browsers PhantomJS
 ```
 
+## Developing
+Running the following command will start a webpack server at: http://localhost:8080/
+
+```
+npm run start
+```
+
 ## Building 
 
 To build the bundle:
 
-```bash
- ./node_modules/.bin/webpack
+```
+npm run build
 ```
 
 ## To use on a page:
@@ -42,9 +48,9 @@ To build the bundle:
      <title>Avalon Player Webpack Version</title>
    </head>
    <body>
-     <div class="iiif-av-player"></div>
+     <div id="iiif-standalone-player-mount"></div>
      <div id="data-iiifav-source"  data-iiifav-source="lunchroom_manners_v2.json"></div>
-     <script src="bundle.js"></script>
+     <script src="iiif-player-bundle.js"></script>
    </body>
  </html>
 ```
@@ -58,6 +64,6 @@ Documentation generated from JSDoc comments is published <a href="https://avalon
 
 You can fork this repository to host your own IIIF Player. 
 
-First fork this repository, then edit the HTML pages and upload your own manifests in the `dist` folder. 
+First fork this repository, then edit the HTML pages and upload your own manifests in the `build` folder. 
 
 Commit the changes and then push. 

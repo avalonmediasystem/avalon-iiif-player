@@ -142,11 +142,13 @@ export default class IIIFParser {
     let targetItem = {}
     contentObj.items.forEach((item) => {
       item.body.forEach((body) => {
-        body.items.forEach((item) => {
-          if (item.label === qualityLevel) {
-            targetItem = item
-          }
-        })
+        if (body.hasOwnProperty('items')) {
+          body.items.forEach((item) => {
+            if (item.label === qualityLevel) {
+              targetItem = item
+            }
+          })
+        }
       })
     })
     return targetItem

@@ -143,6 +143,10 @@ export default class Player {
     // Instantiate MediaElement player
     this.player = new MediaElementPlayer(this.playerElId, {}) // eslint-disable-line
 
+    // This enables the custom quality selector
+    // TODO: Fix this if we want it working
+    // document.getElementById(this.playerElId).insertAdjacentHTML('beforeend', this.qualitySelectorMarkup())
+
     this.hashHandler = new HashHandler({
       'playerClass': this
     })
