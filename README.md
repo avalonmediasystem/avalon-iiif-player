@@ -12,10 +12,10 @@ JSON.
   
 ## Running tests:
 
-To run the project's tests:
+To run the project's Karma / Jasmine unit tests:
 
 ```base
-./node_modules/karma/bin/karma start
+npm run test
 
 ```
 
@@ -59,6 +59,11 @@ The `data-iiifav-source` attribute should link to a publically accesible IIIF-AV
 ## JSDoc Documentation
 
 Documentation generated from JSDoc comments is published <a href="https://avalonmediasystem.github.io/avalon-poc-standalone/out/">here</a>. 
+
+To run the JSDoc utility and update documentation:
+```
+npm run jsdoc
+```
 
 ## Using with GitHub Pages
 

@@ -1,3 +1,7 @@
+/**
+ * @class UtilityHelpers
+ * @classdesc Generic singleton utility helpers object for the application, which could potentially store application state
+ */
 export default class UtilityHelpers {
   constructor () {
     this.errorClass = 'error-message'
@@ -5,6 +9,7 @@ export default class UtilityHelpers {
 
   /**
    * Clear the hash params from URL
+   * @function UtilityHelpers#clearHash
    * @return {void}
    */
   clearHash () {
@@ -13,8 +18,9 @@ export default class UtilityHelpers {
 
   /**
    * Create and display default error message
+   * @function UtilityHelpers#displayErrorMessage
    * @param {string} msg - Message to display
-   * @return void
+   * @return {void}
    */
   displayErrorMessage (msg) {
     let el = document.getElementById('manifest-current-wrapper')
@@ -34,6 +40,7 @@ export default class UtilityHelpers {
 
   /**
    * Removes an error message if one exists
+   * @function UtilityHelpers#removeErrorMessage
    * return {void}
    */
   removeErrorMessage () {

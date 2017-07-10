@@ -26,31 +26,53 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** Class representing a HashHandler
+            <pre class="prettyprint source linenums"><code>import $ from 'jquery'
+import IIIFParser from './iiif_parser'
+
+/** Class representing a HashHandler
  * this class is used for functionality based on the hash in the url
  * @class HashHandler
  */
 export default class HashHandler {
   constructor (options) {
+    this.iiifParser = new IIIFParser()
+
     this.currentCanvasIndex = undefined
-    this.instance = options.instance
-    this.qualityChoices = options.qualityChoices
-    this.player = undefined
-    this.bindHashLinkClick()
+    this.playerClass = options.playerClass
+    this.manifest = this.playerClass.manifest
+
+    // Initialize based on first contentObject
+    this.qualityChoices = this.iiifParser.getQualityChoices(this.playerClass.contentObj)
+
+    this.updating = false
+    // this.bindHashLinkClick()
+
+    // Start listening for changes in the hash
+    this.bindHashChange()
   }
 
-  bindHashLinkClick () {
-    document.addEventListener('click', (event) => {
-      if (event.target.className.indexOf('media-structure-uri') > -1 &amp;&amp; window.location.hash.search('/time/') > -1) {
-        this.playFromHash(window.location.hash)
-      }
-    })
-  }
+  /**
+   * The function adds and handles a click listener for structure links
+   * TODO: Fix this implementation, as it adds extra event listeners when a new manifest URL is loaded
+   *
+   * @method HashHandler#bindHashLinkClick
+   * @returns {void}
+   */
+  // bindHashLinkClick () {
+  //   let el = document.getElementById('data-iiifav-source').firstChild
+  //   el.addEventListener('click', (event) => {
+  //     if (event.target.className.indexOf('media-structure-uri') > -1 &amp;&amp; window.location.hash.search('/time/') > -1) {
+  //       this.playFromHash(event.target.hash)
+  //     }
+  //   })
+  // }
+
+  /**
+   * Binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
+   * @method HashHandler#bindHashChange
+   * @return {void}
+   */
   bindHashChange () {
-    /**
-     * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
-     * @method HashHandler#bindHashChange
-     **/
     // Get the player instance
     this.player = document.getElementById('iiif-av-player')
 
@@ -62,43 +84,53 @@ export default class HashHandler {
     }
   }
 
-  canvasesInManifest () {
-     /**
-     * @method HashHandler#canvasesInManifest
-     **/
-    return this.instance.manifest.sequences &amp;&amp; this.instance.manifest.sequences[0].canvases
-  }
-
+  /**
+   * Read a media fragment from a hash in the URL and then play the starting location from the hash
+   * @function HashHandler#playFromHash
+   * @param {string} hash - Url hash value
+   * @return {void}
+   */
   playFromHash (hash) {
-    /**
-     * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
-     * @method HashHandler#playFromHash
-     **/
-    var options = this.processHash(hash)
-    let canvasesExist = this.canvasesInManifest()
+    if (this.updating) {
+      return
+    }
+    this.updating = true
+    let hashOptions = this.processHash(hash)
+    let canvasesExist = this.iiifParser.canvasesInManifest(this.manifest)
     let src = ''
 
     // Safari will only setCurrentTime() after 'canplay' event is fired
-    let handler = (e) => {
-      // Ensure this handler only fires once
-      this.player.removeEventListener(e.type, handler)
-      this.player.setCurrentTime(parseInt(options.start))
+    // Using jQuery's 'one' method ensures event only fires once, but there may be a better solution to limit
+    //   event listeners being unnecessarily added
+    $(this.player).one('canplay', () => {
+      this.player.setCurrentTime(parseInt(hashOptions.start))
       this.player.play()
-    }
-
-    this.player.addEventListener('canplay', handler)
+      this.updating = false
+    })
 
     // Is canvas in the hash different from canvas currently in the player?
-    if (canvasesExist &amp;&amp; (options.canvas !== this.currentCanvasIndex)) {
-      // Get current canvas object from canvas index
-      let canvasObj = this.instance.getCanvasByIndex(options.canvas)
-      this.qualityChoices = this.instance.getQualityChoices(canvasObj)
-      this.currentCanvasIndex = options.canvas
+    if (canvasesExist &amp;&amp; (hashOptions.canvas !== this.currentCanvasIndex)) {
+      // Get the new canvas object from canvas index
+      let canvasObj = this.iiifParser.getCanvasByIndex(hashOptions.canvas, this.manifest)
+
+      let playerType = this.iiifParser.determinePlayerType(canvasObj.content[0])
+
+      // Different type of player required.
+      if (playerType !== this.playerClass.currentPlayerType) {
+        // Destroy current player and it's Mediaelement instance
+        this.playerClass.destroyPlayerInstance()
+        // Render and create a new player instance
+        this.playerClass.render(canvasObj.content[0])
+        return
+      }
+
+      this.qualityChoices = this.iiifParser.getQualityChoices(canvasObj.content[0])
+      this.currentCanvasIndex = hashOptions.canvas
     }
 
     // Find the new source media file
     this.qualityChoices.forEach((choice) => {
-      if (choice.label === options.quality) {
+      if (choice.label === hashOptions.quality) {
         src = choice.id
       }
     })
@@ -109,22 +141,21 @@ export default class HashHandler {
     this.player.load()
   }
 
+  /**
+   * Processes a window.location.hash and creates an object.
+   * It can take any number of parameters. Strings at even locations are keys
+   * and odd locations are values.
+   * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
+   * @function HashHandler#processHash
+   * @param {string} hash - a window.location.hash
+   * @return {Object} result - Representation of hash values in key/value pair
+   **/
   processHash (hash) {
-    /**
-     *
-     * This method processes a window.location.hash and creates an object.
-     * It can take any number of parameters. Strings at even locations are keys
-     * and odd locations are values.
-     * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
-     * @method HashHandler#processHash
-     * @param {string} hash - a window.location.hash
-     * @return {object}
-     **/
-
     return hash.split('/').splice(1).reduce((result, item, index, array) => {
       if (index % 2 === 0) {
         if (item === 'time') {
           const time = array[index + 1].split(',')
+          console.log('time', time)
           result['start'] = time[0]
           result['stop'] = time[1]
         }
@@ -144,13 +175,14 @@ export default class HashHandler {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Avalon.html">Avalon</a></li><li><a href="HashHandler.html">HashHandler</a></li><li><a href="MediaPlayer.html">MediaPlayer</a></li><li><a href="QualitySelector.html">QualitySelector</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Avalon.html">Avalon</a></li><li><a href="HashHandler.html">HashHandler</a></li><li><a href="IIIFParser.html">IIIFParser</a></li><li><a href="Player.html">Player</a></li><li><a href="QualitySelector.html">QualitySelector</a></li><li><a href="UtilityHelpers.html">UtilityHelpers</a></li></ul><h3>Global</h3><ul><li><a href="global.html#UtilityHelpers#removeErrorMessagereturn%257Bvoid%257D">UtilityHelpers#removeErrorMessage
+return {void}</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jun 02 2017 11:43:04 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.1</a> on Mon Jul 10 2017 14:20:37 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

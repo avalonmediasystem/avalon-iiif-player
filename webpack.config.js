@@ -17,8 +17,7 @@ const commonConfig = merge([
       // filename: '[name].js'
       filename: 'iiif-player-bundle.js'
     },
-    plugins: [
-    ]
+    plugins: []
   },
   // Lint JS during development with StandardJs
   parts.lintJavaScript({ include: PATHS.app }),

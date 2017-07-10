@@ -58,6 +58,7 @@ export default class HashHandler {
 
   /**
    * Read a media fragment from a hash in the URL and then play the starting location from the hash
+   * @function HashHandler#playFromHash
    * @param {string} hash - Url hash value
    * @return {void}
    */
@@ -117,8 +118,9 @@ export default class HashHandler {
    * It can take any number of parameters. Strings at even locations are keys
    * and odd locations are values.
    * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
+   * @function HashHandler#processHash
    * @param {string} hash - a window.location.hash
-   * @return {Object} - Representation of hash values in key/value pair
+   * @return {Object} result - Representation of hash values in key/value pair
    **/
   processHash (hash) {
     return hash.split('/').splice(1).reduce((result, item, index, array) => {

@@ -3,8 +3,16 @@ import IIIFParser from './iiif_parser'
 import Player from './player'
 import { utilityHelpers } from './utility_helpers'
 
-/** Class representing the avalon IIIF player */
+/**
+ * @class Avalon
+ * @classdesc A wrapper for the Avalon IIIF player
+ */
 export default class Avalon {
+  /**
+   * @function Avalon#initialize
+   * @description Initializer function
+   * @return {void}
+   */
   initialize () {
     this.iiifParser = new IIIFParser()
 
@@ -49,10 +57,11 @@ export default class Avalon {
 
   /**
    * Handle AJAX success response of supplied manifest URL
+   * @function Avalon#ajaxSuccessHandler
    * @param {object} data - AJAX data response
    * @param {string} textStatus - AJAX text response
    * @param {object} jqXHR - AJAX request response
-   * @returns {*}
+   * @return {void}
    */
   ajaxSuccessHandler (data, textStatus, jqXHR) {
     let manifest = ''
@@ -95,6 +104,7 @@ export default class Avalon {
 
   /**
    * Recurse the manifest 'structures' array and creates an html tree of section links
+   * @function Avalon#createStructure
    * @param {object} members - A 'members' array in the manifest, under 'structures' array
    * @param {string[]} list - Markup temporary storage array while building the nested unordered lists
    * @param {boolean} newUl - Flag whether to write a nested unordered list
@@ -130,6 +140,7 @@ export default class Avalon {
 
   /**
    * Retrieve a manifest via Ajax
+   * @function Avalon#getManifestAJAX
    * @param {string} url - Url of manifest, either 'http...' or a local file
    * @return {void}
    */
@@ -148,6 +159,8 @@ export default class Avalon {
 
   /**
    * Add structures tree markup to DOM mount element
+   * @function Avalon#mountStructure
+   * @return {void}
    */
   mountStructure () {
     document.getElementById(this.configObj.structureElId).innerHTML = this.structureMarkup
@@ -155,7 +168,7 @@ export default class Avalon {
 
   /**
    * Set up listener for the Manifest Url form
-   * @method Avalon#prepareForm
+   * @function Avalon#prepareForm
    * @return {void}
    */
   prepareForm () {
@@ -170,6 +183,7 @@ export default class Avalon {
   /**
    * Set up the initial markup wrappers for structures links and the player,
    * then add markup to the DOM
+   * @function Avalon#setupMarkup
    * @return {void}
    */
   setupMarkup () {
@@ -185,8 +199,9 @@ export default class Avalon {
 
   /**
    * Form submit event handler
+   * @function Avalon#submitURLHandler
    * @param {Object} e - the event object
-   * @returns {boolean}
+   * @return {boolean} false - Prevent default form submit behavior
    */
   submitURLHandler (e) {
     e.preventDefault()
