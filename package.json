@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --env.target production",
     "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
-    "test": "standard && karma start --single-run",
+    "test": "standard && karma start --single-run --browsers PhantomJS",
     "jsdoc": "jsdoc app/avalon"
   },
   "keywords": [],

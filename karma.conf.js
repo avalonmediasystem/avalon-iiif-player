@@ -9,7 +9,7 @@ let configuration = {
 
   // start these browsers
   // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-  browsers: ['Chrome'],
+  browsers: ['Chrome', 'PhantomJS'],
 
   // enable / disable colors in the output (reporters and logs)
   colors: true,
@@ -17,14 +17,6 @@ let configuration = {
   // Concurrency level
   // how many browser should be started simultaneous
   concurrency: Infinity,
-
-  // To run Chrome browser on Travis CI environment
-  customLaunchers: {
-    Chrome_travis_ci: {
-      base: 'Chrome',
-      flags: ['--no-sandbox']
-    }
-  },
 
   // list of files / patterns to load in the browser
   files: [
@@ -91,10 +83,6 @@ let configuration = {
       ]
     }
   }
-}
-
-if (process.env.TRAVIS) {
-  configuration.browsers = ['Chrome_travis_ci']
 }
 
 module.exports = function (config) {
