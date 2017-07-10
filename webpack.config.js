@@ -42,7 +42,6 @@ const developmentConfig = merge([
 ])
 
 module.exports = (env) => {
-  console.log('env', env)
   if (env === 'production') {
     return merge(commonConfig, productionConfig)
   }

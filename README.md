@@ -22,7 +22,7 @@ npm run test
 ## Travis Runs...
 ```base
 standard
-karma start --single-run --browsers PhantomJS
+karma start --single-run
 ```
 
 ## Developing

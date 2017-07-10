@@ -9999,7 +9999,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/** Class representing parsing functionality of an IIIF Manifest */
+/**
+ * @class IIIFParser
+ * @classdesc Class representing parsing functionality of an IIIF Manifest
+ */
 var IIIFParser = function () {
   function IIIFParser() {
     _classCallCheck(this, IIIFParser);
@@ -10010,8 +10013,9 @@ var IIIFParser = function () {
 
     /**
      * Build a manifest map helper object for parsing
+     * @function IIIFParser#buildManifestMap
      * @param {Object} manifest - Manifest object
-     * @returns {Object} A generated helper map object with information about current manifest
+     * @returns {Object} obj - A generated helper map object with information about current manifest
      */
     value: function buildManifestMap(manifest) {
       var obj = {
@@ -10034,8 +10038,9 @@ var IIIFParser = function () {
 
     /**
      * Generate a structure nested list link
+     * @function IIIFParser#buildStructureLink
      * @param {Object} member - A member object
-     * @returns {string} - HTML string for the anchor link
+     * @returns {string} structureLink - HTML string for the anchor link
      */
 
   }, {
@@ -10057,7 +10062,8 @@ var IIIFParser = function () {
 
     /**
      * Does the manifest have a canvases array?
-     * @return {boolean}
+     * @function IIIFParser#canvasesInManifest
+     * @return {boolean} - Does manifest have a canvases array
      **/
 
   }, {
@@ -10068,6 +10074,7 @@ var IIIFParser = function () {
 
     /**
      * Parse what type of content the file is
+     * @function IIIFParser#determinePlayerType
      * @param {object} contentObj - The content item for which to find type
      * @returns {string} 'Audio' or 'Video' text (for now)
      */
@@ -10089,8 +10096,9 @@ var IIIFParser = function () {
 
     /**
      * Retrieve all canvases from a manifest
+     * @function IIIFParser#getCanvases
      * @param options
-     * @returns {Array}
+     * @returns {Array} canvases - An array of canvases present in manifest
      */
 
   }, {
@@ -10107,6 +10115,7 @@ var IIIFParser = function () {
 
     /**
      * Parse canvasId URI for the canvas index
+     * @function IIIFParser#getCanvasIndex
      * @param {string} canvasId - key in manifest
      * @returns {string} canvasIndex - URI canvas index
      */
@@ -10130,9 +10139,10 @@ var IIIFParser = function () {
 
     /**
      * Get a canvas object from manifest 'canvases' array
+     * @function IIIFParser#getCanvasByIndex
      * @param {string} index - target canvas index
      * @param {Object} manifest - Manifest object
-     * @returns {Object} canvasObject or empty object
+     * @returns {Object} canvasObject - An individual canvas object
      */
 
   }, {
@@ -10164,9 +10174,10 @@ var IIIFParser = function () {
 
     /**
      *  Get a target item at desired quality level
+     *  @function IIIFParser#getContentItem
      *  @param {Object} contentObj - Canvas content object in manifest
      *  @param {string} qualityLevel - Quality level from manifest: ie. 'Medium', 'High'
-     *  @return {Object} An item object at desired quality level
+     *  @return {Object} targetItem - An item object at desired quality level
      */
 
   }, {
@@ -10189,9 +10200,10 @@ var IIIFParser = function () {
 
     /**
      * Get a manifest's content array
+     * @function IIIFParser#getFirstContentObj
      * @param {Object} manifest - A json manifest
      * @param {Object} manifestMap - Helper object of manifest details
-     * @returns {Object} The first element in content array
+     * @returns {Object} firstContent[0] - The first element in content array
      */
 
   }, {
@@ -10213,8 +10225,9 @@ var IIIFParser = function () {
     /**
      * Takes a uri with a media fragment that looks like #=120,134 and returns an object
      * with start/stop in seconds and the duration in milliseconds
+     * @function IIIFParser#getMediaFragment
      * @param {string} uri - Uri value
-     * @return {Object}
+     * @return {Object} - Representing the media fragment, or undefined
      */
 
   }, {
@@ -10236,8 +10249,9 @@ var IIIFParser = function () {
 
     /**
      * Determine quality choices present in the manifest
+     * @function IIIFParser#getQualityChoices
      * @param {Object} contentObj - A contentObj object in the manifest
-     * @return {Object[]} An array of quality choices
+     * @return {Object[]} choices - An array of quality choices
      */
 
   }, {
@@ -10259,10 +10273,11 @@ var IIIFParser = function () {
 
     /**
      * Determine a video's (no audio dimensions?) presentation dimensions
+     * @function IIIFParser#getPlayerDimensions
      * @param {Object} manifest - Current manifest
      * @param {Object} contentObj - Element in content array
      * @param {Object} item - Element of manifest's body.items array
-     * @returns {Object} - Dimensions key/value pair
+     * @returns {Object} dimensions - Dimensions key/value pair
      */
 
   }, {
@@ -10294,6 +10309,7 @@ var IIIFParser = function () {
 
     /**
      * Determines whether manifest content object has subtitles included
+     * @function IIIFParser#getSubtitles
      * @param {Object} contentObj - Manifest canvas content object
      * @return {Object} subtitlesObj - Object of subtitles in body array
      */
@@ -10707,7 +10723,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/** Class representing the avalon IIIF player */
+/**
+ * @class Avalon
+ * @classdesc A wrapper for the Avalon IIIF player
+ */
 var Avalon = function () {
   function Avalon() {
     _classCallCheck(this, Avalon);
@@ -10715,6 +10734,12 @@ var Avalon = function () {
 
   _createClass(Avalon, [{
     key: 'initialize',
+
+    /**
+     * @function Avalon#initialize
+     * @description Initializer function
+     * @return {void}
+     */
     value: function initialize() {
       this.iiifParser = new _iiif_parser2.default();
 
@@ -10758,10 +10783,11 @@ var Avalon = function () {
 
     /**
      * Handle AJAX success response of supplied manifest URL
+     * @function Avalon#ajaxSuccessHandler
      * @param {object} data - AJAX data response
      * @param {string} textStatus - AJAX text response
      * @param {object} jqXHR - AJAX request response
-     * @returns {*}
+     * @return {void}
      */
 
   }, {
@@ -10807,6 +10833,7 @@ var Avalon = function () {
 
     /**
      * Recurse the manifest 'structures' array and creates an html tree of section links
+     * @function Avalon#createStructure
      * @param {object} members - A 'members' array in the manifest, under 'structures' array
      * @param {string[]} list - Markup temporary storage array while building the nested unordered lists
      * @param {boolean} newUl - Flag whether to write a nested unordered list
@@ -10850,6 +10877,7 @@ var Avalon = function () {
 
     /**
      * Retrieve a manifest via Ajax
+     * @function Avalon#getManifestAJAX
      * @param {string} url - Url of manifest, either 'http...' or a local file
      * @return {void}
      */
@@ -10867,6 +10895,8 @@ var Avalon = function () {
 
     /**
      * Add structures tree markup to DOM mount element
+     * @function Avalon#mountStructure
+     * @return {void}
      */
 
   }, {
@@ -10877,7 +10907,7 @@ var Avalon = function () {
 
     /**
      * Set up listener for the Manifest Url form
-     * @method Avalon#prepareForm
+     * @function Avalon#prepareForm
      * @return {void}
      */
 
@@ -10897,6 +10927,7 @@ var Avalon = function () {
     /**
      * Set up the initial markup wrappers for structures links and the player,
      * then add markup to the DOM
+     * @function Avalon#setupMarkup
      * @return {void}
      */
 
@@ -10915,8 +10946,9 @@ var Avalon = function () {
 
     /**
      * Form submit event handler
+     * @function Avalon#submitURLHandler
      * @param {Object} e - the event object
-     * @returns {boolean}
+     * @return {boolean} false - Prevent default form submit behavior
      */
 
   }, {
@@ -19404,6 +19436,7 @@ var HashHandler = function () {
 
     /**
      * Read a media fragment from a hash in the URL and then play the starting location from the hash
+     * @function HashHandler#playFromHash
      * @param {string} hash - Url hash value
      * @return {void}
      */
@@ -19468,8 +19501,9 @@ var HashHandler = function () {
      * It can take any number of parameters. Strings at even locations are keys
      * and odd locations are values.
      * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
+     * @function HashHandler#processHash
      * @param {string} hash - a window.location.hash
-     * @return {Object} - Representation of hash values in key/value pair
+     * @return {Object} result - Representation of hash values in key/value pair
      **/
 
   }, {
@@ -19528,6 +19562,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+ * @class Player
+ * @classdesc Class representing a MediaelementJS player wrapper
+ */
 var Player = function () {
   function Player(options) {
     _classCallCheck(this, Player);
@@ -19553,6 +19591,8 @@ var Player = function () {
 
   /**
    * This will add urls to labels in the structure navigation if they have the class .implicit
+   * @function Player#addUrlsForParents
+   * @return {void}
    * TODO: Revisit and fix this
    */
 
@@ -19585,6 +19625,7 @@ var Player = function () {
 
     /**
      * Completely remove the current player and it's Mediaelement instance
+     * @function Player#destroyPlayerInstance
      * @return {void}
      */
 
@@ -19605,8 +19646,9 @@ var Player = function () {
 
     /**
      * This takes a url generated by this software (not a URI from the manifest) and returns an object with start/stop in seconds and the duration in milliseconds
+     * @function Player#getTimeFromUrl
      * @param {string} url - URL string value
-     * @return {Object}
+     * @return {Object} - Time key/value object giving start and stop times
      */
 
   }, {
@@ -19623,8 +19665,9 @@ var Player = function () {
 
     /**
      * Generate player markup (<audio> or <video>) depending on type of contentObj processed
+     * @function Player#generatePlayerMarkup
      * @param {Object} item - Item object for media file
-     * @returns {string} - <audio> or <video> markup HTML string
+     * @returns {string} markup - <audio> or <video> markup HTML string
      */
 
   }, {
@@ -19647,7 +19690,8 @@ var Player = function () {
 
     /**
      * Creates the quality selector markup
-     * @returns {*}
+     * @function Player#qualitySelectorMarkup
+     * @returns {Object} renderChoices() - A QualitySelector class function which renders choices.
      */
 
   }, {
@@ -19661,6 +19705,7 @@ var Player = function () {
 
     /**
      * Create the player html tag (audio or video), and instantiate MediaElementPlayer
+     * @function Player#render
      * @param {Object} contentObj - Object representing the media content item
      * @param {string} qualityLevel - Quality level desired ie: 'Low', 'High', 'Medium', etc.
      * @return {void}
@@ -19698,9 +19743,10 @@ var Player = function () {
 
     /**
      * This will replace the /time/345,536/ with a new time when given object like this: { start: 230 , stop : 340 }
+     * @function Player#replaceTimeInUrl
      * @param {string} url - Url string
      * @param {Object} childStartStopTime
-     * @return {string} - Start stop time key value for url hash
+     * @return {string} url - Start stop time key value for url hash
      */
 
   }, {
@@ -19873,6 +19919,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+ * @class UtilityHelpers
+ * @classdesc Generic singleton utility helpers object for the application, which could potentially store application state
+ */
 var UtilityHelpers = function () {
   function UtilityHelpers() {
     _classCallCheck(this, UtilityHelpers);
@@ -19882,6 +19932,7 @@ var UtilityHelpers = function () {
 
   /**
    * Clear the hash params from URL
+   * @function UtilityHelpers#clearHash
    * @return {void}
    */
 
@@ -19894,8 +19945,9 @@ var UtilityHelpers = function () {
 
     /**
      * Create and display default error message
+     * @function UtilityHelpers#displayErrorMessage
      * @param {string} msg - Message to display
-     * @return void
+     * @return {void}
      */
 
   }, {
@@ -19915,6 +19967,7 @@ var UtilityHelpers = function () {
 
     /**
      * Removes an error message if one exists
+     * @function UtilityHelpers#removeErrorMessage
      * return {void}
      */
 
