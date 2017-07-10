@@ -12,9 +12,9 @@ exports.devServer = ({ host, port } = {}) => ({
     port, // Defaults to 8080
     overlay: {
       errors: true,
-      warnings: true,
-    },
-  },
+      warnings: true
+    }
+  }
 })
 
 exports.lintJavaScript = ({ include }) => ({
@@ -31,10 +31,10 @@ exports.lintJavaScript = ({ include }) => ({
           // Emit errors instead of warnings (default = false)
           error: false,
           // enable snazzy output (default = true)
-          snazzy: true,
+          snazzy: true
           // other config options to be passed through to standard e.g.
-          //parser: 'babel-eslint'
-        },
+          // parser: 'babel-eslint'
+        }
       },
       {
         loader: 'babel-loader',
@@ -42,8 +42,8 @@ exports.lintJavaScript = ({ include }) => ({
           presets: ['env']
         }
       }
-    ],
-  },
+    ]
+  }
 })
 
 exports.loadCSS = ({ include, exclude } = {}) => ({
@@ -53,16 +53,14 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
         test: /\.css$/,
         include,
         exclude,
-
-        use: ['style-loader', 'css-loader'],
+        loaders: ['style-loader', 'css-loader']
       },
       {
         test: /\.scss$/,
         include,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader']
       }
-    ],
-
+    ]
   }
 })
 

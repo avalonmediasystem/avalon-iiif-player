@@ -1,32 +1,66 @@
-// Karma configuration
-// Generated on Mon May 22 2017 14:21:22 GMT-0400 (EDT)
+const path = require('path')
+
 module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-    plugins: ['karma-chrome-launcher', 'karma-jasmine', 'karma-phantomjs-launcher', 'karma-webpack'],
+    // Note: Karma automatically loads plugins starting with 'karma-...'
+    // plugins: ['karma-chrome-launcher', 'karma-jasmine', 'karma-phantomjs-launcher', 'karma-webpack', 'karma-sourcemap-loader'],
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-jquery', 'jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/jquery/dist/jquery.slim.min.js',
-      'spec/helpers/jasmine-jquery.js',
-      'spec/**/*_spec.js'
+      'node_modules/jquery/dist/jquery.min.js',
+      'spec/fixtures/*.html',
+      'spec/**/*_spec.js',
+      { pattern: 'build/*.json', watched: true, served: true, included: false }
     ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'app/**/*.js': ['webpack'],
-      'spec/**/*_spec.js': ['webpack'],
+      'app/**/*.js': ['webpack', 'sourcemap'],
+      'spec/**/*_spec.js': ['webpack', 'sourcemap'],
       'spec/fixtures/*.js': ['webpack']
     },
-    webpack: require('./webpack.config.js'),
+    webpack: {
+      devtool: 'inline-source-map',
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /(node_modules|bower_components)/,
+            include: [
+              path.join(__dirname, 'app'),
+              path.join(__dirname, 'spec')
+            ],
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['env']
+              }
+            }
+          },
+          {
+            test: /\.css$/,
+            use: [
+              'style-loader',
+              'css-loader'
+            ]
+
+          },
+          {
+            test: /\.svg$/,
+            use: [ 'svg-url-loader' ]
+          }
+        ]
+      }
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -48,7 +82,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
