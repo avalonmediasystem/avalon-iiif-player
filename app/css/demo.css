@@ -1,15 +1,3 @@
-body {
-  font-family: -apple-system,
-  BlinkMacSystemFont,
-  "Segoe UI",
-  Roboto,
-  Oxygen-Sans,
-  Ubuntu,
-  Cantarell,
-  "Helvetica Neue",
-  sans-serif;
-}
-
 nav {
   margin: 2rem 0;
 }
@@ -42,5 +30,8 @@ nav {
 }
 .manifest-url-wrapper {
   margin-bottom: 20px;
+}
+#data-iiifav-source {
+  margin-bottom: 40px;
 }
 

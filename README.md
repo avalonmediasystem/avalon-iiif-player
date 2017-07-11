@@ -7,28 +7,13 @@ This is a JavaScript player that displays a player and navagation when given III
 JSON. 
 
 ## Demo Page:
-- [Submit a valid manifest URL and render structure links and a player](https://github.com/avalonmediasystem/avalon-poc-standalone/blob/dev/build/index.html)
-
-  
-## Running tests:
-
-To run the project's Karma / Jasmine unit tests:
-
-```base
-npm run test
-
-```
-
-## Travis Runs...
-```base
-standard
-karma start --single-run
-```
+- [https://avalonmediasystem.github.io/avalon-poc-standalone/build/](https://avalonmediasystem.github.io/avalon-poc-standalone/build/)
 
 ## Developing
-Running the following command will start a webpack server at: http://localhost:8080/
+Navigate to project root directory and run the following commands. A webpack dev server (with live re-loading) will start at: http://localhost:8080/
 
 ```
+npm install
 npm run start
 ```
 
@@ -38,6 +23,20 @@ To build the bundle:
 
 ```
 npm run build
+```
+
+## Running tests:
+
+To run the project's Karma / Jasmine unit tests:
+
+```base
+npm run test
+```
+
+## Travis Runs...
+```base
+standard
+karma start --single-run --browsers PhantomJS
 ```
 
 ## To use on a page:
