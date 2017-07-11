@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import IIIFParser from './iiif_parser'
 
 /** Class representing a HashHandler
  * this class is used for functionality based on the hash in the url
@@ -6,12 +7,20 @@ import $ from 'jquery'
  */
 export default class HashHandler {
   constructor (options) {
+    this.iiifParser = new IIIFParser()
+
     this.currentCanvasIndex = undefined
-    this.instance = options.instance
-    this.qualityChoices = options.qualityChoices
-    this.player = undefined
+    this.playerClass = options.playerClass
+    this.manifest = this.playerClass.manifest
+
+    // Initialize based on first contentObject
+    this.qualityChoices = this.iiifParser.getQualityChoices(this.playerClass.contentObj)
+
     this.updating = false
     // this.bindHashLinkClick()
+
+    // Start listening for changes in the hash
+    this.bindHashChange()
   }
 
   /**
@@ -30,11 +39,12 @@ export default class HashHandler {
   //   })
   // }
 
+  /**
+   * Binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
+   * @method HashHandler#bindHashChange
+   * @return {void}
+   */
   bindHashChange () {
-    /**
-     * this method binds the onhashchange event and checks the location.hash if a user comes directly from a URL with a hash in it
-     * @method HashHandler#bindHashChange
-     **/
     // Get the player instance
     this.player = document.getElementById('iiif-av-player')
 
@@ -46,46 +56,53 @@ export default class HashHandler {
     }
   }
 
-  canvasesInManifest () {
-     /**
-     * @method HashHandler#canvasesInManifest
-     **/
-    return this.instance.manifest.sequences && this.instance.manifest.sequences[0].canvases
-  }
-
+  /**
+   * Read a media fragment from a hash in the URL and then play the starting location from the hash
+   * @function HashHandler#playFromHash
+   * @param {string} hash - Url hash value
+   * @return {void}
+   */
   playFromHash (hash) {
-    /**
-     * this method will read a media fragment from a hash in the URL and then play the starting location from the hash
-     * @method HashHandler#playFromHash
-     **/
     if (this.updating) {
       return
     }
     this.updating = true
-    let options = this.processHash(hash)
-    let canvasesExist = this.canvasesInManifest()
+    let hashOptions = this.processHash(hash)
+    let canvasesExist = this.iiifParser.canvasesInManifest(this.manifest)
     let src = ''
 
     // Safari will only setCurrentTime() after 'canplay' event is fired
     // Using jQuery's 'one' method ensures event only fires once, but there may be a better solution to limit
     //   event listeners being unnecessarily added
     $(this.player).one('canplay', () => {
-      this.player.setCurrentTime(parseInt(options.start))
+      this.player.setCurrentTime(parseInt(hashOptions.start))
       this.player.play()
       this.updating = false
     })
 
     // Is canvas in the hash different from canvas currently in the player?
-    if (canvasesExist && (options.canvas !== this.currentCanvasIndex)) {
-      // Get current canvas object from canvas index
-      let canvasObj = this.instance.getCanvasByIndex(options.canvas)
-      this.qualityChoices = this.instance.getQualityChoices(canvasObj)
-      this.currentCanvasIndex = options.canvas
+    if (canvasesExist && (hashOptions.canvas !== this.currentCanvasIndex)) {
+      // Get the new canvas object from canvas index
+      let canvasObj = this.iiifParser.getCanvasByIndex(hashOptions.canvas, this.manifest)
+
+      let playerType = this.iiifParser.determinePlayerType(canvasObj.content[0])
+
+      // Different type of player required.
+      if (playerType !== this.playerClass.currentPlayerType) {
+        // Destroy current player and it's Mediaelement instance
+        this.playerClass.destroyPlayerInstance()
+        // Render and create a new player instance
+        this.playerClass.render(canvasObj.content[0])
+        return
+      }
+
+      this.qualityChoices = this.iiifParser.getQualityChoices(canvasObj.content[0])
+      this.currentCanvasIndex = hashOptions.canvas
     }
 
     // Find the new source media file
     this.qualityChoices.forEach((choice) => {
-      if (choice.label === options.quality) {
+      if (choice.label === hashOptions.quality) {
         src = choice.id
       }
     })
@@ -96,18 +113,16 @@ export default class HashHandler {
     this.player.load()
   }
 
+  /**
+   * Processes a window.location.hash and creates an object.
+   * It can take any number of parameters. Strings at even locations are keys
+   * and odd locations are values.
+   * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
+   * @function HashHandler#processHash
+   * @param {string} hash - a window.location.hash
+   * @return {Object} result - Representation of hash values in key/value pair
+   **/
   processHash (hash) {
-    /**
-     *
-     * This method processes a window.location.hash and creates an object.
-     * It can take any number of parameters. Strings at even locations are keys
-     * and odd locations are values.
-     * Example: /key/value/someotherkey/value will give you {'key':'value','somotherkey':'value'}
-     * @method HashHandler#processHash
-     * @param {string} hash - a window.location.hash
-     * @return {object}
-     **/
-
     return hash.split('/').splice(1).reduce((result, item, index, array) => {
       if (index % 2 === 0) {
         if (item === 'time') {

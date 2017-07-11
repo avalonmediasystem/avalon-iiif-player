@@ -35,3 +35,12 @@ nav {
   margin: 2rem 0;
 }
 
+/* New Styles */
+#iiif-standalone-player-mount {
+  display: flex;
+  justify-content: space-between;
+}
+.manifest-url-wrapper {
+  margin-bottom: 20px;
+}
+

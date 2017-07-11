@@ -1,5 +1,6 @@
-<html>
+<!DOCTYPE html>
 <head>
+  <meta charset="UTF-8">
   <title>Avalon Player Webpack Version</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
 </head>
@@ -7,10 +8,6 @@
 <div class="ui container content-wrapper">
 
   <h1>IIIF Manifest Standalone Player</h1>
-  <nav class="ui two item menu">
-    <a href="index.html" class="item">Video Player</a>
-    <a href="audio.html" class="item active">Audio Player</a>
-  </nav>
 
   <div class="ui info message" id="manifest-current-wrapper">
     <div class="header">
@@ -28,11 +25,11 @@
     </div>
   </form>
 
-  <section class="iiif-av-player"></section>
-  <section id="data-iiifav-source" data-iiifav-audio-source="mahler-symphony-3.json"></section>
+  <div id="iiif-standalone-player-mount"></div>
+  <div id="data-iiifav-source"  data-iiifav-source="lunchroom_manners_v2.json"></div>
 
 </div>
 
-<script src="bundle.js"></script>
+<script src="iiif-player-bundle.js"></script>
 </body>
 </html>

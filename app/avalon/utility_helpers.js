@@ -1,18 +1,15 @@
-/** Class representing a MediaPlayer
- * @class MediaPlayer
+/**
+ * @class UtilityHelpers
+ * @classdesc Generic singleton utility helpers object for the application, which could potentially store application state
  */
 export default class UtilityHelpers {
-  /**
-   * Create a UtilityHelper
-   * @constructor
-   */
   constructor () {
     this.errorClass = 'error-message'
   }
 
   /**
    * Clear the hash params from URL
-   * @method UtilityHelpers#clearHash
+   * @function UtilityHelpers#clearHash
    * @return {void}
    */
   clearHash () {
@@ -20,9 +17,10 @@ export default class UtilityHelpers {
   }
 
   /**
-   * Display default error message
-   * @param msg
-   * @return void
+   * Create and display default error message
+   * @function UtilityHelpers#displayErrorMessage
+   * @param {string} msg - Message to display
+   * @return {void}
    */
   displayErrorMessage (msg) {
     let el = document.getElementById('manifest-current-wrapper')
@@ -40,6 +38,11 @@ export default class UtilityHelpers {
     el.parentNode.insertBefore(newNode, el.nextSibling)
   }
 
+  /**
+   * Removes an error message if one exists
+   * @function UtilityHelpers#removeErrorMessage
+   * return {void}
+   */
   removeErrorMessage () {
     let el = document.getElementsByClassName(this.errorClass)[0]
     if (el) {
@@ -47,3 +50,6 @@ export default class UtilityHelpers {
     }
   }
 }
+
+// This creates a singleton instance of utilityHelpers to pass around the application
+export let utilityHelpers = new UtilityHelpers()
