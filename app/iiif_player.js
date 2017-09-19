@@ -4,12 +4,12 @@ import Player from './player'
 import { utilityHelpers } from './utility_helpers'
 
 /**
- * @class Avalon
- * @classdesc A wrapper for the Avalon IIIF player
+ * @class IIIFPlayer
+ * @classdesc A wrapper for the IIIFPlayer IIIF player
  */
-export default class Avalon {
+export default class IIIFPlayer {
   /**
-   * @function Avalon#initialize
+   * @function IIIFPlayer#initialize
    * @description Initializer function
    * @return {void}
    */
@@ -18,6 +18,7 @@ export default class Avalon {
 
     // Configuration object to hold element values, ids and such in one place
     this.configObj = {
+      alertElId: 'alert-message',
       currentManifestId: 'manifest-current',
       defaultManifest: 'lunchroom_manners_v2.json',
       mountElId: 'iiif-standalone-player-mount',
@@ -42,9 +43,6 @@ export default class Avalon {
     // Root element necessary in HTML for our application to mount to
     this.mountEl = document.getElementById(this.configObj.mountElId)
 
-    // Set up initial markup for elements to mount to
-    this.setupMarkup()
-
     // Set up a manifest URL form listener
     this.prepareForm()
 
@@ -52,12 +50,19 @@ export default class Avalon {
     let sourceEl = document.getElementById(this.configObj.sourceElId)
     if (sourceEl) {
       this.getManifestAJAX(sourceEl.dataset.iiifavSource)
+      // Update manifest url display
+      this.manifestUrlEl.value = sourceEl.dataset.iiifavSource
     }
+
+    // Add click listener to close alert
+    $(document.getElementById(this.configObj.alertElId)).find('button').on('click', (e) => {
+      this.toggleAlertMessage('', false)
+    })
   }
 
   /**
    * Handle AJAX success response of supplied manifest URL
-   * @function Avalon#ajaxSuccessHandler
+   * @function IIIFPlayer#ajaxSuccessHandler
    * @param {object} data - AJAX data response
    * @param {string} textStatus - AJAX text response
    * @param {object} jqXHR - AJAX request response
@@ -81,11 +86,6 @@ export default class Avalon {
     // Clear current structures markup
     this.structureMarkup = ''
 
-    // Update current manifest message
-    if (document.getElementById(this.configObj.currentManifestId)) {
-      document.getElementById(this.configObj.currentManifestId).innerText = (this.manifestUrlEl.value !== '') ? this.manifestUrlEl.value : this.configObj.defaultManifest
-    }
-
     // Build helper map for current manifest
     this.manifestMap = this.iiifParser.buildManifestMap(manifest)
 
@@ -104,7 +104,7 @@ export default class Avalon {
 
   /**
    * Recurse the manifest 'structures' array and creates an html tree of section links
-   * @function Avalon#createStructure
+   * @function IIIFPlayer#createStructure
    * @param {object} members - A 'members' array in the manifest, under 'structures' array
    * @param {string[]} list - Markup temporary storage array while building the nested unordered lists
    * @param {boolean} newUl - Flag whether to write a nested unordered list
@@ -140,18 +140,20 @@ export default class Avalon {
 
   /**
    * Retrieve a manifest via Ajax
-   * @function Avalon#getManifestAJAX
+   * @function IIIFPlayer#getManifestAJAX
    * @param {string} url - Url of manifest, either 'http...' or a local file
    * @return {void}
    */
   getManifestAJAX (url) {
+    const t = this
+
     $.ajax({
       dataType: 'json',
       url: url
     })
       .done(this.ajaxSuccessHandler.bind(this))
-      .fail(function (error) {
-        utilityHelpers.displayErrorMessage(`Manifest URL Error - ${error.statusText}`)
+      .fail((error) => {
+        t.toggleAlertMessage(`Manifest URL Error - ${error.statusText}`, true)
       })
       .always(function () {
       })
@@ -159,7 +161,7 @@ export default class Avalon {
 
   /**
    * Add structures tree markup to DOM mount element
-   * @function Avalon#mountStructure
+   * @function IIIFPlayer#mountStructure
    * @return {void}
    */
   mountStructure () {
@@ -168,38 +170,20 @@ export default class Avalon {
 
   /**
    * Set up listener for the Manifest Url form
-   * @function Avalon#prepareForm
+   * @function IIIFPlayer#prepareForm
    * @return {void}
    */
   prepareForm () {
     let form = document.getElementById('manifest-url-form')
 
     if (!form) { return }
-
     // Add form submit event listener
     form.addEventListener('submit', this.submitURLHandler.bind(this))
   }
 
   /**
-   * Set up the initial markup wrappers for structures links and the player,
-   * then add markup to the DOM
-   * @function Avalon#setupMarkup
-   * @return {void}
-   */
-  setupMarkup () {
-    let structureEl = document.createElement('div')
-    let playerEl = document.createElement('div')
-
-    structureEl.setAttribute('id', this.configObj.structureElId)
-    playerEl.setAttribute('id', this.configObj.playerWrapperId)
-
-    this.mountEl.appendChild(structureEl)
-    this.mountEl.appendChild(playerEl)
-  }
-
-  /**
    * Form submit event handler
-   * @function Avalon#submitURLHandler
+   * @function IIIFPlayer#submitURLHandler
    * @param {Object} e - the event object
    * @return {boolean} false - Prevent default form submit behavior
    */
@@ -210,5 +194,21 @@ export default class Avalon {
     utilityHelpers.removeErrorMessage()
     this.getManifestAJAX(this.manifestUrlEl.value)
     return false
+  }
+
+  /**
+   * Helper method to toggle the alert message
+   * @param  {string} msg     Test message to display
+   * @param  {boolean} display Whether to display the alert, or hide the alert
+   * @return {null}
+   */
+  toggleAlertMessage (msg, display) {
+    let el = document.getElementById('alert-message')
+
+    if (display) {
+      el.classList.remove('hide')
+    } else {
+      el.classList.add('hide')
+    }
   }
 }

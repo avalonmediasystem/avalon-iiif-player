@@ -23,11 +23,11 @@ export default class UtilityHelpers {
    * @return {void}
    */
   displayErrorMessage (msg) {
-    let el = document.getElementById('manifest-current-wrapper')
+    let el = document.getElementById('alert-message')
     let newNode = document.createElement('div')
     let markup = `<i class="icon warning circle"></i>
                   <div class="content">
-                     <p>${msg}</p> 
+                     <p>${msg}</p>
                   </div>`
     newNode.classList.add(this.errorClass)
     newNode.classList.add('ui')

@@ -1,6 +1,6 @@
-import Avalon from '../app/avalon/avalon'
+import IIIFPlayer from '../app/iiif_player'
 
-let avalon
+let iiifPlayer
 
 describe('An Avalon class', () => {
   beforeAll(() => {
@@ -10,9 +10,9 @@ describe('An Avalon class', () => {
   })
 
   it('should be initialized', () => {
-    avalon = new Avalon()
-    avalon.initialize()
-    expect(avalon.toBeDefined)
-    expect(avalon.configObj.toBeDefined)
+    iiifPlayer = new IIIFPlayer()
+    iiifPlayer.initialize()
+    expect(iiifPlayer.toBeDefined)
+    expect(iiifPlayer.configObj.toBeDefined)
   })
 })

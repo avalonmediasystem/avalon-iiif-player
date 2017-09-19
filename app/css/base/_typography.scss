@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+body {
+  font-family: $primaryFont;
+}
+
+a {
+  color: $primaryColor;
+
+  &:hover {
+    color: darken($primaryColor, 25%);
+  }
+}
