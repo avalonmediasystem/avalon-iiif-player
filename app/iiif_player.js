@@ -204,8 +204,10 @@ export default class IIIFPlayer {
    */
   toggleAlertMessage (msg, display) {
     let el = document.getElementById('alert-message')
+    let textEl = document.getElementById('alert-message-text')
 
     if (display) {
+      textEl.innerText = msg
       el.classList.remove('hide')
     } else {
       el.classList.add('hide')
