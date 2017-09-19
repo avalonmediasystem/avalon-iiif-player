@@ -1,4 +1,4 @@
-import HashHandler from '../app/avalon/hash_handler'
+import HashHandler from '../app/hash_handler'
 
 let lunchRoomMannersJSON = {}
 
