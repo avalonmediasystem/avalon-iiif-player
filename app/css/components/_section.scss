@@ -3,5 +3,11 @@ section {
 }
 
 .current-manifest {
-  padding-left: 10px;
+  h4 {
+    cursor: pointer;
+  }
+  
+  pre {
+    font-size: 12px;
+  }
 }

@@ -6,7 +6,7 @@ describe('An Avalon class', () => {
   beforeAll(() => {
     // Load fixtures
     jasmine.getFixtures().fixturesPath = 'base/spec/fixtures'
-    loadFixtures('myfixture.html')
+    loadFixtures('test_fixture.html')
   })
 
   it('should be initialized', () => {
