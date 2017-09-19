@@ -54,9 +54,25 @@ export default class IIIFPlayer {
       this.manifestUrlEl.value = sourceEl.dataset.iiifavSource
     }
 
+    // Add event listeners
+    this.addEventListeners()
+  }
+
+  /**
+   * Add event listeners to UI elements
+   * @function IIIFPlayer#addEventListeners
+   * @return {void}
+   */
+  addEventListeners () {
+    let $currentManifest = $('section.current-manifest')
+
     // Add click listener to close alert
     $(document.getElementById(this.configObj.alertElId)).find('button').on('click', (e) => {
       this.toggleAlertMessage('', false)
+    })
+
+    $currentManifest.find('h4').on('click', (e) => {
+      $currentManifest.find('pre').slideToggle()
     })
   }
 
@@ -94,6 +110,12 @@ export default class IIIFPlayer {
 
     // Put structure markup in DOM
     this.mountStructure()
+
+    // Update manifest code in DOM
+    $('#current-manifest-pre').html(JSON.stringify(manifest, null, 2))
+
+    // Update manifest title in DOM
+    document.getElementById('current-manifest-title').innerHTML = manifest.label || 'Manifest does not have a parent label property'
 
     // Get first content item to feed player
     options.contentObj = this.iiifParser.getFirstContentObj(manifest, this.manifestMap)
@@ -145,13 +167,16 @@ export default class IIIFPlayer {
    * @return {void}
    */
   getManifestAJAX (url) {
-    const t = this
+    let t = this
+
+    // Clear any error messages if they exist
+    t.toggleAlertMessage('')
 
     $.ajax({
       dataType: 'json',
       url: url
     })
-      .done(this.ajaxSuccessHandler.bind(this))
+      .done(t.ajaxSuccessHandler.bind(t))
       .fail((error) => {
         t.toggleAlertMessage(`Manifest URL Error - ${error.statusText}`, true)
       })
@@ -210,6 +235,7 @@ export default class IIIFPlayer {
       textEl.innerText = msg
       el.classList.remove('hide')
     } else {
+      textEl.innerText = ''
       el.classList.add('hide')
     }
   }
