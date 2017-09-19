@@ -1,9 +1,9 @@
 {
-  "name": "avalon-player",
+  "name": "avalon-iiif-player",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "repository": "https://github.com/avalonmediasystem/avalon-poc-standalone",
+  "repository": "https://github.com/avalonmediasystem/avalon-iiif-player",
   "scripts": {
     "build": "webpack --env.target production",
     "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
@@ -18,7 +18,9 @@
     "babel-loader": "^7.1.0",
     "babel-preset-env": "^1.5.2",
     "babel-register": "^6.24.1",
+    "bootstrap": "^4.0.0-beta",
     "css-loader": "^0.28.4",
+    "file-loader": "^0.11.2",
     "jasmine-core": "^2.6.4",
     "jsdoc": "^3.5.1",
     "karma": "^1.7.0",

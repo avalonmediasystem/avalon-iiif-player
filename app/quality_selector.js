@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import '../css/quality-selector.css'
+import './css/quality-selector.css'
 
 export default class QualitySelector {
 /**

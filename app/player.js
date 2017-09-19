@@ -2,7 +2,7 @@ import HashHandler from './hash_handler'
 import IIIFParser from './iiif_parser'
 import QualitySelector from './quality_selector'
 import 'mediaelement'
-import '../../node_modules/mediaelement/src/css/mediaelementplayer.css'
+import '../node_modules/mediaelement/src/css/mediaelementplayer.css'
 
 /**
  * @class Player
@@ -104,7 +104,7 @@ export default class Player {
 
     // Audio File
     if (item.type === 'Audio') {
-      markup = `<audio controls id="${this.playerElId}" width="600">
+      markup = `<audio width="100%" controls id="${this.playerElId}" data-mejsoptions='{"stretching": "responsive"}'>
           <source src="${item.id}" type="audio/mp3" data-quality="${item.label}">
         </audio>`
     }

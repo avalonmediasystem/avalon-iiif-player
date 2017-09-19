@@ -1,7 +1,7 @@
-import Avalon from './avalon/avalon'
-import './css/demo.css'
+import IIIFPlayer from './iiif_player'
+import './css/main.scss'
 
 document.addEventListener('DOMContentLoaded', () => {
-  var avalon = new Avalon()
-  avalon.initialize()
+  var iiifPlayer = new IIIFPlayer()
+  iiifPlayer.initialize()
 })

@@ -24,7 +24,8 @@ const commonConfig = merge([
   parts.loadCSS({
     include: [
       PATHS.app,
-      path.resolve(__dirname, 'node_modules/mediaelement/src/css')
+      path.resolve(__dirname, 'node_modules/mediaelement/src/css'),
+      path.resolve(__dirname, 'node_modules/bootstrap/scss')
     ]
   }),
   parts.loadSVG()
