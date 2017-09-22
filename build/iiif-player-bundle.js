@@ -10218,6 +10218,16 @@ var IIIFParser = function () {
         // Has sequences and canvases
       } else if (manifestMap.hasSequences && manifestMap.hasCanvases) {
         firstContent = manifest.sequences[0].canvases[0].content;
+
+        // Has sequences, no root manifest canvases
+      } else if (manifestMap.hasSequences && !manifestMap.hasCanvases) {
+        // Sequence first object has 'items' key
+        if (manifest.sequences[0].hasOwnProperty('items')) {
+          // items first object has 'content' key
+          if (manifest.sequences[0].items[0].hasOwnProperty('content')) {
+            firstContent = manifest.sequences[0].items[0].content;
+          }
+        }
       }
       return firstContent[0];
     }
@@ -10283,7 +10293,10 @@ var IIIFParser = function () {
   }, {
     key: 'getPlayerDimensions',
     value: function getPlayerDimensions(manifest, contentObj, item) {
-      var dimensions = {};
+      var dimensions = {
+        height: 480,
+        width: 640
+      };
       var canvasIndex = this.getCanvasIndex(contentObj.id);
       var canvas = this.getCanvasByIndex(canvasIndex, manifest);
 
@@ -10840,7 +10853,7 @@ var IIIFPlayer = function () {
       this.manifestMap = this.iiifParser.buildManifestMap(manifest);
 
       // Create structure markup, or display message if no structures exist in manifest
-      this.structureMarkup = manifest.hasOwnProperty('structures') ? this.createStructure(manifest.structures, [], true) : '<p>No structures in manifest</p>';
+      this.structureMarkup = manifest.hasOwnProperty('structures') ? this.createStructure(manifest.structures, [], true) : '<div class="alert alert-danger"><p>No structures array in manifest root</p></div>';
 
       // Put structure markup in DOM
       this.mountStructure();
@@ -10966,9 +10979,6 @@ var IIIFPlayer = function () {
     key: 'submitURLHandler',
     value: function submitURLHandler(e) {
       e.preventDefault();
-
-      // Remove any existing error messages
-      _utility_helpers.utilityHelpers.removeErrorMessage();
       this.getManifestAJAX(this.manifestUrlEl.value);
       return false;
     }
@@ -19736,7 +19746,7 @@ var Player = function () {
       }
       // Video File
       if (item.type === 'Video') {
-        markup = '<video class=\'av-player-controls\' id="' + this.playerElId + '" class="mejs__player" height="' + dimensions.height + '" width="' + dimensions.width + '" controls data-mejsoptions=\'{"pluginPath": "", "alwaysShowControls": "true"}\'>\n          <source src="' + item.id + '" type="video/mp4">\n          <track kind="subtitles" src="' + subtitlesObj.id + '" srclang="' + subtitlesObj.language + '">\n        </video>';
+        markup = '<video class="av-player-controls" id="' + this.playerElId + '" class="mejs__player" height="' + dimensions.height + '" width="' + dimensions.width + '" controls data-mejsoptions=\'{"pluginPath": "", "alwaysShowControls": "true"}\'>\n          <source src="' + item.id + '" type="video/mp4">\n          <track kind="subtitles" src="' + subtitlesObj.id + '" srclang="' + subtitlesObj.language + '">\n        </video>';
       }
       return markup;
     }
@@ -19774,6 +19784,11 @@ var Player = function () {
 
       // Generate HTML5 markup which Mediaelement will hook into
       var playerMarkup = this.generatePlayerMarkup(contentObj, item);
+
+      // TODO: Use this to hardcode external source files for testing
+      // let playerMarkup = `<video class='av-player-controls' id="${this.playerElId}" class="mejs__player" height="480" width="640" controls data-mejsoptions='{"pluginPath": "", "alwaysShowControls": "true"}'>
+      //     <source src="https://mallorn.dlib.indiana.edu/streams/02a21687-f628-45f2-b002-9f8987cc908e/085d7022-4134-4d3e-8baf-9e0e386f9c8c/videoshort.mp4" type="application/vnd.apple.mpegURL">
+      //   </video>`
 
       // Update environmental vars
       this.currentPlayerType = item.type;

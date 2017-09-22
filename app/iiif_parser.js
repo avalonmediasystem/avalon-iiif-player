@@ -182,6 +182,16 @@ export default class IIIFParser {
       // Has sequences and canvases
     } else if (manifestMap.hasSequences && manifestMap.hasCanvases) {
       firstContent = manifest.sequences[0].canvases[0].content
+
+      // Has sequences, no root manifest canvases
+    } else if (manifestMap.hasSequences && !manifestMap.hasCanvases) {
+      // Sequence first object has 'items' key
+      if (manifest.sequences[0].hasOwnProperty('items')) {
+        // items first object has 'content' key
+        if (manifest.sequences[0].items[0].hasOwnProperty('content')) {
+          firstContent = manifest.sequences[0].items[0].content
+        }
+      }
     }
     return firstContent[0]
   }
@@ -238,7 +248,10 @@ export default class IIIFParser {
    * @returns {Object} dimensions - Dimensions key/value pair
    */
   getPlayerDimensions (manifest, contentObj, item) {
-    let dimensions = {}
+    let dimensions = {
+      height: 480,
+      width: 640
+    }
     const canvasIndex = this.getCanvasIndex(contentObj.id)
     const canvas = this.getCanvasByIndex(canvasIndex, manifest)
 

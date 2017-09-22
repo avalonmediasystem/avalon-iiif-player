@@ -106,7 +106,7 @@ export default class IIIFPlayer {
     this.manifestMap = this.iiifParser.buildManifestMap(manifest)
 
     // Create structure markup, or display message if no structures exist in manifest
-    this.structureMarkup = (manifest.hasOwnProperty('structures')) ? this.createStructure(manifest.structures, [], true) : '<p>No structures in manifest</p>'
+    this.structureMarkup = (manifest.hasOwnProperty('structures')) ? this.createStructure(manifest.structures, [], true) : '<div class="alert alert-danger"><p>No structures array in manifest root</p></div>'
 
     // Put structure markup in DOM
     this.mountStructure()
@@ -214,9 +214,6 @@ export default class IIIFPlayer {
    */
   submitURLHandler (e) {
     e.preventDefault()
-
-    // Remove any existing error messages
-    utilityHelpers.removeErrorMessage()
     this.getManifestAJAX(this.manifestUrlEl.value)
     return false
   }
