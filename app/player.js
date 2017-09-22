@@ -110,7 +110,7 @@ export default class Player {
     }
     // Video File
     if (item.type === 'Video') {
-      markup = `<video class='av-player-controls' id="${this.playerElId}" class="mejs__player" height="${dimensions.height}" width="${dimensions.width}" controls data-mejsoptions='{"pluginPath": "", "alwaysShowControls": "true"}'>
+      markup = `<video class="av-player-controls" id="${this.playerElId}" class="mejs__player" height="${dimensions.height}" width="${dimensions.width}" controls data-mejsoptions='{"pluginPath": "", "alwaysShowControls": "true"}'>
           <source src="${item.id}" type="video/mp4">
           <track kind="subtitles" src="${subtitlesObj.id}" srclang="${subtitlesObj.language}">
         </video>`
@@ -143,6 +143,11 @@ export default class Player {
 
     // Generate HTML5 markup which Mediaelement will hook into
     let playerMarkup = this.generatePlayerMarkup(contentObj, item)
+
+    // TODO: Use this to hardcode external source files for testing
+    // let playerMarkup = `<video class='av-player-controls' id="${this.playerElId}" class="mejs__player" height="480" width="640" controls data-mejsoptions='{"pluginPath": "", "alwaysShowControls": "true"}'>
+    //     <source src="https://mallorn.dlib.indiana.edu/streams/02a21687-f628-45f2-b002-9f8987cc908e/085d7022-4134-4d3e-8baf-9e0e386f9c8c/videoshort.mp4" type="application/vnd.apple.mpegURL">
+    //   </video>`
 
     // Update environmental vars
     this.currentPlayerType = item.type
