@@ -298,4 +298,22 @@ export default class IIIFParser {
 
     return subtitlesObj
   }
+
+  /**
+   * Get a thumbnail (poster) to display for a video file if one exists in the manifest
+   * @param  {Object} manifest The manifest
+   * @return {string} URI of thumbnail or an empty string if not found
+   */
+  getThumbnail (manifest) {
+    let thumbnail = ''
+
+    if (manifest.hasOwnProperty('sequences')) {
+      if (manifest.sequences[0].hasOwnProperty('items')) {
+        if (manifest.sequences[0].items[0].hasOwnProperty('thumbnail')) {
+          thumbnail = manifest.sequences[0].items[0].thumbnail.id
+        }
+      }
+    }
+    return thumbnail
+  }
 }
