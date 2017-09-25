@@ -71,6 +71,7 @@ export default class IIIFPlayer {
       this.toggleAlertMessage('', false)
     })
 
+    // Slide toggle the DOM section which displays current manifest JSON object
     $currentManifest.find('h4').on('click', (e) => {
       $currentManifest.find('pre').slideToggle()
     })

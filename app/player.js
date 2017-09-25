@@ -101,17 +101,19 @@ export default class Player {
     let markup = ''
     let subtitlesObj = this.iiifParser.getSubtitles(contentObj)
     let dimensions = this.iiifParser.getPlayerDimensions(this.manifest, contentObj, item)
+    let videoSourceFormat = item.format || 'video/mp4'
+    let audioSourceFormat = item.format || 'audio/mp3'
 
     // Audio File
     if (item.type === 'Audio') {
       markup = `<audio width="100%" controls id="${this.playerElId}" data-mejsoptions='{"stretching": "responsive"}'>
-          <source src="${item.id}" type="audio/mp3" data-quality="${item.label}">
+          <source src="${item.id}" type="${audioSourceFormat}" data-quality="${item.label}">
         </audio>`
     }
     // Video File
     if (item.type === 'Video') {
-      markup = `<video class="av-player-controls" id="${this.playerElId}" class="mejs__player" height="${dimensions.height}" width="${dimensions.width}" controls data-mejsoptions='{"pluginPath": "", "alwaysShowControls": "true"}'>
-          <source src="${item.id}" type="video/mp4">
+      markup = `<video class="av-player-controls" id="${this.playerElId}" height="${dimensions.height}" width="${dimensions.width}" controls>
+          <source src="${item.id}" type="${videoSourceFormat}">
           <track kind="subtitles" src="${subtitlesObj.id}" srclang="${subtitlesObj.language}">
         </video>`
     }
@@ -140,7 +142,10 @@ export default class Player {
   render (contentObj, qualityLevel = 'Medium') {
     // Get current item in manifest to render
     let item = this.iiifParser.getContentItem(contentObj, qualityLevel)
-
+    let defaults = {
+      alwaysShowControls: true,
+      pluginPath: ''
+    }
     // Generate HTML5 markup which Mediaelement will hook into
     let playerMarkup = this.generatePlayerMarkup(contentObj, item)
 
@@ -156,8 +161,16 @@ export default class Player {
     // Insert HTML5 tag markup
     document.getElementById(this.configObj.playerWrapperId).innerHTML = playerMarkup
 
+    // Add poster image (if one exists) for video files
+    if (this.currentPlayerType === 'Video') {
+      let thumbnail = this.iiifParser.getThumbnail(this.manifest)
+      if (thumbnail !== '') {
+        defaults.poster = thumbnail
+      }
+    }
+
     // Instantiate MediaElement player
-    this.player = new MediaElementPlayer(this.playerElId, {}) // eslint-disable-line
+    this.player = new MediaElementPlayer(this.playerElId, defaults) // eslint-disable-line
 
     // This enables the custom quality selector
     // TODO: Fix this if we want it working
