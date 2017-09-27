@@ -1,4 +1,3 @@
-import HashHandler from './hash_handler'
 import IIIFParser from './iiif_parser'
 import QualitySelector from './quality_selector'
 import 'mediaelement'
@@ -27,34 +26,6 @@ export default class Player {
 
     // Render initial player
     this.render(this.contentObj)
-  }
-
-  /**
-   * This will add urls to labels in the structure navigation if they have the class .implicit
-   * @function Player#addUrlsForParents
-   * @return {void}
-   * TODO: Revisit and fix this
-   */
-  addUrlsForParents () {
-    try {
-      var parentStopTimes = document.querySelectorAll('.implicit')
-      parentStopTimes.forEach((el) => {
-        let lastTimeIndex = el.querySelectorAll('.explicit').length - 1
-        let childStartStopTime = this.getTimeFromUrl(el.querySelectorAll('.explicit')[lastTimeIndex].querySelector('a').href)
-        let newTime = this.replaceTimeInUrl(el.querySelector('.media-structure-uri').href, childStartStopTime)
-
-        let label = el.querySelector('li').textContent
-        el.querySelector('li').textContent = ''
-
-        let link = document.createElement('a')
-        link.setAttribute('class', 'media-structure-uri')
-        link.setAttribute('href', newTime)
-        link.text = label
-        el.querySelector('li').appendChild(link)
-      })
-    } catch (e) {
-      console.log(e)
-    }
   }
 
   /**
@@ -121,6 +92,17 @@ export default class Player {
   }
 
   /**
+   * Safely set a new current time in player
+   * @param  {[type]} startTime [description]
+   * @return {[type]}           [description]
+   */
+  goToNewTime (startTime) {
+    this.player.pause()
+    this.player.setCurrentTime(startTime)
+    this.player.play()
+  }
+
+  /**
    * Creates the quality selector markup
    * @function Player#qualitySelectorMarkup
    * @returns {Object} renderChoices() - A QualitySelector class function which renders choices.
@@ -154,6 +136,10 @@ export default class Player {
     //     <source src="https://mallorn.dlib.indiana.edu/streams/02a21687-f628-45f2-b002-9f8987cc908e/085d7022-4134-4d3e-8baf-9e0e386f9c8c/videoshort.mp4" type="application/vnd.apple.mpegURL">
     //   </video>`
 
+    // let playerMarkup = `<audio width="100%" controls id="${this.playerElId}" data-mejsoptions='{"stretching": "responsive"}'>
+    //     <source src="https://mallorn.dlib.indiana.edu/streams/c6f24ac2-4710-46e0-8709-c47b73a61f7c/3b0fb05e-1155-4323-9b85-8cdfb0be3b9a/Caruso_BellaFigliaDellamore.mp4.m3u8?token=4694c4a5a950f742988fed9f7f971f8f63d4d5ea" type="application/x-mpegURL" data-quality="Medium">
+    //   </audio>`
+
     // Update environmental vars
     this.currentPlayerType = item.type
     this.contentObj = contentObj
@@ -176,9 +162,9 @@ export default class Player {
     // TODO: Fix this if we want it working
     // document.getElementById(this.playerElId).insertAdjacentHTML('beforeend', this.qualitySelectorMarkup())
 
-    this.hashHandler = new HashHandler({
-      'playerClass': this
-    })
+    // this.hashHandler = new HashHandler({
+    //   'playerClass': this
+    // })
   }
 
   /**

@@ -35,17 +35,9 @@ export default class IIIFParser {
    * @returns {string} structureLink - HTML string for the anchor link
    */
   buildStructureLink (member) {
-    let members = member.members
-    let id = members[0].id
-    let structureLink = '#'
+    let id = member.members[0].id
+    let structureLink = `<a href="${id}">${member.label}</a>`
 
-    if (this.getMediaFragment(id) !== undefined) {
-      let mediaFragment = this.getMediaFragment(id)
-      let canvasIndex = this.getCanvasIndex(id)
-      let canvasHash = (canvasIndex !== '') ? `/canvas/${canvasIndex}` : ''
-
-      structureLink = `<a data-turbolinks='false' data-target="#" href="#avalon/time/${mediaFragment.start},${mediaFragment.stop}/quality/Medium${canvasHash}" class="media-structure-uri" >${member.label}</a>`
-    }
     return structureLink
   }
 
@@ -75,6 +67,23 @@ export default class IIIFParser {
       }
     }
     return body[0].items[0].type
+  }
+
+  /**
+   * Get a canvas object from it's id
+   * @param  {[type]} canvasId [description]
+   * @return {[type]}          [description]
+   */
+  getCanvas (canvasId, canvases) {
+    let canvas = {}
+
+    for (let i = 0, len = canvases.length; i < len; i++) {
+      if (canvases[i].id === canvasId) {
+        canvas = canvases[i]
+        break
+      }
+    }
+    return canvas
   }
 
   /**
@@ -140,6 +149,11 @@ export default class IIIFParser {
       })
     }
     return canvasObject
+  }
+
+  getCanvasMediaType (canvas) {
+    // TODO: Make sure location of source files doesn't live elsewhere than where targeted below
+
   }
 
   /**
@@ -273,6 +287,19 @@ export default class IIIFParser {
       dimensions.width = item.width
     }
     return dimensions
+  }
+
+  /**
+   * Retrieve range start/stop times from uri query param 't=...'
+   * @param  {[type]} uri [description]
+   * @return {[type]}          [description]
+   */
+  getStartStopTimes (uri) {
+    let hashParams = uri.split('#')[1]
+    let tIndex = hashParams.indexOf('t=')
+    let timesStr = hashParams.slice(tIndex + 2, hashParams.indexOf('&', tIndex))
+
+    return timesStr.split(',')
   }
 
   /**

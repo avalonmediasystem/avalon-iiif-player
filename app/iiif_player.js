@@ -16,23 +16,32 @@ export default class IIIFPlayer {
   initialize () {
     this.iiifParser = new IIIFParser()
 
+    this.canvases = []
+
     // Configuration object to hold element values, ids and such in one place
     this.configObj = {
       alertElId: 'alert-message',
       currentManifestId: 'manifest-current',
       defaultManifest: 'lunchroom_manners_v2.json',
       mountElId: 'iiif-standalone-player-mount',
+      playerId: 'iiif-av-player',
       playerWrapperId: 'iiif-player-wrapper',
       sourceElId: 'data-iiifav-source',
       structureElId: 'iiif-structure-wrapper',
       urlTextInputId: 'manifest-url'
     }
 
+    this.currentCanvasId = ''
+
+    this.manifest = null
+
     // Map of current manifest properties we need for parsing decisions
     this.manifestMap = {}
 
     // Variable to hold structures HTML markup as a string
     this.structureMarkup = ''
+
+    this.playerEl = null
 
     // Current player wrapper instance
     this.playerWrapper = null
@@ -59,7 +68,8 @@ export default class IIIFPlayer {
   }
 
   /**
-   * Add event listeners to UI elements
+   * Add event listeners for submitting a new manifest url
+   * and toggling display of manifest JSON code in UI
    * @function IIIFPlayer#addEventListeners
    * @return {void}
    */
@@ -74,6 +84,79 @@ export default class IIIFPlayer {
     // Slide toggle the DOM section which displays current manifest JSON object
     $currentManifest.find('h4').on('click', (e) => {
       $currentManifest.find('pre').slideToggle()
+    })
+  }
+
+  /**
+   * Handle clicking nested structure links
+   */
+  addStructureListeners () {
+    const $el = $('#' + this.configObj.structureElId)
+    let t = this
+
+    $el.off()
+    $el.on('click', (e) => {
+      const target = e.target
+      let updating = false
+
+      // Set the reference to the player element, since we know
+      // it now exists in the DOM
+      if (!t.playerEl) {
+        t.playerEl = document.getElementById(t.configObj.playerId)
+      }
+
+      if (target.nodeName === 'A') {
+        e.preventDefault()
+        // Handle update interuptions with a flag
+        if (updating) {
+          return false
+        }
+        updating = true
+
+        let newCanvasId = target.href.split('#')[0]
+        let startStopTimes = t.iiifParser.getStartStopTimes(target.href)
+
+        $(t.playerEl).one('canplay', (e) => {
+          if (updating) {
+            console.log('canplay')
+            t.playerWrapper.goToNewTime(startStopTimes[0])
+            updating = false
+          }
+        })
+
+        if (this.currentCanvasId === newCanvasId) {
+          // Same canvas media object, just update the time
+          t.playerWrapper.goToNewTime(startStopTimes[0])
+        } else {
+          // Get the new canvas for clicked structured link
+          let canvas = t.iiifParser.getCanvas(newCanvasId, this.canvases)
+          const choiceItems = canvas.content[0].items[0].body[0].items
+
+          // Update current canvasId
+          t.currentCanvasId = newCanvasId
+          // Is new canvas object media type same as current canvas media type?
+          // ie. (Video old, Video new)
+          if (choiceItems[0].type === t.playerWrapper.currentPlayerType) {
+            // Update the source media file feeding MEJS player
+            t.playerWrapper.player.pause()
+            t.playerWrapper.player.setSrc(choiceItems[0].id)
+            t.playerWrapper.player.load()
+            t.playerWrapper.player.play()
+            console.log('loaded: ' + choiceItems[0].id)
+          } else {
+            // Destroy current player and render a new one
+            // ie (Video old, Audio new)
+            t.playerWrapper.destroyPlayerInstance()
+            // t.playerWrapper.render(canvas.content[0])
+            delete t.playerWrapper
+            let options = {}
+            options.manifest = t.manifest
+            options.configObj = t.configObj
+            options.contentObj = canvas.content[0]
+            this.playerWrapper = new Player(options)
+          }
+        }
+      }
     })
   }
 
@@ -94,6 +177,11 @@ export default class IIIFPlayer {
     } catch (e) {
       manifest = data
     }
+    // Manifest SHOULD have 'sequences' but if not the canvas object might be the root object
+    this.canvases = (manifest.hasOwnProperty('sequences')) ? manifest.sequences[0].canvases : [manifest]
+    this.currentCanvasId = this.canvases[0].id
+
+    this.manifest = manifest
     options.manifest = manifest
     options.configObj = this.configObj
 
@@ -111,6 +199,9 @@ export default class IIIFPlayer {
 
     // Put structure markup in DOM
     this.mountStructure()
+
+    // Listen to structure link clicks
+    this.addStructureListeners()
 
     // Update manifest code in DOM
     $('#current-manifest-pre').html(JSON.stringify(manifest, null, 2))

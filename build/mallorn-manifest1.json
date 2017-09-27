@@ -1,0 +1,399 @@
+{
+  "id": "https://mallorn.dlib.indiana.edu/media_objects/0c483j54d/manifest",
+  "type": "manifest",
+  "label": "lunch-pop",
+  "metadata": [
+    {
+      "label": "Date Issued",
+      "value": "1212"
+    }
+  ],
+  "thumbnail": {
+    "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/thumbnail",
+    "type": "Image"
+  },
+  "sequences": [
+    {
+      "id": "https://mallorn.dlib.indiana.edu/media_objects/0c483j54d/manifest/sequence",
+      "type": "Sequence",
+      "canvases": [
+        {
+          "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/canvas",
+          "type": "Canvas",
+          "duration": 30.101,
+          "thumbnail": {
+            "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/poster",
+            "type": "Image"
+          },
+          "height": 240,
+          "width": 320,
+          "content": [
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/canvas/annotation_page",
+              "type": "AnnotationPage",
+              "items": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/canvas/annotation_page/annotation/0",
+                  "type": "Annotation",
+                  "motivation": "painting",
+                  "body": [
+                    {
+                      "type": "Choice",
+                      "choiceHint": "user",
+                      "items": [
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/0274365b-8eac-4a2c-8451-227cc4c61378/4c684964-af07-43e0-bda9-f99279f4bf14/Popeye_forPresident.mp4.m3u8?token=0add8f0ef3373927792cf4fc3689ed18bee4c553",
+                          "type": "Video",
+                          "format": "application/x-mpegURL",
+                          "label": "Medium"
+                        },
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/0274365b-8eac-4a2c-8451-227cc4c61378/1ece4ade-9c05-46bf-bb05-ff7e20c4ecd3/Popeye_forPresident.mp4.m3u8?token=0add8f0ef3373927792cf4fc3689ed18bee4c553",
+                          "type": "Video",
+                          "format": "application/x-mpegURL",
+                          "label": "High"
+                        },
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/0274365b-8eac-4a2c-8451-227cc4c61378/13cc2fe3-135b-429d-aeb6-2ea5f784d513/Popeye_forPresident.mp4.m3u8?token=0add8f0ef3373927792cf4fc3689ed18bee4c553",
+                          "type": "Video",
+                          "format": "application/x-mpegURL",
+                          "label": "Low"
+                        }
+                      ]
+                    }
+                  ],
+                  "target": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/canvas"
+                },
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/canvas/annotation_page/annotation/1",
+                  "type": "Annotation",
+                  "motivation": "painting",
+                  "body": [
+                    {
+                      "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/captions",
+                      "type": "Text",
+                      "format": "text/vtt"
+                    }
+                  ],
+                  "target": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/canvas"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas",
+          "type": "Canvas",
+          "duration": 572.034,
+          "thumbnail": {
+            "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/poster",
+            "type": "Image"
+          },
+          "height": 360,
+          "width": 480,
+          "content": [
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas/annotation_page",
+              "type": "AnnotationPage",
+              "items": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas/annotation_page/annotation/0",
+                  "type": "Annotation",
+                  "motivation": "painting",
+                  "body": [
+                    {
+                      "type": "Choice",
+                      "choiceHint": "user",
+                      "items": [
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/6be8c04e-4afb-4d5a-abb7-5a7d558d5919/0407e429-9f31-49c4-a618-71fbba982f51/lunchroom_manners.mp4.m3u8?token=c2398d79b94825660e9cd9137000b63eb91e02e7",
+                          "type": "Video",
+                          "format": "application/x-mpegURL",
+                          "label": "High"
+                        },
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/6be8c04e-4afb-4d5a-abb7-5a7d558d5919/8165e654-50fa-447c-a946-297d00c36130/lunchroom_manners.mp4.m3u8?token=c2398d79b94825660e9cd9137000b63eb91e02e7",
+                          "type": "Video",
+                          "format": "application/x-mpegURL",
+                          "label": "Low"
+                        },
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/6be8c04e-4afb-4d5a-abb7-5a7d558d5919/9753f2e5-52bf-4d0e-bf9d-8d18910f7db7/lunchroom_manners.mp4.m3u8?token=c2398d79b94825660e9cd9137000b63eb91e02e7",
+                          "type": "Video",
+                          "format": "application/x-mpegURL",
+                          "label": "Medium"
+                        }
+                      ]
+                    }
+                  ],
+                  "target": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas"
+                },
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas/annotation_page/annotation/1",
+                  "type": "Annotation",
+                  "motivation": "painting",
+                  "body": [
+                    {
+                      "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/captions",
+                      "type": "Text",
+                      "format": "text/vtt"
+                    }
+                  ],
+                  "target": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "https://mallorn.dlib.indiana.edu/master_files/qv33rw76p/canvas",
+          "type": "Canvas",
+          "duration": 88.555,
+          "content": [
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/qv33rw76p/canvas/annotation_page",
+              "type": "AnnotationPage",
+              "items": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/qv33rw76p/canvas/annotation_page/annotation/0",
+                  "type": "Annotation",
+                  "motivation": "painting",
+                  "body": [
+                    {
+                      "type": "Choice",
+                      "choiceHint": "user",
+                      "items": [
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/c6f24ac2-4710-46e0-8709-c47b73a61f7c/3b0fb05e-1155-4323-9b85-8cdfb0be3b9a/Caruso_BellaFigliaDellamore.mp4.m3u8?token=ccf0ca87c4d50aeafd6ccb2cd63fad7946098485",
+                          "type": "Audio",
+                          "format": "application/x-mpegURL",
+                          "label": "Medium"
+                        },
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/c6f24ac2-4710-46e0-8709-c47b73a61f7c/d94ed831-ab3e-4aa8-9f20-a45bd13f05a1/Caruso_BellaFigliaDellamore.mp4.m3u8?token=ccf0ca87c4d50aeafd6ccb2cd63fad7946098485",
+                          "type": "Audio",
+                          "format": "application/x-mpegURL",
+                          "label": "High"
+                        }
+                      ]
+                    }
+                  ],
+                  "target": "https://mallorn.dlib.indiana.edu/master_files/qv33rw76p/canvas"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "https://mallorn.dlib.indiana.edu/master_files/x920fw93c/canvas",
+          "type": "Canvas",
+          "duration": 5.334,
+          "thumbnail": {
+            "id": "https://mallorn.dlib.indiana.edu/master_files/x920fw93c/poster",
+            "type": "Image"
+          },
+          "height": 240,
+          "width": 320,
+          "content": [
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/x920fw93c/canvas/annotation_page",
+              "type": "AnnotationPage",
+              "items": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/x920fw93c/canvas/annotation_page/annotation/0",
+                  "type": "Annotation",
+                  "motivation": "painting",
+                  "body": [
+                    {
+                      "type": "Choice",
+                      "choiceHint": "user",
+                      "items": [
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/80c67e8b-7d57-440d-9f3d-c8751fa5ddc7/12801f6e-b397-4b72-823d-f8aa0c3a6cef/electricbeat_1.mp4.m3u8?token=950f169a8b821f677785a0e134abc13008fcba1e",
+                          "type": "Video",
+                          "format": "application/x-mpegURL",
+                          "label": "Low"
+                        },
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/80c67e8b-7d57-440d-9f3d-c8751fa5ddc7/4752034c-1930-40b2-85eb-cfedec3df4fa/electricbeat_1.mp4.m3u8?token=950f169a8b821f677785a0e134abc13008fcba1e",
+                          "type": "Video",
+                          "format": "application/x-mpegURL",
+                          "label": "Medium"
+                        },
+                        {
+                          "id": "https://mallorn.dlib.indiana.edu/streams/80c67e8b-7d57-440d-9f3d-c8751fa5ddc7/5d0e9598-d600-45db-af7f-84fc3ce0235b/electricbeat_1.mp4.m3u8?token=950f169a8b821f677785a0e134abc13008fcba1e",
+                          "type": "Video",
+                          "format": "application/x-mpegURL",
+                          "label": "High"
+                        }
+                      ]
+                    }
+                  ],
+                  "target": "https://mallorn.dlib.indiana.edu/master_files/x920fw93c/canvas"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "structures": [
+    {
+      "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/range",
+      "type": "Range",
+      "label": "Popoyee",
+      "members": [
+        {
+          "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/range/0",
+          "type": "Range",
+          "label": "Introduction",
+          "members": [
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/range/0/0",
+              "type": "Range",
+              "label": "Part 1",
+              "members": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/canvas#t=0.0,10.0",
+                  "type": "Canvas"
+                }
+              ]
+            },
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/range/0/1",
+              "type": "Range",
+              "label": "Part 2",
+              "members": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/canvas#t=10.0,20.0",
+                  "type": "Canvas"
+                }
+              ]
+            },
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/range/0/2",
+              "type": "Range",
+              "label": "Part 3",
+              "members": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/d791sg28h/canvas#t=20.0,25.0",
+                  "type": "Canvas"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/range",
+      "type": "Range",
+      "label": "Lunchroom Manners",
+      "members": [
+        {
+          "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/range/0",
+          "type": "Range",
+          "label": "Introduction",
+          "members": [
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/range/0/0",
+              "type": "Range",
+              "label": "Part 1",
+              "members": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas#t=0.0,60.0",
+                  "type": "Canvas"
+                }
+              ]
+            },
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/range/0/1",
+              "type": "Range",
+              "label": "Part 2",
+              "members": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas#t=60.0,120.0",
+                  "type": "Canvas"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/range/1",
+          "type": "Range",
+          "label": "Manners",
+          "members": [
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/range/1/0",
+              "type": "Range",
+              "label": "Wash Hands",
+              "members": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas#t=120.0,150.0",
+                  "type": "Canvas"
+                }
+              ]
+            },
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/range/1/1",
+              "type": "Range",
+              "label": "No Elbows",
+              "members": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas#t=150.0,210.0",
+                  "type": "Canvas"
+                }
+              ]
+            },
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/range/1/2",
+              "type": "Range",
+              "label": "Inside Voices",
+              "members": [
+                {
+                  "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas#t=210.0,300.0",
+                  "type": "Canvas"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/range/2",
+          "type": "Range",
+          "label": "Conclusion",
+          "members": [
+            {
+              "id": "https://mallorn.dlib.indiana.edu/master_files/2z10wq40w/canvas#t=300.0,572.034",
+              "type": "Canvas"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://mallorn.dlib.indiana.edu/master_files/qv33rw76p/range",
+      "type": "Range",
+      "label": "lunch-pop - Caruso-BellaFigliaDellamore.mp3",
+      "members": [
+        {
+          "id": "https://mallorn.dlib.indiana.edu/master_files/qv33rw76p/canvas#t=0,88.555",
+          "type": "Canvas"
+        }
+      ]
+    },
+    {
+      "id": "https://mallorn.dlib.indiana.edu/master_files/x920fw93c/range",
+      "type": "Range",
+      "label": "lunch-pop - elec1",
+      "members": [
+        {
+          "id": "https://mallorn.dlib.indiana.edu/master_files/x920fw93c/canvas#t=0,5.334",
+          "type": "Canvas"
+        }
+      ]
+    }
+  ]
+}
