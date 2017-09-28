@@ -51,6 +51,42 @@ export default class IIIFParser {
   }
 
   /**
+   * Recurse the manifest 'structures' array and creates an html tree of section links
+   * @function IIIFParser#createStructure
+   * @param {object} members - A 'members' array in the manifest, under 'structures' array
+   * @param {string[]} list - Markup temporary storage array while building the nested unordered lists
+   * @param {boolean} newUl - Flag whether to write a nested unordered list
+   * @return {string} - HTML string containing a nested unordered list and links to section content
+   */
+  createStructure (members, list = [], newUl = false) {
+    if (newUl) {
+      list.push('<ul>')
+    }
+    members.map((member, index) => {
+      if (member.type === 'Range' && member.hasOwnProperty('members')) {
+        let members = member.members
+
+        // Multiple members, create a new <ul>
+        if (members.length > 1 || members[0].type === 'Range') {
+          newUl = true
+          list.push(`<li>${member.label}`)
+          this.createStructure(members, list, newUl)
+          list.push(`</li>`)
+        }
+        // Create a link; don't send child members object back in
+        if (members.length === 1 && members[0].type === 'Canvas') {
+          let structureLink = this.buildStructureLink(member)
+          list.push(`<li>${structureLink}</li>`)
+        }
+      }
+    })
+    if (newUl) {
+      list.push('</ul>')
+    }
+    return list.join('')
+  }
+
+  /**
    * Parse what type of content the file is
    * @function IIIFParser#determinePlayerType
    * @param {object} contentObj - The content item for which to find type
@@ -92,12 +128,13 @@ export default class IIIFParser {
    * @param options
    * @returns {Array} canvases - An array of canvases present in manifest
    */
-  getCanvases (options) {
+  getCanvases (manifest) {
     let canvases = []
-    let sequences = options.manifest.sequences
-    if (sequences && sequences.length > 0) {
-      // Default use the first sequence to grab canvases
-      canvases = sequences[0].canvases || []
+
+    if (manifest.hasOwnProperty('sequences')) {
+      canvases = manifest.sequences[0].canvases
+    } else {
+      canvases = [manifest]
     }
     return canvases
   }

@@ -1,7 +1,8 @@
 import $ from 'jquery'
 import IIIFParser from './iiif_parser'
-import Player from './player'
 import { utilityHelpers } from './utility_helpers'
+import 'mediaelement'
+import '../node_modules/mediaelement/src/css/mediaelementplayer.css'
 
 /**
  * @class IIIFPlayer
@@ -14,57 +15,50 @@ export default class IIIFPlayer {
    * @return {void}
    */
   initialize () {
+    let starterManifestEl = document.getElementById(utilityHelpers.elementTitles.sourceElId)
     this.iiifParser = new IIIFParser()
-
     this.canvases = []
-
-    // Configuration object to hold element values, ids and such in one place
-    this.configObj = {
-      alertElId: 'alert-message',
-      currentManifestId: 'manifest-current',
-      defaultManifest: 'lunchroom_manners_v2.json',
-      mountElId: 'iiif-standalone-player-mount',
-      playerId: 'iiif-av-player',
-      playerWrapperId: 'iiif-player-wrapper',
-      sourceElId: 'data-iiifav-source',
-      structureElId: 'iiif-structure-wrapper',
-      urlTextInputId: 'manifest-url'
-    }
-
     this.currentCanvasId = ''
-
+    this.currentPlayerType = ''
     this.manifest = null
-
     // Map of current manifest properties we need for parsing decisions
     this.manifestMap = {}
-
     // Variable to hold structures HTML markup as a string
     this.structureMarkup = ''
-
+    this.mejsPlayer = null
     this.playerEl = null
-
     // Current player wrapper instance
     this.playerWrapper = null
-
     // Save reference to manifest URL text input element
-    this.manifestUrlEl = document.getElementById(this.configObj.urlTextInputId)
-
-    // Root element necessary in HTML for our application to mount to
-    this.mountEl = document.getElementById(this.configObj.mountElId)
+    this.manifestUrlEl = document.getElementById(utilityHelpers.elementTitles.urlTextInputId)
 
     // Set up a manifest URL form listener
-    this.prepareForm()
+    this.addFormSubmitListener()
 
     // Get initial default manifest file
-    let sourceEl = document.getElementById(this.configObj.sourceElId)
-    if (sourceEl) {
-      this.getManifestAJAX(sourceEl.dataset.iiifavSource)
+
+    if (starterManifestEl) {
+      this.getManifestAJAX(starterManifestEl.dataset.iiifavSource)
       // Update manifest url display
-      this.manifestUrlEl.value = sourceEl.dataset.iiifavSource
+      this.manifestUrlEl.value = starterManifestEl.dataset.iiifavSource
     }
 
     // Add event listeners
     this.addEventListeners()
+  }
+
+  tester () {
+    let html = `<video id="tester" height="480" width="640" controls>
+      <source src="https://dlib.indiana.edu/iiif_av/lunchroom_manners/high/lunchroom_manners_1024kb.mp4">
+    </video>`
+    document.getElementById('tester-wrapper').innerHTML = html
+    this.mejsTester = new MediaElementPlayer('tester', {}) // eslint-disable-line
+    console.log(this.mejsTester)
+  }
+
+  tester2 () {
+    this.mejsTester.remove()
+    this.tester()
   }
 
   /**
@@ -74,90 +68,87 @@ export default class IIIFPlayer {
    * @return {void}
    */
   addEventListeners () {
-    let $currentManifest = $('section.current-manifest')
+    utilityHelpers.closeAlertListener()
+    utilityHelpers.manifestDisplayListener()
+    $('#tester-btn').on('click', this.tester.bind(this))
+    $('#destroy-recreate-btn').on('click', this.tester2.bind(this))
+  }
 
-    // Add click listener to close alert
-    $(document.getElementById(this.configObj.alertElId)).find('button').on('click', (e) => {
-      this.toggleAlertMessage('', false)
-    })
+  /**
+   * Set up listener for the Manifest Url form
+   * @function IIIFPlayer#addFormSubmitListener
+   * @return {void}
+   */
+  addFormSubmitListener () {
+    let form = document.getElementById('manifest-url-form')
 
-    // Slide toggle the DOM section which displays current manifest JSON object
-    $currentManifest.find('h4').on('click', (e) => {
-      $currentManifest.find('pre').slideToggle()
-    })
+    if (!form) { return }
+    form.addEventListener('submit', this.submitURLHandler.bind(this))
   }
 
   /**
    * Handle clicking nested structure links
    */
   addStructureListeners () {
-    const $el = $('#' + this.configObj.structureElId)
-    let t = this
+    const $el = $('#' + utilityHelpers.elementTitles.structureElId)
 
     $el.off()
-    $el.on('click', (e) => {
-      const target = e.target
-      let updating = false
+    $el.on('click', this.structureClickHandler.bind(this))
+  }
 
-      // Set the reference to the player element, since we know
-      // it now exists in the DOM
-      if (!t.playerEl) {
-        t.playerEl = document.getElementById(t.configObj.playerId)
+  structureClickHandler (e) {
+    let t = this
+    const target = e.target
+    let updating = false
+    let playerEl = document.getElementById(utilityHelpers.elementTitles.playerId)
+
+    if (target.nodeName === 'A') {
+      e.preventDefault()
+      // Handle update interuptions with a flag
+      if (updating) {
+        return false
       }
+      updating = true
 
-      if (target.nodeName === 'A') {
-        e.preventDefault()
-        // Handle update interuptions with a flag
+      let newCanvasId = target.href.split('#')[0]
+      let startStopTimes = t.iiifParser.getStartStopTimes(target.href)
+
+      $(playerEl).one('canplay', (e) => {
         if (updating) {
-          return false
+          console.log('canplay')
+          t.goToNewTime(startStopTimes[0])
+          updating = false
         }
-        updating = true
+      })
 
-        let newCanvasId = target.href.split('#')[0]
-        let startStopTimes = t.iiifParser.getStartStopTimes(target.href)
+      if (this.currentCanvasId === newCanvasId) {
+        // Same canvas media object, just update the time
+        t.goToNewTime(startStopTimes[0])
+      } else {
+        // Get the new canvas for clicked structured link
+        let canvas = t.iiifParser.getCanvas(newCanvasId, this.canvases)
+        const choiceItems = canvas.content[0].items[0].body[0].items
+        let mejsPlayer = t.mejsPlayer
 
-        $(t.playerEl).one('canplay', (e) => {
-          if (updating) {
-            console.log('canplay')
-            t.playerWrapper.goToNewTime(startStopTimes[0])
-            updating = false
-          }
-        })
-
-        if (this.currentCanvasId === newCanvasId) {
-          // Same canvas media object, just update the time
-          t.playerWrapper.goToNewTime(startStopTimes[0])
+        // Update current canvasId
+        t.currentCanvasId = newCanvasId
+        // Is new canvas object media type same as current canvas media type?
+        // ie. (Video old, Video new)
+        if (choiceItems[0].type === t.currentPlayerType) {
+          // Update the source media file feeding MEJS player
+          mejsPlayer.pause()
+          mejsPlayer.setSrc(choiceItems[0].id)
+          mejsPlayer.load()
+          mejsPlayer.play()
+          console.log('loaded: ' + choiceItems[0].id)
         } else {
-          // Get the new canvas for clicked structured link
-          let canvas = t.iiifParser.getCanvas(newCanvasId, this.canvases)
-          const choiceItems = canvas.content[0].items[0].body[0].items
-
-          // Update current canvasId
-          t.currentCanvasId = newCanvasId
-          // Is new canvas object media type same as current canvas media type?
-          // ie. (Video old, Video new)
-          if (choiceItems[0].type === t.playerWrapper.currentPlayerType) {
-            // Update the source media file feeding MEJS player
-            t.playerWrapper.player.pause()
-            t.playerWrapper.player.setSrc(choiceItems[0].id)
-            t.playerWrapper.player.load()
-            t.playerWrapper.player.play()
-            console.log('loaded: ' + choiceItems[0].id)
-          } else {
-            // Destroy current player and render a new one
-            // ie (Video old, Audio new)
-            t.playerWrapper.destroyPlayerInstance()
-            // t.playerWrapper.render(canvas.content[0])
-            delete t.playerWrapper
-            let options = {}
-            options.manifest = t.manifest
-            options.configObj = t.configObj
-            options.contentObj = canvas.content[0]
-            this.playerWrapper = new Player(options)
-          }
+          // Destroy current player and render a new one
+          // ie (Video old, Audio new)
+          t.destroyPlayerInstance()
+          t.createMediaElementPlayer(canvas.content[0])
         }
       }
-    })
+    }
   }
 
   /**
@@ -170,86 +161,119 @@ export default class IIIFPlayer {
    */
   ajaxSuccessHandler (data, textStatus, jqXHR) {
     let manifest = ''
-    let options = {}
+    let markup = ''
 
     try {
       manifest = JSON.parse(data)
     } catch (e) {
       manifest = data
     }
-    // Manifest SHOULD have 'sequences' but if not the canvas object might be the root object
-    this.canvases = (manifest.hasOwnProperty('sequences')) ? manifest.sequences[0].canvases : [manifest]
-    this.currentCanvasId = this.canvases[0].id
-
+    // Do manifest related stuff
     this.manifest = manifest
-    options.manifest = manifest
-    options.configObj = this.configObj
-
-    // Clear previous manifest's url hash
-    utilityHelpers.clearHash()
-
-    // Clear current structures markup
-    this.structureMarkup = ''
-
     // Build helper map for current manifest
     this.manifestMap = this.iiifParser.buildManifestMap(manifest)
-
-    // Create structure markup, or display message if no structures exist in manifest
-    this.structureMarkup = (manifest.hasOwnProperty('structures')) ? this.createStructure(manifest.structures, [], true) : '<div class="alert alert-danger"><p>No structures array in manifest root</p></div>'
-
-    // Put structure markup in DOM
-    this.mountStructure()
-
-    // Listen to structure link clicks
-    this.addStructureListeners()
-
     // Update manifest code in DOM
     $('#current-manifest-pre').html(JSON.stringify(manifest, null, 2))
-
     // Update manifest title in DOM
-    document.getElementById('current-manifest-title').innerHTML = manifest.label || 'Manifest does not have a parent label property'
+    document.getElementById(utilityHelpers.elementTitles.manifestTitle).innerHTML = manifest.label || 'Manifest does not have a parent label property'
+
+    // Do canvases related stuff
+    this.canvases = this.iiifParser.getCanvases(manifest)
+    this.currentCanvasId = this.canvases[0].id
+
+    // Create nested structure markup and put it in DOM
+    markup = (manifest.hasOwnProperty('structures')) ? this.iiifParser.createStructure(manifest.structures, [], true) : '<div class="alert alert-danger"><p>No structures array in manifest root</p></div>'
+    document.getElementById(utilityHelpers.elementTitles.structureElId).innerHTML = markup
+
+    // Listen for clicks on nested structure links
+    this.addStructureListeners()
 
     // Get first content item to feed player
-    options.contentObj = this.iiifParser.getFirstContentObj(manifest, this.manifestMap)
+    let contentObj = this.iiifParser.getFirstContentObj(manifest, this.manifestMap)
 
     // Create player instance
-    this.playerWrapper = new Player(options)
+    this.createMediaElementPlayer(contentObj)
+  }
+
+  createMediaElementPlayer (contentObj, qualityLevel = 'Medium') {
+    // Get current item in manifest to render
+    let item = this.iiifParser.getContentItem(contentObj, qualityLevel)
+    let defaults = {
+      alwaysShowControls: true,
+      pluginPath: '',
+      success: function (mediaElement, originalNode, instance) {
+        console.log('created')
+      }
+    }
+    // Generate HTML5 markup which Mediaelement will hook into
+    let playerMarkup = this.generatePlayerMarkup(contentObj, item)
+
+    // Update environmental vars
+    this.currentPlayerType = item.type
+
+    // Insert HTML5 tag markup
+    document.getElementById(utilityHelpers.elementTitles.playerWrapperId).innerHTML = playerMarkup
+
+    // Add poster image (if one exists) for video files
+    if (this.currentPlayerType === 'Video') {
+      let thumbnail = this.iiifParser.getThumbnail(this.manifest)
+      if (thumbnail !== '') {
+        defaults.poster = thumbnail
+      }
+    } else {
+      defaults.stretching = 'responsive'
+    }
+
+    // Instantiate MediaElement player
+    this.mejsPlayer = new MediaElementPlayer('iiif-av-player', defaults) // eslint-disable-line
   }
 
   /**
-   * Recurse the manifest 'structures' array and creates an html tree of section links
-   * @function IIIFPlayer#createStructure
-   * @param {object} members - A 'members' array in the manifest, under 'structures' array
-   * @param {string[]} list - Markup temporary storage array while building the nested unordered lists
-   * @param {boolean} newUl - Flag whether to write a nested unordered list
-   * @return {string} - HTML string containing a nested unordered list and links to section content
+   * Completely remove the current player and it's Mediaelement instance
+   * @function IIIFPlayer#destroyPlayerInstance
+   * @return {void}
    */
-  createStructure (members, list = [], newUl = false) {
-    if (newUl) {
-      list.push('<ul>')
+  destroyPlayerInstance () {
+    // Remove Mediaelement instance
+    if (!this.mejsPlayer.paused) {
+      this.mejsPlayer.pause()
     }
-    members.map((member, index) => {
-      if (member.type === 'Range' && member.hasOwnProperty('members')) {
-        let members = member.members
+    this.mejsPlayer.remove()
 
-        // Multiple members, create a new <ul>
-        if (members.length > 1 || members[0].type === 'Range') {
-          newUl = true
-          list.push(`<li>${member.label}`)
-          this.createStructure(members, list, newUl)
-          list.push(`</li>`)
-        }
-        // Create a link; don't send child members object back in
-        if (members.length === 1 && members[0].type === 'Canvas') {
-          let structureLink = this.iiifParser.buildStructureLink(member)
-          list.push(`<li>${structureLink}</li>`)
-        }
-      }
-    })
-    if (newUl) {
-      list.push('</ul>')
+    // Clear media tag (<audio> or <video>) from DOM
+    let tagName = (this.currentPlayerType === 'Audio') ? 'audio' : 'video'
+    let tagNameEl = document.getElementsByTagName(tagName)[0]
+    tagNameEl.parentNode.removeChild(tagNameEl)
+  }
+
+  /**
+   * Generate player markup (<audio> or <video>) depending on type of contentObj processed
+   * @function IIIFPlayer#generatePlayerMarkup
+   * @param {Object} item - Item object for media file
+   * @returns {string} markup - <audio> or <video> markup HTML string
+   */
+  generatePlayerMarkup (contentObj, item) {
+    let markup = ''
+    const playerId = utilityHelpers.elementTitles.playerId
+    let subtitlesObj = this.iiifParser.getSubtitles(contentObj)
+    let dimensions = this.iiifParser.getPlayerDimensions(this.manifest, contentObj, item)
+    let videoSourceFormat = item.format || 'video/mp4'
+    let audioSourceFormat = item.format || 'audio/mp3'
+
+    // Audio File
+    if (item.type === 'Audio') {
+      markup = `<audio width="100%" controls id="${playerId}">
+          <source src="${item.id}" type="${audioSourceFormat}" data-quality="${item.label}">
+        </audio>`
     }
-    return list.join('')
+    // Video File
+    if (item.type === 'Video') {
+      markup = `<video class="av-player-controls" id="${playerId}" height="${dimensions.height}" width="${dimensions.width}" controls>
+          <source src="${item.id}" type="${videoSourceFormat}">
+          <track kind="subtitles" src="${subtitlesObj.id}" srclang="${subtitlesObj.language}">
+        </video>`
+    }
+    return markup
   }
 
   /**
@@ -262,40 +286,26 @@ export default class IIIFPlayer {
     let t = this
 
     // Clear any error messages if they exist
-    t.toggleAlertMessage('')
+    utilityHelpers.toggleAlertMessage('')
 
     $.ajax({
       dataType: 'json',
       url: url
-    })
-      .done(t.ajaxSuccessHandler.bind(t))
+    }).done(t.ajaxSuccessHandler.bind(t))
       .fail((error) => {
-        t.toggleAlertMessage(`Manifest URL Error - ${error.statusText}`, true)
-      })
-      .always(function () {
+        utilityHelpers.toggleAlertMessage(`Manifest URL Error - ${error.statusText}`, true)
       })
   }
 
   /**
-   * Add structures tree markup to DOM mount element
-   * @function IIIFPlayer#mountStructure
-   * @return {void}
+   * Safely set a new current time in player
+   * @param  {[type]} startTime [description]
+   * @return {[type]}           [description]
    */
-  mountStructure () {
-    document.getElementById(this.configObj.structureElId).innerHTML = this.structureMarkup
-  }
-
-  /**
-   * Set up listener for the Manifest Url form
-   * @function IIIFPlayer#prepareForm
-   * @return {void}
-   */
-  prepareForm () {
-    let form = document.getElementById('manifest-url-form')
-
-    if (!form) { return }
-    // Add form submit event listener
-    form.addEventListener('submit', this.submitURLHandler.bind(this))
+  goToNewTime (startTime) {
+    this.mejsPlayer.pause()
+    this.mejsPlayer.setCurrentTime(startTime)
+    this.mejsPlayer.play()
   }
 
   /**
@@ -308,24 +318,5 @@ export default class IIIFPlayer {
     e.preventDefault()
     this.getManifestAJAX(this.manifestUrlEl.value)
     return false
-  }
-
-  /**
-   * Helper method to toggle the alert message
-   * @param  {string} msg     Test message to display
-   * @param  {boolean} display Whether to display the alert, or hide the alert
-   * @return {null}
-   */
-  toggleAlertMessage (msg, display) {
-    let el = document.getElementById('alert-message')
-    let textEl = document.getElementById('alert-message-text')
-
-    if (display) {
-      textEl.innerText = msg
-      el.classList.remove('hide')
-    } else {
-      textEl.innerText = ''
-      el.classList.add('hide')
-    }
   }
 }
