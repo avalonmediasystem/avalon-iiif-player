@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 /**
  * @class UtilityHelpers
  * @classdesc Generic singleton utility helpers object for the application, which could potentially store application state
@@ -5,48 +7,76 @@
 export default class UtilityHelpers {
   constructor () {
     this.errorClass = 'error-message'
+    this.elementTitles = this.getElementTitles()
+  }
+
+  closeAlertListener () {
+    // Add click listener to close alert
+    $(document.getElementById(utilityHelpers.elementTitles.alertElId)).find('button').on('click', (e) => {
+      this.toggleAlertMessage('', false)
+    })
+  }
+
+  getElementTitles () {
+    return {
+      alertElId: 'alert-message',
+      currentManifestId: 'manifest-current',
+      defaultManifest: 'lunchroom_manners_v2.json',
+      manifestTitle: 'current-manifest-title',
+      manifestUrlForm: 'manifest-url-form',
+      mountElId: 'iiif-standalone-player-mount',
+      playerId: 'iiif-av-player',
+      playerWrapperId: 'iiif-player-wrapper',
+      sourceElId: 'data-iiifav-source',
+      structureElId: 'iiif-structure-wrapper',
+      urlTextInputId: 'manifest-url'
+    }
   }
 
   /**
-   * Clear the hash params from URL
-   * @function UtilityHelpers#clearHash
-   * @return {void}
+   * Helper method to parse label field of manifests
+   * @param  {Object} label Label object
+   * @return {string} label string
    */
-  clearHash () {
-    window.history.pushState('', document.title, window.location.pathname)
+  getLabel (obj) {
+    let labelText = ''
+
+    if (obj.hasOwnProperty('@none')) {
+      labelText = obj['@none'][0]
+    } else if (obj.hasOwnProperty('en')) {
+      labelText = obj['en'][0]
+    }
+    return labelText
   }
 
   /**
-   * Create and display default error message
-   * @function UtilityHelpers#displayErrorMessage
-   * @param {string} msg - Message to display
-   * @return {void}
+   * Slide toggle the DOM section which displays current manifest JSON object
+   * @return {[type]} [description]
    */
-  displayErrorMessage (msg) {
+  manifestDisplayListener () {
+    let $currentManifest = $('section.current-manifest')
+
+    $currentManifest.find('h4').on('click', (e) => {
+      $currentManifest.find('pre').slideToggle()
+    })
+  }
+
+  /**
+   * Helper method to toggle the alert message
+   * @param  {string} msg     Test message to display
+   * @param  {boolean} display Whether to display the alert, or hide the alert
+   * @return {null}
+   */
+  toggleAlertMessage (msg, display) {
     let el = document.getElementById('alert-message')
-    let newNode = document.createElement('div')
-    let markup = `<i class="icon warning circle"></i>
-                  <div class="content">
-                     <p>${msg}</p>
-                  </div>`
-    newNode.classList.add(this.errorClass)
-    newNode.classList.add('ui')
-    newNode.classList.add('negative')
-    newNode.classList.add('icon')
-    newNode.classList.add('message')
-    newNode.innerHTML = markup
-    el.parentNode.insertBefore(newNode, el.nextSibling)
-  }
+    let textEl = document.getElementById('alert-message-text')
 
-  /**
-   * Removes an error message if one exists
-   * @function UtilityHelpers#removeErrorMessage
-   * return {void}
-   */
-  removeErrorMessage () {
-    let el = document.getElementsByClassName(this.errorClass)[0]
-    if (el) {
-      el.parentNode.removeChild(el)
+    if (display) {
+      textEl.innerText = msg
+      el.classList.remove('hide')
+    } else {
+      textEl.innerText = ''
+      el.classList.add('hide')
     }
   }
 }
