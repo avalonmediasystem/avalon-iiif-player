@@ -16,49 +16,35 @@ export default class IIIFPlayer {
    */
   initialize () {
     let starterManifestEl = document.getElementById(utilityHelpers.elementTitles.sourceElId)
+
     this.iiifParser = new IIIFParser()
+    this.initializeClassVars()
+    // Get initial default manifest file
+    if (starterManifestEl) {
+      this.getManifestAJAX(starterManifestEl.dataset.iiifavSource)
+      // Update manifest url display
+      this.manifestUrlEl.value = starterManifestEl.dataset.iiifavSource
+    }
+    // Add event listeners
+    this.addEventListeners()
+  }
+
+  /**
+   * List all variables this class uses in one location
+   * @function IIIFPlayer.initializeClassVars
+   * @return {void}
+   */
+  initializeClassVars () {
     this.canvases = []
     this.currentCanvasId = ''
     this.currentPlayerType = ''
     this.manifest = null
-    // Map of current manifest properties we need for parsing decisions
-    this.manifestMap = {}
-    // Variable to hold structures HTML markup as a string
-    this.structureMarkup = ''
     this.mejsPlayer = null
     this.playerEl = null
     // Current player wrapper instance
     this.playerWrapper = null
     // Save reference to manifest URL text input element
     this.manifestUrlEl = document.getElementById(utilityHelpers.elementTitles.urlTextInputId)
-
-    // Set up a manifest URL form listener
-    this.addFormSubmitListener()
-
-    // Get initial default manifest file
-
-    if (starterManifestEl) {
-      this.getManifestAJAX(starterManifestEl.dataset.iiifavSource)
-      // Update manifest url display
-      this.manifestUrlEl.value = starterManifestEl.dataset.iiifavSource
-    }
-
-    // Add event listeners
-    this.addEventListeners()
-  }
-
-  tester () {
-    let html = `<video id="tester" height="480" width="640" controls>
-      <source src="https://dlib.indiana.edu/iiif_av/lunchroom_manners/high/lunchroom_manners_1024kb.mp4">
-    </video>`
-    document.getElementById('tester-wrapper').innerHTML = html
-    this.mejsTester = new MediaElementPlayer('tester', {}) // eslint-disable-line
-    console.log(this.mejsTester)
-  }
-
-  tester2 () {
-    this.mejsTester.remove()
-    this.tester()
   }
 
   /**
@@ -68,34 +54,33 @@ export default class IIIFPlayer {
    * @return {void}
    */
   addEventListeners () {
+    let form = document.getElementById(utilityHelpers.elementTitles.manifestUrlForm)
+
     utilityHelpers.closeAlertListener()
     utilityHelpers.manifestDisplayListener()
-    $('#tester-btn').on('click', this.tester.bind(this))
-    $('#destroy-recreate-btn').on('click', this.tester2.bind(this))
+    if (form) {
+      form.addEventListener('submit', this.submitURLHandler.bind(this))
+    }
   }
 
   /**
-   * Set up listener for the Manifest Url form
-   * @function IIIFPlayer#addFormSubmitListener
+   * Add a listener to the structures DOM element
+   * to handle clicking of structured metadata nested links
+   * @function IIIFPlayer#addStructureListeners
    * @return {void}
-   */
-  addFormSubmitListener () {
-    let form = document.getElementById('manifest-url-form')
-
-    if (!form) { return }
-    form.addEventListener('submit', this.submitURLHandler.bind(this))
-  }
-
-  /**
-   * Handle clicking nested structure links
    */
   addStructureListeners () {
     const $el = $('#' + utilityHelpers.elementTitles.structureElId)
 
-    $el.off()
-    $el.on('click', this.structureClickHandler.bind(this))
+    $el.off().on('click', this.structureClickHandler.bind(this))
   }
 
+  /**
+   * Handle clicking nested structure links
+   * @function IIIFPlayer#structureClickHandler
+   * @param {Object} e Click event
+   * @return {void}
+   */
   structureClickHandler (e) {
     let t = this
     const target = e.target
@@ -170,12 +155,10 @@ export default class IIIFPlayer {
     }
     // Do manifest related stuff
     this.manifest = manifest
-    // Build helper map for current manifest
-    this.manifestMap = this.iiifParser.buildManifestMap(manifest)
     // Update manifest code in DOM
     $('#current-manifest-pre').html(JSON.stringify(manifest, null, 2))
     // Update manifest title in DOM
-    document.getElementById(utilityHelpers.elementTitles.manifestTitle).innerHTML = manifest.label || 'Manifest does not have a parent label property'
+    document.getElementById(utilityHelpers.elementTitles.manifestTitle).innerHTML = utilityHelpers.getLabel(manifest.label) || 'Manifest does not have a parent label property'
 
     // Do canvases related stuff
     this.canvases = this.iiifParser.getCanvases(manifest)
@@ -189,7 +172,7 @@ export default class IIIFPlayer {
     this.addStructureListeners()
 
     // Get first content item to feed player
-    let contentObj = this.iiifParser.getFirstContentObj(manifest, this.manifestMap)
+    let contentObj = this.iiifParser.getFirstContentObj(this.canvases)
 
     // Create player instance
     this.createMediaElementPlayer(contentObj)
@@ -268,7 +251,7 @@ export default class IIIFPlayer {
     }
     // Video File
     if (item.type === 'Video') {
-      markup = `<video class="av-player-controls" id="${playerId}" height="${dimensions.height}" width="${dimensions.width}" controls>
+      markup = `<video id="${playerId}" height="${dimensions.height}" width="${dimensions.width}" controls>
           <source src="${item.id}" type="${videoSourceFormat}">
           <track kind="subtitles" src="${subtitlesObj.id}" srclang="${subtitlesObj.language}">
         </video>`

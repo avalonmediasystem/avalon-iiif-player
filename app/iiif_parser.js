@@ -1,3 +1,5 @@
+import { utilityHelpers } from './utility_helpers'
+
 /**
  * @class IIIFParser
  * @classdesc Class representing parsing functionality of an IIIF Manifest
@@ -31,12 +33,12 @@ export default class IIIFParser {
   /**
    * Generate a structure nested list link
    * @function IIIFParser#buildStructureLink
-   * @param {Object} member - A member object
+   * @param {Object} item - A item object
    * @returns {string} structureLink - HTML string for the anchor link
    */
-  buildStructureLink (member) {
-    let id = member.members[0].id
-    let structureLink = `<a href="${id}">${member.label}</a>`
+  buildStructureLink (item) {
+    let id = item.items[0].id
+    let structureLink = `<a href="${id}">${utilityHelpers.getLabel(item.label)}</a>`
 
     return structureLink
   }
@@ -53,29 +55,29 @@ export default class IIIFParser {
   /**
    * Recurse the manifest 'structures' array and creates an html tree of section links
    * @function IIIFParser#createStructure
-   * @param {object} members - A 'members' array in the manifest, under 'structures' array
+   * @param {object} items - An 'items' array in the manifest, under 'structures' array
    * @param {string[]} list - Markup temporary storage array while building the nested unordered lists
    * @param {boolean} newUl - Flag whether to write a nested unordered list
    * @return {string} - HTML string containing a nested unordered list and links to section content
    */
-  createStructure (members, list = [], newUl = false) {
+  createStructure (items, list = [], newUl = false) {
     if (newUl) {
       list.push('<ul>')
     }
-    members.map((member, index) => {
-      if (member.type === 'Range' && member.hasOwnProperty('members')) {
-        let members = member.members
+    items.map((item, index) => {
+      if (item.type === 'Range' && item.hasOwnProperty('items')) {
+        let items = item.items
 
-        // Multiple members, create a new <ul>
-        if (members.length > 1 || members[0].type === 'Range') {
+        // Multiple items, create a new <ul>
+        if (items.length > 1 || items[0].type === 'Range') {
           newUl = true
-          list.push(`<li>${member.label}`)
-          this.createStructure(members, list, newUl)
+          list.push(`<li>${utilityHelpers.getLabel(item.label)}`)
+          this.createStructure(items, list, newUl)
           list.push(`</li>`)
         }
-        // Create a link; don't send child members object back in
-        if (members.length === 1 && members[0].type === 'Canvas') {
-          let structureLink = this.buildStructureLink(member)
+        // Create a link; don't send child items object back in
+        if (items.length === 1 && items[0].type === 'Canvas') {
+          let structureLink = this.buildStructureLink(item)
           list.push(`<li>${structureLink}</li>`)
         }
       }
@@ -130,12 +132,9 @@ export default class IIIFParser {
    */
   getCanvases (manifest) {
     let canvases = []
+    const canvasesParent = manifest.items[0].items
 
-    if (manifest.hasOwnProperty('sequences')) {
-      canvases = manifest.sequences[0].canvases
-    } else {
-      canvases = [manifest]
-    }
+    canvases = canvasesParent.filter(possibleCanvas => possibleCanvas.type === 'Canvas')
     return canvases
   }
 
@@ -202,11 +201,12 @@ export default class IIIFParser {
    */
   getContentItem (contentObj, qualityLevel) {
     let targetItem = {}
+
     contentObj.items.forEach((item) => {
       item.body.forEach((body) => {
         if (body.hasOwnProperty('items')) {
           body.items.forEach((item) => {
-            if (item.label === qualityLevel) {
+            if (item.label.en[0] === qualityLevel) {
               targetItem = item
             }
           })
@@ -220,31 +220,10 @@ export default class IIIFParser {
    * Get a manifest's content array
    * @function IIIFParser#getFirstContentObj
    * @param {Object} manifest - A json manifest
-   * @param {Object} manifestMap - Helper object of manifest details
    * @returns {Object} firstContent[0] - The first element in content array
    */
-  getFirstContentObj (manifest, manifestMap) {
-    let firstContent = {}
-
-    // No sequences, go right to content key
-    if (!manifestMap.hasSequences) {
-      firstContent = manifest.content
-
-      // Has sequences and canvases
-    } else if (manifestMap.hasSequences && manifestMap.hasCanvases) {
-      firstContent = manifest.sequences[0].canvases[0].content
-
-      // Has sequences, no root manifest canvases
-    } else if (manifestMap.hasSequences && !manifestMap.hasCanvases) {
-      // Sequence first object has 'items' key
-      if (manifest.sequences[0].hasOwnProperty('items')) {
-        // items first object has 'content' key
-        if (manifest.sequences[0].items[0].hasOwnProperty('content')) {
-          firstContent = manifest.sequences[0].items[0].content
-        }
-      }
-    }
-    return firstContent[0]
+  getFirstContentObj (canvases) {
+    return canvases[0].content[0]
   }
 
   /**
