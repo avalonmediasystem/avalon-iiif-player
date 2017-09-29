@@ -1,28 +1,64 @@
 <!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
-  <title>Avalon Player Webpack Version</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avalon IIIF Player</title>
 </head>
 <body>
-<div>
+<div class="container-fluid content-wrapper">
+  <header>
+    <img src="img/logo.png" class="avalon-logo left" alt="Avalon Media System" title="Avalon Media System" width="210">
+    <h3 class="version-title">Avalon IIIF A/V MediaElement Player v.1.0</h3>
+  </header>
 
-  <div class="ui info message" id="manifest-current-wrapper">
-    <div class="header">
-      Current Manifest:
-    </div>
+  <article class="alert alert-secondary">
+    <p><strong>Note:</strong> Currently the master branch represents parsing of a manifest with the following structure:  <a href="https://mallorn.dlib.indiana.edu/media_objects/0c483j54d/manifest" target="_blank">https://mallorn.dlib.indiana.edu/media_objects/0c483j54d/manifest</a>  To get started, copy and paste this url below and click 'Submit'.   There's a current MediaElement4 / hls issue in this app which will only render one MediaElement player per page load.</p>
+  </article>
+
+  <!-- Alert message -->
+  <article id="alert-message" class="alert alert-danger hide">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <span id="alert-message-text"></span>
+  </article>
+
+  <!-- Manifest URL submit form -->
+  <section>
+    <form id="manifest-url-form" class="manifest-url-form">
+      <div class="input-group">
+        <input id="manifest-url" type="text" class="form-control form-control-lg" placeholder="Enter a manifest URL..." aria-label="Enter a manifest URL...">
+        <span class="input-group-btn">
+          <button id="manifest-url-button" class="btn btn-secondary btn-lg" type="submit">Submit</button>
+        </span>
+      </div>
+    </form>
+  </section>
+
+  <!-- Abstract element just to grab an initial local manifest -->
+  <!--
+  <div id="data-iiifav-source"  data-iiifav-source="mallorn-manifest1.json"></div>
+  -->
+
+  <div class="row">
+    <!-- Structured navigation links -->
+    <section class="col-sm-5">
+      <h4>Structured Links</h4>
+      <div id="iiif-structure-wrapper"></div>
+    </section>
+    <!-- MediaElement Player -->
+    <section class="col-sm-7">
+      <h4>MediaElement 4 Player</h4>
+      <h5 id="current-manifest-title">Manifest Title Here</h5>
+      <div id="iiif-player-wrapper"></div>
+    </section>
   </div>
 
-  <form class="ui form" id="manifest-url-form">
-    <div class="field">
-      <div class="ui fluid action input manifest-url-wrapper">
-        <input type="text" placeholder="Enter a manifest URL..." id="manifest-url">
-        <button class="ui button" id="manifest-url-button">Submit</button>
-      </div>
-    </div>
-  </form>
-
-  <div id="iiif-standalone-player-mount"></div>
-  <div id="data-iiifav-source" data-iiifav-source="lunchroom_manners_v2.json"></div>
+  <!-- Current manifest -->
+  <section class="current-manifest">
+    <h4>Current Manifest</h4>
+    <pre id="current-manifest-pre" class="alert alert-secondary"></pre>
+  </section>
 
 </div>
 
