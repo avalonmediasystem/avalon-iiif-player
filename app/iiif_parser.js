@@ -344,19 +344,15 @@ export default class IIIFParser {
 
   /**
    * Get a thumbnail (poster) to display for a video file if one exists in the manifest
-   * @param  {Object} manifest The manifest
+   * @param {Object Array} canvases Current canvases in manifest
+   * @param  {string} canvasId The current canvas id
    * @return {string} URI of thumbnail or an empty string if not found
    */
-  getThumbnail (manifest) {
-    let thumbnail = ''
+  getCanvasPoster (canvases, canvasId) {
+    const canvas = canvases.find((canvas) => {
+      return canvas.id === canvasId
+    })
 
-    if (manifest.hasOwnProperty('sequences')) {
-      if (manifest.sequences[0].hasOwnProperty('items')) {
-        if (manifest.sequences[0].items[0].hasOwnProperty('thumbnail')) {
-          thumbnail = manifest.sequences[0].items[0].thumbnail.id
-        }
-      }
-    }
-    return thumbnail
+    return (canvas) ? canvas.thumbnail[0].id : ''
   }
 }

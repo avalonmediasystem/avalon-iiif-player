@@ -199,11 +199,12 @@ export default class IIIFPlayer {
 
     // Add poster image (if one exists) for video files
     if (this.currentPlayerType === 'Video') {
-      let thumbnail = this.iiifParser.getThumbnail(this.manifest)
-      if (thumbnail !== '') {
-        defaults.poster = thumbnail
+      let poster = this.iiifParser.getCanvasPoster(this.canvases, this.currentCanvasId)
+      if (poster !== '') {
+        defaults.poster = poster
       }
     } else {
+      // Audio player responsive width
       defaults.stretching = 'responsive'
     }
 

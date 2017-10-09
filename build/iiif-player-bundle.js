@@ -10714,11 +10714,12 @@ var IIIFPlayer = function () {
 
       // Add poster image (if one exists) for video files
       if (this.currentPlayerType === 'Video') {
-        var thumbnail = this.iiifParser.getThumbnail(this.manifest);
-        if (thumbnail !== '') {
-          defaults.poster = thumbnail;
+        var poster = this.iiifParser.getCanvasPoster(this.canvases, this.currentCanvasId);
+        if (poster !== '') {
+          defaults.poster = poster;
         }
       } else {
+        // Audio player responsive width
         defaults.stretching = 'responsive';
       }
 
@@ -19634,23 +19635,19 @@ var IIIFParser = function () {
 
     /**
      * Get a thumbnail (poster) to display for a video file if one exists in the manifest
-     * @param  {Object} manifest The manifest
+     * @param {Object Array} canvases Current canvases in manifest
+     * @param  {string} canvasId The current canvas id
      * @return {string} URI of thumbnail or an empty string if not found
      */
 
   }, {
-    key: 'getThumbnail',
-    value: function getThumbnail(manifest) {
-      var thumbnail = '';
+    key: 'getCanvasPoster',
+    value: function getCanvasPoster(canvases, canvasId) {
+      var canvas = canvases.find(function (canvas) {
+        return canvas.id === canvasId;
+      });
 
-      if (manifest.hasOwnProperty('sequences')) {
-        if (manifest.sequences[0].hasOwnProperty('items')) {
-          if (manifest.sequences[0].items[0].hasOwnProperty('thumbnail')) {
-            thumbnail = manifest.sequences[0].items[0].thumbnail.id;
-          }
-        }
-      }
-      return thumbnail;
+      return canvas ? canvas.thumbnail[0].id : '';
     }
   }]);
 
