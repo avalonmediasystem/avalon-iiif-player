@@ -223,7 +223,7 @@ export default class IIIFParser {
    * @returns {Object} firstContent[0] - The first element in content array
    */
   getFirstContentObj (canvases) {
-    return canvases[0].content[0]
+    return canvases[0].items[0]
   }
 
   /**
