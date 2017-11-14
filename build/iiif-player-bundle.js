@@ -19499,7 +19499,7 @@ var IIIFParser = function () {
   }, {
     key: 'getFirstContentObj',
     value: function getFirstContentObj(canvases) {
-      return canvases[0].content[0];
+      return canvases[0].items[0];
     }
 
     /**
@@ -19643,11 +19643,16 @@ var IIIFParser = function () {
   }, {
     key: 'getCanvasPoster',
     value: function getCanvasPoster(canvases, canvasId) {
+      var thumbnailUri = '';
       var canvas = canvases.find(function (canvas) {
         return canvas.id === canvasId;
       });
 
-      return canvas ? canvas.thumbnail[0].id : '';
+      if (canvas.thumbnail && canvas.thumbnail[0].id) {
+        thumbnailUri = canvas.thumbnail[0].id;
+      }
+
+      return thumbnailUri;
     }
   }]);
 
