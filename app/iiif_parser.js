@@ -349,10 +349,15 @@ export default class IIIFParser {
    * @return {string} URI of thumbnail or an empty string if not found
    */
   getCanvasPoster (canvases, canvasId) {
+    let thumbnailUri = ''
     const canvas = canvases.find((canvas) => {
       return canvas.id === canvasId
     })
 
-    return (canvas) ? canvas.thumbnail[0].id : ''
+    if (canvas.thumbnail && canvas.thumbnail[0].id) {
+      thumbnailUri = canvas.thumbnail[0].id
+    }
+
+    return thumbnailUri
   }
 }
