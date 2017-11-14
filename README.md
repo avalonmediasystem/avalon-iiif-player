@@ -39,22 +39,6 @@ standard
 karma start --single-run --browsers PhantomJS
 ```
 
-## To use on a page:
-
-```html
- <html>
-   <head>
-     <title>Avalon Player Webpack Version</title>
-   </head>
-   <body>
-     <div id="iiif-standalone-player-mount"></div>
-     <div id="data-iiifav-source"  data-iiifav-source="lunchroom_manners_v2.json"></div>
-     <script src="iiif-player-bundle.js"></script>
-   </body>
- </html>
-```
-The `data-iiifav-source` attribute should link to a publically accesible IIIF-AV manifest.
-
 ## JSDoc Documentation
 
 Documentation generated from JSDoc comments is published <a href="https://avalonmediasystem.github.io/avalon-iiif-player/out/">here</a>.
