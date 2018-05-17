@@ -1,36 +1,47 @@
 import React, { Component } from 'react';
 import MediaElementContainer from './containers/MediaElementContainer';
 import StructuredNavigation from './components/StructuredNavigation';
+import * as api from './services/api';
 
 class App extends Component {
   state = {
+    manifest: null,
     manifestUrl: ''
   };
 
   componentDidMount() {
-    this.getManifestUrl();
+    const manifestUrl = this.getManifestUrl();
+    if (manifestUrl === '') { return; }
+
+    const request = async () => {
+      const manifest = await api.fetchManifest(manifestUrl);
+
+      this.setState({
+        manifest,
+        manifestUrl
+      });
+    }
+    request();
   }
 
   getManifestUrl() {
     const el = document.getElementById('avln-iif-player-root');
-    const manifestUrl = el.getAttribute('data-manifest-url');
-    this.setState({ manifestUrl });
-  }
-
-  renderOutput() {
-    return this.state.manifestUrl === '' ? (
-      <p>You must declare a manifest url attribute on mounting element</p>
-    ) : (
-      <section>
-        <MediaElementContainer manifestUrl={this.state.manifestUrl} />
-        <StructuredNavigation />
-      </section>
-    );
+    if (!el) { return ''; }
+    return el.getAttribute('data-manifest-url');
   }
 
   render() {
-    const markup = this.renderOutput();
-    return <div>{markup}</div>;
+    const { manifest } = this.state;
+
+    if (manifest) {
+      return (
+        <section>
+          <MediaElementContainer manifest={manifest} />
+          <StructuredNavigation manifest={manifest} />
+        </section>
+      )
+    }
+    return <p>...Loading</p>;
   }
 }
 

@@ -1,43 +1,34 @@
 import React, { Component } from 'react';
 import MediaElement from '../components/MediaElement';
-import mockManifest from '../json/lunchroom-manners';
+
 
 class MediaElementContainer extends Component {
 
   state = {
     manifestUrl: this.props.manifestUrl,
-    manifest: null,
+    manifest: this.props.manifest,
     ready: false,
     sources: []
   };
 
   componentDidMount() {
-    this.handleGetManifest();
-  }
+    const { manifest } = this.state;
 
-  handleGetManifest() {
-    const request = async () => {
-      const manifest = await this.fetchManifest();
-      this.setState({
-        ready: true,
-        sources: this.getSources(manifest)
-      })
-    };
-
-    request();
-  }
-
-  // Mock API call
-  fetchManifest() {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(mockManifest);
-      }, 500);
-    });
+    this.getSources(manifest);
+    this.setState({
+      ready: true,
+      sources: this.getSources(manifest)
+    })
   }
 
   getSources(manifest) {
-    let sourceUrl = manifest.content["0"].items["0"].body["0"].items["0"].id;
+    let sourceUrl = '';
+    try {
+      sourceUrl = manifest.content["0"].items["0"].body["0"].items["0"].id;
+    } catch(err) {
+      console.log('Error parsing "sourceUrl" from manifest');
+    }
+
     return [
       {
         src: sourceUrl,
@@ -47,7 +38,7 @@ class MediaElementContainer extends Component {
   }
 
   render() {
-    const { ready, sources } = this.state;
+    const { manifest, ready, sources } = this.state;
     const options = {};
 
     if (ready) {
@@ -57,8 +48,8 @@ class MediaElementContainer extends Component {
           mediaType="video"
           preload="none"
           controls
-          width="640"
-          height="360"
+          width={manifest.width || 480}
+          height={manifest.height || 360}
           poster=""
           sources={JSON.stringify(sources)}
           options={JSON.stringify(options)}
