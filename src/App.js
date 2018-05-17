@@ -3,24 +3,34 @@ import MediaElementContainer from './containers/MediaElementContainer';
 import StructuredNavigation from './components/StructuredNavigation';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    manifestUrl: ''
+  };
+
+  componentDidMount() {
     this.getManifestUrl();
   }
 
   getManifestUrl() {
     const el = document.getElementById('avln-iif-player-root');
     const manifestUrl = el.getAttribute('data-manifest-url');
-    console.log('manifestUrl', manifestUrl);
+    this.setState({ manifestUrl });
   }
 
-  render() {
-    return (
+  renderOutput() {
+    return this.state.manifestUrl === '' ? (
+      <p>You must declare a manifest url attribute on mounting element</p>
+    ) : (
       <section>
-        <MediaElementContainer />
+        <MediaElementContainer manifestUrl={this.state.manifestUrl} />
         <StructuredNavigation />
       </section>
     );
+  }
+
+  render() {
+    const markup = this.renderOutput();
+    return <div>{markup}</div>;
   }
 }
 

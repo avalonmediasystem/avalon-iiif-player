@@ -1,37 +1,71 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MediaElement from '../components/MediaElement';
+import mockManifest from '../json/lunchroom-manners';
 
 class MediaElementContainer extends Component {
-  render() {
-    const sources = [
+
+  state = {
+    manifestUrl: this.props.manifestUrl,
+    manifest: null,
+    ready: false,
+    sources: []
+  };
+
+  componentDidMount() {
+    this.handleGetManifest();
+  }
+
+  handleGetManifest() {
+    const request = async () => {
+      const manifest = await this.fetchManifest();
+      this.setState({
+        ready: true,
+        sources: this.getSources(manifest)
+      })
+    };
+
+    request();
+  }
+
+  // Mock API call
+  fetchManifest() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(mockManifest);
+      }, 500);
+    });
+  }
+
+  getSources(manifest) {
+    let sourceUrl = manifest.content["0"].items["0"].body["0"].items["0"].id;
+    return [
       {
-        src: 'http://www.streambox.fr/playlists/test_001/stream.m3u8',
-        type: 'application/x-mpegURL'
-      },
-      {
-        src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+        src: sourceUrl,
         type: 'video/mp4'
-      },
-      {
-        src: 'rtmp://firehose.cul.columbia.edu:1935/vod/mp4:sample.mp4',
-        type: 'video/rtmp'
       }
     ];
+  }
+
+  render() {
+    const { ready, sources } = this.state;
     const options = {};
 
-    return (
-      <MediaElement
-        id="avln-mediaelement-component"
-        mediaType="video"
-        preload="none"
-        controls
-        width="640"
-        height="360"
-        poster=""
-        sources={JSON.stringify(sources)}
-        options={JSON.stringify(options)}
-      />
-    )
+    if (ready) {
+      return (
+        <MediaElement
+          id="avln-mediaelement-component"
+          mediaType="video"
+          preload="none"
+          controls
+          width="640"
+          height="360"
+          poster=""
+          sources={JSON.stringify(sources)}
+          options={JSON.stringify(options)}
+        />
+      );
+    }
+    return null;
   }
 }
 
