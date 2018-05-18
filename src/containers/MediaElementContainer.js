@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import MediaElement from '../components/MediaElement';
 
-
 class MediaElementContainer extends Component {
-
   state = {
     manifestUrl: this.props.manifestUrl,
     manifest: this.props.manifest,
@@ -18,14 +16,14 @@ class MediaElementContainer extends Component {
     this.setState({
       ready: true,
       sources: this.getSources(manifest)
-    })
+    });
   }
 
   getSources(manifest) {
     let sourceUrl = '';
     try {
-      sourceUrl = manifest.content["0"].items["0"].body["0"].items["0"].id;
-    } catch(err) {
+      sourceUrl = manifest.items['0'].items['0'].items['0'].body.items['0'].id;
+    } catch (err) {
       console.log('Error parsing "sourceUrl" from manifest');
     }
 

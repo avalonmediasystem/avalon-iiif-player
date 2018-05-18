@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MediaElementContainer from './containers/MediaElementContainer';
-import StructuredNavigation from './components/StructuredNavigation';
+import StructuredNav from './components/StructuredNav';
 import * as api from './services/api';
 
 class App extends Component {
@@ -37,7 +37,7 @@ class App extends Component {
       return (
         <section>
           <MediaElementContainer manifest={manifest} />
-          <StructuredNavigation manifest={manifest} />
+          <StructuredNav manifest={manifest} />
         </section>
       )
     }

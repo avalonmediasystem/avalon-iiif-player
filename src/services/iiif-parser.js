@@ -35,12 +35,12 @@ export default class IIIFParser {
   /**
    * Generate a structure nested list link
    * @function IIIFParser#buildStructureLink
-   * @param {Object} member - A member object
+   * @param {Object} item - A item object
    * @returns {string} structureLink - HTML string for the anchor link
    */
-  buildStructureLink(member) {
-    let id = member.members[0].id;
-    let structureLink = `<a href="${id}">${member.label}</a>`;
+  buildStructureLink(item) {
+    let id = item.items[0].id;
+    let structureLink = `<a href="${id}">${item.label}</a>`;
 
     return structureLink;
   }
@@ -62,24 +62,24 @@ export default class IIIFParser {
    * @param {boolean} newUl - Flag whether to write a nested unordered list
    * @return {string} - HTML string containing a nested unordered list and links to section content
    */
-  createStructure(members, list = [], newUl = false) {
+  createStructure(items, list = [], newUl = false) {
     if (newUl) {
       list.push('<ul>');
     }
-    members.forEach((member, index) => {
-      if (member.type === 'Range' && member.hasOwnProperty('members')) {
-        let subMembers = member.members;
+    items.forEach((item, index) => {
+      if (item.type === 'Range' && item.hasOwnProperty('items')) {
+        let subMembers = item.items;
 
-        // Multiple members, create a new <ul>
+        // Multiple items, create a new <ul>
         if (subMembers.length > 1 || subMembers[0].type === 'Range') {
           newUl = true;
-          list.push(`<li>${member.label}`);
+          list.push(`<li>${item.label}`);
           this.createStructure(subMembers, list, newUl);
           list.push(`</li>`);
         }
-        // Create a link; don't send child members object back in
+        // Create a link; don't send child items object back in
         if (subMembers.length === 1 && subMembers[0].type === 'Canvas') {
-          let structureLink = this.buildStructureLink(member);
+          let structureLink = this.buildStructureLink(item);
           list.push(`<li>${structureLink}</li>`);
         }
       }
