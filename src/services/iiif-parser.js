@@ -373,4 +373,14 @@ export default class IIIFParser {
 
     return thumbnailUri;
   }
+
+  // NEW
+
+  getChildCanvases(item) {
+    if (!item.items) {
+      return [];
+    }
+    const canvases = item.items.filter(item => item.type === 'Canvas');
+    return canvases;
+  }
 }

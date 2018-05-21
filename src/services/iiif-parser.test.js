@@ -24,25 +24,70 @@ it('should create a nestable HTML unordered list structure from a manifest', () 
   const html = iiifParser.createStructure(manifest.structures, undefined, true);
   const htmlArray = html.split('<ul>');
 
-  expect(htmlArray[1]).toEqual('<li>Lunchroom Manners');
-  expect(htmlArray[2]).toEqual('<li>Getting Ready for Lunch');
-  expect(htmlArray[4]).toContain('<li><a');
+  expect(htmlArray[1]).toEqual('<li>Getting Ready for Lunch');
+  expect(htmlArray[2]).toEqual('<li>Washing Hands');
+  expect(htmlArray[3]).toContain('<li><a');
 });
 
-it('should build a structure link from a member object', () => {
-  const member = {
-    id: 'http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/1-1-1',
-    type: 'Range',
-    label: 'Using Soap',
-    members: [
+it('should build a structure link from a item object', () => {
+  const item = {
+    "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/5",
+    "type": "Range",
+    "label": "Rinsing Well",
+    "items": [
       {
-        id:
-          'http://dlib.indiana.edu/iiif_av/lunchroom_manners/canvas/1#t=157,160',
-        type: 'Canvas'
+        "id": "http://fluorine.dlib.indiana.edu/concern/generic_works/2n49t1699/manifest/canvas/08612n52b#t=165,178",
+        "type": "Canvas"
       }
     ]
   };
-  const expected = '<a href="http://dlib.indiana.edu/iiif_av/lunchroom_manners/canvas/1#t=157,160">Using Soap</a>';
+  const expected = '<a href="http://fluorine.dlib.indiana.edu/concern/generic_works/2n49t1699/manifest/canvas/08612n52b#t=165,178">Rinsing Well</a>';
 
-  expect(iiifParser.buildStructureLink(member)).toEqual(expected);
+  expect(iiifParser.buildStructureLink(item)).toEqual(expected);
 });
+
+it('should return an array of existing child "Canvas" items if they exist', () => {
+  const itemWithChild = {
+    "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/5",
+    "type": "Range",
+    "label": "Rinsing Well",
+    "items": [
+      {
+        "id": "http://fluorine.dlib.indiana.edu/concern/generic_works/2n49t1699/manifest/canvas/08612n52b#t=165,178",
+        "type": "Canvas"
+      }
+    ]
+  };
+  const itemWithNoDirectChild = {
+    "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/2",
+    "type": "Range",
+    "label": "Washing Hands",
+    "items": [
+      {
+        "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/3",
+        "type": "Range",
+        "label": "Using Soap",
+        "items": [
+          {
+            "id": "http://fluorine.dlib.indiana.edu/concern/generic_works/2n49t1699/manifest/canvas/08612n52b#t=157,160",
+            "type": "Canvas"
+          }
+        ]
+      },
+      {
+        "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/5",
+        "type": "Range",
+        "label": "Rinsing Well",
+        "items": [
+          {
+            "id": "http://fluorine.dlib.indiana.edu/concern/generic_works/2n49t1699/manifest/canvas/08612n52b#t=165,178",
+            "type": "Canvas"
+          }
+        ]
+      }
+    ]
+  };
+
+  expect(iiifParser.getChildCanvases(itemWithChild)).toHaveLength(1);
+  expect(iiifParser.getChildCanvases(itemWithNoDirectChild)).toHaveLength(0);
+})
