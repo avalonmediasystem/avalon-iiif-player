@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "gh-pages": "^1.1.0",
     "mediaelement": "^4.2.9",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
@@ -15,7 +16,9 @@
     "start": "PORT=3334 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
-  "homepage" : "http://avalonmediasystem.github.io/avalon-iiif-player/build"
+  "homepage": "https://avalonmediasystem.github.io/avalon-iiif-player"
 }
