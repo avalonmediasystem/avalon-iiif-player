@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Root from './Root';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('avln-iif-player-root'));
+ReactDOM.render(<Root />, document.getElementById('avln-iiif-player-root'));
 registerServiceWorker();

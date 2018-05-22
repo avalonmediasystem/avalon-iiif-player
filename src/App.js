@@ -25,7 +25,7 @@ class App extends Component {
   }
 
   getManifestUrl() {
-    const el = document.getElementById('avln-iif-player-root');
+    const el = document.getElementById('avln-iiif-player-root');
     if (!el) { return ''; }
     return el.getAttribute('data-manifest-url');
   }

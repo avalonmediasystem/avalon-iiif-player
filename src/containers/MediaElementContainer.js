@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MediaElement from '../components/MediaElement';
+import PropTypes from 'prop-types';
 
 class MediaElementContainer extends Component {
   state = {
@@ -57,5 +58,9 @@ class MediaElementContainer extends Component {
     return null;
   }
 }
+
+MediaElementContainer.propTypes = {
+  manifest: PropTypes.object
+};
 
 export default MediaElementContainer;

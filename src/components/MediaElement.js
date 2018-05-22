@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 import 'mediaelement';
+import PropTypes from 'prop-types';
 
 // Import stylesheet and shims
 import 'mediaelement/build/mediaelementplayer.min.css';
 
-export default class MediaElement extends Component {
+class MediaElement extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -13,6 +16,9 @@ export default class MediaElement extends Component {
   success(media, node, instance) {
     // Your action when media was successfully loaded
     console.log('Loaded successfully');
+
+    // Action reducer
+    this.props.playerInitialized(instance);
   }
 
   error(media) {
@@ -73,3 +79,22 @@ export default class MediaElement extends Component {
     return <div dangerouslySetInnerHTML={{ __html: mediaHtml }} />;
   }
 }
+
+MediaElement.propTypes = {
+  id: PropTypes.string,
+  mediaType: PropTypes.string,
+  preload: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  poster: PropTypes.string,
+  sources: PropTypes.string,
+  options: PropTypes.string
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    playerInitialized: player => dispatch(actions.playerInitialized(player))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(MediaElement);

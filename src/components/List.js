@@ -1,5 +1,6 @@
 import React from 'react';
 import ListItem from './ListItem';
+import PropTypes from 'prop-types';
 
 const List = props => {
   return (
@@ -8,11 +9,14 @@ const List = props => {
         <ListItem
           key={item.id}
           item={item}
-          handleItemClick={props.handleItemClick}
         />
       ))}
     </ul>
   );
 };
+
+List.propTypes = {
+  items: PropTypes.array.isRequired
+}
 
 export default List;
