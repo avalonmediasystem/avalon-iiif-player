@@ -1,43 +1,54 @@
 import React, { Component } from 'react';
 import MediaElement from '../components/MediaElement';
 import PropTypes from 'prop-types';
+import IIIFParser from '../services/iiif-parser';
+import ErrorMessage from '../components/ErrorMessage';
+
+const iiifParser = new IIIFParser();
 
 class MediaElementContainer extends Component {
   state = {
     manifestUrl: this.props.manifestUrl,
     manifest: this.props.manifest,
     ready: false,
-    sources: []
+    sources: [],
+    error: null
   };
 
   componentDidMount() {
     const { manifest } = this.state;
+    const choiceItems = iiifParser.getChoiceItems(manifest);
+    this.prepSources(manifest, choiceItems);
+  }
 
-    this.getSources(manifest);
+  getSources(choiceItems) {
+    const sources = choiceItems.map(item => {
+      return {
+        src: item.id,
+        // TODO: Fix this assumption
+        type: 'video/mp4'
+      };
+    });
+    return sources;
+  }
+
+  prepSources(manifest, choiceItems) {
+    if (choiceItems.length === 0) {
+      this.setState({
+        error: 'No media choice items found in manifest'
+      });
+      return;
+    }
+
+    const sources = this.getSources(choiceItems);
     this.setState({
       ready: true,
-      sources: this.getSources(manifest)
+      sources
     });
   }
 
-  getSources(manifest) {
-    let sourceUrl = '';
-    try {
-      sourceUrl = manifest.items['0'].items['0'].items['0'].body.items['0'].id;
-    } catch (err) {
-      console.log('Error parsing "sourceUrl" from manifest');
-    }
-
-    return [
-      {
-        src: sourceUrl,
-        type: 'video/mp4'
-      }
-    ];
-  }
-
   render() {
-    const { manifest, ready, sources } = this.state;
+    const { manifest, ready, sources, error } = this.state;
     const options = {};
 
     if (ready) {
@@ -54,6 +65,8 @@ class MediaElementContainer extends Component {
           options={JSON.stringify(options)}
         />
       );
+    } else if (error) {
+      return <ErrorMessage message={error} />;
     }
     return null;
   }

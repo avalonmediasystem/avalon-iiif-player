@@ -383,4 +383,22 @@ export default class IIIFParser {
     const canvases = item.items.filter(item => item.type === 'Canvas');
     return canvases;
   }
+
+  getChoiceItems(manifest) {
+    let itemWithBody;
+
+    const searchItems = items => {
+      for (const item of items) {
+        if (item.body) {
+          return item.body.items;
+        } else if (item.items) {
+          return searchItems(item.items);
+        }
+      }
+    };
+
+    itemWithBody = searchItems(manifest.items);
+
+    return itemWithBody;
+  }
 }
