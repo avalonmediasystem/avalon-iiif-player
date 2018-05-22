@@ -1,6 +1,6 @@
 import * as types from '../actions/types';
 
-export function rootReducer(state = {}, action) {
+export default function rootReducer(state = {}, action) {
   switch (action.type) {
     case types.MEJS_PLAYER_INITIALIZED:
       return Object.assign({}, state, {
