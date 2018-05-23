@@ -36,11 +36,14 @@ class StructuredNav extends Component {
   }
 
   render() {
-    return (
-      <List
-        items={this.manifest.structures}
-      />
-    );
+    if (this.manifest.structures) {
+      return (
+        <List
+          items={this.manifest.structures}
+        />
+      );
+    }
+    return <p>There are no structures in the manifest.</p>;
   }
 }
 
