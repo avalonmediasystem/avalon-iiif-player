@@ -11,7 +11,7 @@ export function fetchManifest(url) {
     .then(json => json)
     .catch(err => {
       console.log('Problem with the fetch operation', err)
-      return { error: err };
+      return { error: 'Network failure fetching the manifest' };
     });
 }
 
