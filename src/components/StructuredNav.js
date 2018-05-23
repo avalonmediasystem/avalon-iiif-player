@@ -49,7 +49,7 @@ StructuredNav.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  clickedUrl: state.clickedUrl,
+  clickedUrl: state.nav.clickedUrl,
   player: state.player
 });
 

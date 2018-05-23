@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MediaElementContainer from './containers/MediaElementContainer';
 import StructuredNav from './components/StructuredNav';
+import ErrorMessage from './components/ErrorMessage';
 import * as api from './services/api';
 
 class App extends Component {
@@ -11,27 +12,39 @@ class App extends Component {
 
   componentDidMount() {
     const manifestUrl = this.getManifestUrl();
-    if (manifestUrl === '') { return; }
+    if (manifestUrl === '') {
+      return;
+    }
 
     const request = async () => {
-      const manifest = await api.fetchManifest(manifestUrl);
+      const response = await api.fetchManifest(manifestUrl);
 
+      if (response.error) {
+        this.setState({
+          error: 'There was an error fetching the manifest',
+          manifest: null
+        });
+        return;
+      }
+      
       this.setState({
-        manifest,
+        manifest: response,
         manifestUrl
       });
-    }
+    };
     request();
   }
 
   getManifestUrl() {
     const el = document.getElementById('avln-iiif-player-root');
-    if (!el) { return ''; }
+    if (!el) {
+      return '';
+    }
     return el.getAttribute('data-manifest-url');
   }
 
   render() {
-    const { manifest } = this.state;
+    const { manifest, error } = this.state;
 
     if (manifest) {
       return (
@@ -39,7 +52,10 @@ class App extends Component {
           <MediaElementContainer manifest={manifest} />
           <StructuredNav manifest={manifest} />
         </section>
-      )
+      );
+    }
+    if (error) {
+      return <ErrorMessage message={error} />;
     }
     return <p>...Loading</p>;
   }
