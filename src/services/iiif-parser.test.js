@@ -20,6 +20,7 @@ it('should contain a structures[] array which represents structured metadata', (
 });
 
 // TODO: extend these tests to cover recursive calls
+// TODO: createStructure is deprecated, clean this up by removing
 it('should create a nestable HTML unordered list structure from a manifest', () => {
   const html = iiifParser.createStructure(manifest.structures, undefined, true);
   const htmlArray = html.split('<ul>');
@@ -29,7 +30,7 @@ it('should create a nestable HTML unordered list structure from a manifest', () 
   expect(htmlArray[3]).toContain('<li><a');
 });
 
-it('should build a structure link from a item object', () => {
+it('should build a structure link from an item object', () => {
   const item = {
     "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/5",
     "type": "Range",

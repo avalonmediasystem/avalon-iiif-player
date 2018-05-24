@@ -401,4 +401,14 @@ export default class IIIFParser {
 
     return itemWithBody;
   }
+
+  filterVisibleRangeItem(item) {
+    if (!item.behavior) {
+      return item;
+    }
+
+    if (item.behavior === 'no-nav') {
+      return null;
+    }
+  }
 }
