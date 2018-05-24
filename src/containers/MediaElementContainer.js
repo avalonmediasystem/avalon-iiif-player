@@ -56,7 +56,7 @@ class MediaElementContainer extends Component {
         <MediaElement
           id="avln-mediaelement-component"
           mediaType="video"
-          preload="none"
+          preload="auto"
           controls
           width={manifest.width || 480}
           height={manifest.height || 360}

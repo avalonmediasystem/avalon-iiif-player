@@ -7,7 +7,7 @@ This is a React JavaScript application that displays a player and structured nav
 JSON manifest (spec 3.0).
 
 ## Demo Page:
-- [https://avalonmediasystem.github.io/avalon-iiif-player/build/](https://avalonmediasystem.github.io/avalon-iiif-player st)
+- [https://avalonmediasystem.github.io/avalon-iiif-player/](https://avalonmediasystem.github.io/avalon-iiif-player/)
 
 ## Developing
 Navigate to project root directory and run the following commands. A webpack dev server (with live re-loading) will start at: http://localhost:3334/
