@@ -1,7 +1,7 @@
 import mockManifest from '../json/lunchroom-manners';
 
 export function fetchManifest(url) {
-  return fetch(url)
+  return fetch(url, {credentials: 'include'})
     .then(response => {
       if (response.ok) {
         return response.json();
