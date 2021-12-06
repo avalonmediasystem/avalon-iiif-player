@@ -1,3 +1,7 @@
+**Please note that, this GitHub repository is no longer supported by Avalon Media System**
+
+This has been replaced by a new component library at: https://github.com/samvera-labs/iiif-react-media-player.
+
 # Avalon IIIF-AV player
 
 [![Build Status](https://travis-ci.org/avalonmediasystem/avalon-iiif-player.svg?branch=master)](https://travis-ci.org/avalonmediasystem/avalon-iiif-player) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
